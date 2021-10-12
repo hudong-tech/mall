@@ -4,7 +4,12 @@ spring:
     password: root
     url: jdbc:mysql://81.68.207.20:3306/mall_oms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.jdbc.Driver
-
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 81.68.207.20:8848
+  application:
+    name: mall-order
 # MapperScan
 mybatis-plus:
   # sql映射文件位置
