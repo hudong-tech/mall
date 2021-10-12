@@ -1,10 +1,10 @@
-package com.tech.gulimall.coupon;
+package com.tech.gulimall.member;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GulimallCouponApplicationTests {
+class GulimallMemberApplicationTests {
 
     @Test
     void contextLoads() {
