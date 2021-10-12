@@ -13,3 +13,6 @@ mybatis-plus:
     db-config:
       # entity主键自增
       id-type: auto
+
+server:
+  port: 7000
