@@ -25,6 +25,14 @@ public class CouponController {
     @Autowired
     private CouponService couponService;
 
+
+    @PostMapping("/member/list")
+    public R memberCoupons(){
+        CouponEntity couponEntity = new CouponEntity();
+        couponEntity.setCouponName("满100-10");
+        return R.ok().put("coupons",Arrays.asList(couponEntity));
+    }
+
     /**
      * 列表
      */
