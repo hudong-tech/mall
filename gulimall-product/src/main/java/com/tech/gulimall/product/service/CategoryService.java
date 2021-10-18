@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.product.entity.CategoryEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +17,22 @@ import java.util.Map;
 public interface CategoryService extends IService<CategoryEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+    /**
+     * @Description:  使用递归查出所有分类及子分类，以树形列表组装起来
+     * @Param: []
+     * @return: java.util.List<com.tech.gulimall.product.entity.CategoryEntity>
+     * @Author: phil
+     * @Date: 2021/10/14 22:38
+     */
+    List<CategoryEntity> queryListTreeByRecursion();
+
+    /**
+    * @Description:  使用for循环查出所有分类及子分类，以树形列表组装起来
+    * @Param: []
+    * @return: java.util.List<com.tech.gulimall.product.entity.CategoryEntity>
+    * @Author: phil
+    * @Date: 2021/10/18 21:00
+    */
+    List<CategoryEntity> queryListTreeByFor();
 }
 

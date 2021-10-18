@@ -1,14 +1,16 @@
 package com.tech.gulimall.product.controller;
 
-import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
 import com.tech.gulimall.product.entity.CategoryEntity;
 import com.tech.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 
 
 
@@ -26,14 +28,23 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
-     * 列表
+     * 查出所有分类及子分类，以树形列表组装起来
+     * 递归算法
      */
-    @RequestMapping("/list")
-    // @RequiresPermissions("product:category:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = categoryService.queryPage(params);
+    @RequestMapping("/list/tree/recursion")
+    public R listByRecursion(){
+        List<CategoryEntity> entities = categoryService.queryListTreeByRecursion();
+        return R.ok().put("data", entities);
+    }
 
-        return R.ok().put("page", page);
+    /**
+     * 查出所有分类及子分类，以树形列表组装起来
+     * for算法  -> 推荐
+     */
+    @RequestMapping("/list/tree/for")
+    public R listByFor(){
+        List<CategoryEntity> entities = categoryService.queryListTreeByFor();
+        return R.ok().put("data", entities);
     }
 
 
