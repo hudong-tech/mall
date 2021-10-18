@@ -115,4 +115,10 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         }
         return sortedList;
     }
+
+    @Override
+    public String deleteBatch(List<Long> ids) {
+        int record = baseMapper.deleteBatchIds(ids);
+        return "成功删除" + record + "条数据";
+    }
 }

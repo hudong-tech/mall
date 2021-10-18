@@ -34,5 +34,14 @@ public interface CategoryService extends IService<CategoryEntity> {
     * @Date: 2021/10/18 21:00
     */
     List<CategoryEntity> queryListTreeByFor();
+
+    /**
+    * @Description: 菜单逻辑批量删除
+    * @Param: [ids]
+    * @return: java.lang.String
+    * @Author: phil
+    * @Date: 2021/10/18 22:46
+    */
+    String deleteBatch(List<Long> ids);
 }
 
