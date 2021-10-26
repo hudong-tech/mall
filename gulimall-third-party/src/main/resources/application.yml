@@ -15,7 +15,7 @@
 #        endpoint: oss-cn-hangzhou.aliyuncs.com
 #
 #  application:
-#    name: mall-product
+#    name: third-party
 ## MapperScan
 #mybatis-plus:
 #  # sql映射文件位置
@@ -25,4 +25,4 @@
 #      # entity主键自增
 #      id-type: auto
 #server:
-#  port: 10019
+#  port: 30000

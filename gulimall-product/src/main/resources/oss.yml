@@ -1,0 +1,8 @@
+#spring:
+#  cloud:
+#    alicloud:
+#      access-key: LTAI5tMsf6dMKkrj3rhZxUzV
+#      secret-key: T9s9CANCDPyWn333Vp4wn19uuNKgV1
+#      oss:
+#        endpoint: oss-cn-hangzhou.aliyuncs.com
+#        bucket: gulimail-dong
