@@ -43,5 +43,23 @@ public interface CategoryService extends IService<CategoryEntity> {
     * @Date: 2021/10/18 22:46
     */
     String deleteBatch(List<Long> ids);
+
+    /***
+    * @Description: 根据catelogId查询分类的完整路径
+    * @Param: [catelogId]
+    * @return: java.lang.Long[]
+    * @Author: phil
+    * @Date: 2021/11/6 13:35
+    */
+    Long[] findCateLogPath(Long catelogId);
+
+    /**
+    * @Description: 保存分类数据的全路径
+    * @Param: []
+    * @return: void
+    * @Author: phil
+    * @Date: 2021/11/6 20:51
+    */
+    void saveAllPath();
 }
 

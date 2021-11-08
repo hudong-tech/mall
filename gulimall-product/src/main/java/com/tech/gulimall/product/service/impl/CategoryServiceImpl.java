@@ -3,12 +3,15 @@ package com.tech.gulimall.product.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.base.Splitter;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.Query;
 import com.tech.gulimall.product.dao.CategoryDao;
 import com.tech.gulimall.product.entity.CategoryEntity;
 import com.tech.gulimall.product.service.CategoryService;
+import org.apache.commons.beanutils.ConvertUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -120,5 +123,83 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     public String deleteBatch(List<Long> ids) {
         int record = baseMapper.deleteBatchIds(ids);
         return "成功删除" + record + "条数据";
+    }
+
+    @Override
+    public Long[] findCateLogPath(Long catelogId) {
+        // 1.收集当前节点id
+        List<Long> paths = new ArrayList<>();
+        // 另一种方式
+        // paths = findParentPath(catelogId, paths);
+        // Collections.reverse(paths);
+
+        String path = baseMapper.selectById(catelogId).getPath();
+        // 忽略空值
+        List<String> tempPathArray = Splitter.on("#").omitEmptyStrings().splitToList(path);
+        Long[] pathAsArray = (Long [])ConvertUtils.convert(tempPathArray, Long[].class);
+        return pathAsArray;
+    }
+
+    /***
+    * @Description: 根据三级分类id，获取path
+    * @Param: [catelogId, paths]
+    * @return: java.util.List<java.lang.Long>
+    * @Author: phil
+    * @Date: 2021/11/8 11:18
+    */
+    private List<Long> findParentPath(Long catelogId, List<Long> paths) {
+        paths.add(catelogId);
+        CategoryEntity category = this.getById(catelogId);
+        if (category.getParentCid() != 0) {
+            findParentPath(category.getParentCid(),paths);
+        }
+        return paths;
+    }
+
+    @Override
+    public void saveAllPath(){
+        List<CategoryEntity> entities = baseMapper.selectList(null);
+
+        Map<Long, Long> catIdAndParentMap = new HashMap<>(2000);
+        Map<Integer, List<Long>> pMap = new HashMap<>(2000);
+        Set<Long> ids = new HashSet<>(2000);
+        Set<Integer> levels = new HashSet<>(2000);
+        try {
+            for (CategoryEntity entity : entities) {
+                // 三级分类id,父级id关联关系
+                catIdAndParentMap.put(entity.getCatId(),entity.getParentCid());
+                // 层级和三级分类Id的关联关系
+                ids.add(entity.getCatId());
+                Integer catLevel = entity.getCatLevel();
+                levels.add(catLevel);
+                if (null == pMap.get(catLevel)) {
+                    pMap.put(catLevel,new ArrayList<>());
+                }
+                pMap.get(catLevel).add(entity.getCatId());
+            }
+
+            if (ids.size() != entities.size()) {
+                throw new Exception("主键数据量与实体不一致！");
+            }
+
+            Map<Long, String> catIdPathMap = new HashMap<>(2000);
+
+            for (Integer level : levels) {
+                List<Long> queue = pMap.remove(level);
+
+                if (null != queue) {
+                    while (queue.size() > 0) {
+                        Long id = queue.remove(0);
+                        String  path = StringUtils.isEmpty(catIdPathMap.get(catIdAndParentMap.get(id))) ? "#" + id.toString() : catIdPathMap.get(catIdAndParentMap.get(id)) + "#" + id.toString();
+                        catIdPathMap.put(id, path);
+                    }
+                }
+            }
+
+            baseMapper.updatePath(catIdPathMap);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            log.error("处理路径失败:" + e.getStackTrace());
+        }
     }
 }

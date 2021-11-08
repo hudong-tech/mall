@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -70,6 +71,6 @@ public class CategoryEntity implements Serializable {
 	 * 所有子节点，@TableField(exist = false) 表示在数据库表里不存在
 	 */
 	@TableField(exist = false)
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private List<CategoryEntity> children;
-
 }

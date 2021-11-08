@@ -1,8 +1,11 @@
 package com.tech.gulimall.product.dao;
 
-import com.tech.gulimall.product.entity.CategoryEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.tech.gulimall.product.entity.CategoryEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Map;
 
 /**
  * 商品三级分类
@@ -13,5 +16,13 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface CategoryDao extends BaseMapper<CategoryEntity> {
-	
+
+    /**
+    * @Description: 更新分类的path
+    * @Param: [catIdPathMap]
+    * @return: void
+    * @Author: phil
+    * @Date: 2021/11/6 21:57
+    */
+    void updatePath(@Param("catIdPathMap") Map<Long, String> catIdPathMap);
 }

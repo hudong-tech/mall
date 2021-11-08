@@ -16,5 +16,11 @@
         <result property="productCount" column="product_count"/>
     </resultMap>
 
+    <update id="updatePath" parameterType="java.util.Map">
+        <foreach collection="catIdPathMap" item="value" index="key" separator=";">
+            UPDATE pms_category
+            SET path = #{value} where cat_id = #{key}
+        </foreach>
+    </update>
 
 </mapper>
