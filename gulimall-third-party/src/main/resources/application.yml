@@ -1,28 +1,28 @@
-#spring:
-#  datasource:
-#    username: root
-#    password: root
-#    url: jdbc:mysql://81.68.207.20:3306/mall_pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true
-#    driver-class-name: com.mysql.jdbc.Driver
-#  cloud:
-#    nacos:
-#      discovery:
-#        server-addr: 81.68.207.20:8848
-#    alicloud:
-#      access-key: LTAI5tMsf6dMKkrj3rhZxUzV
-#      secret-key: T9s9CANCDPyWn333Vp4wn19uuNKgV1
-#      oss:
-#        endpoint: oss-cn-hangzhou.aliyuncs.com
-#
-#  application:
-#    name: third-party
-## MapperScan
-#mybatis-plus:
-#  # sql映射文件位置
-#  mapper-locations: classpath:/mapper/**/*.xml
-#  global-config:
-#    db-config:
-#      # entity主键自增
-#      id-type: auto
-#server:
-#  port: 30000
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://81.68.207.20:3306/mall_pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 81.68.207.20:8848
+    alicloud:
+      access-key: LTAI5tMsf6dMKkrj3rhZxUzV
+      secret-key: T9s9CANCDPyWn333Vp4wn19uuNKgV1
+      oss:
+        endpoint: oss-cn-hangzhou.aliyuncs.com
+
+  application:
+    name: third-party
+# MapperScan
+mybatis-plus:
+  # sql映射文件位置
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      # entity主键自增
+      id-type: auto
+server:
+  port: 30000
