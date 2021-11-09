@@ -18,10 +18,10 @@ public class CommonObject implements Serializable {
 
     private static final long serialVersionUID = -8976593705955160104L;
 
-    @TableField("create_by")
+    @TableField("created_by")
     protected String createdBy;
     @TableField(
-            value = "create_time",
+            value = "created_time",
             fill = FieldFill.INSERT
     )
     protected Date createdTime;

@@ -1,5 +1,6 @@
 package com.tech.gulimall.product.controller;
 
+import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
 import com.tech.gulimall.common.valid.AddGroup;
@@ -58,6 +59,7 @@ public class BrandController {
     @RequestMapping("/save")
     // @RequiresPermissions("product:brand:save")
     public R save(@Validated(AddGroup.class) @RequestBody BrandEntity brand){
+        BeanUtils.updateAuditFields(brand,true,"hudong");
 		brandService.save(brand);
 
         return R.ok();
@@ -80,6 +82,7 @@ public class BrandController {
      */
     @RequestMapping("/update/status")
     public R updateStatus(@Validated(UpdateStatus.class) @RequestBody BrandEntity brand){
+        BeanUtils.updateAuditFields(brand,false,"hudong");
         brandService.updateById(brand);
 
         return R.ok();

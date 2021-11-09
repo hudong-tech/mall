@@ -26,7 +26,8 @@ public class DBSqlScriptUtils {
 	* @Date: 2021/11/9 23:52
 	*/
 	public static List<String> prepareSqlStatementWithStringFormat(boolean isForFiles) {
-		String sql = "alter table %s ADD COLUMN created_time DATETIME COMMENT '创建时间', ADD COLUMN create_by VARCHAR(32) DEFAULT NULL COMMENT '创建人', ADD COLUMN updated_time DATETIME COMMENT '修改时间', ADD COLUMN updated_by VARCHAR(32) DEFAULT NULL COMMENT '修改人', ADD COLUMN version DECIMAL(4) DEFAULT 1 COMMENT '修改版本'";
+		// String sql = "alter table %s ADD COLUMN created_time DATETIME COMMENT '创建时间', ADD COLUMN created_by VARCHAR(32) DEFAULT NULL COMMENT '创建人', ADD COLUMN updated_time DATETIME COMMENT '修改时间', ADD COLUMN updated_by VARCHAR(32) DEFAULT NULL COMMENT '修改人', ADD COLUMN version DECIMAL(4) DEFAULT 1 COMMENT '修改版本'";
+		String sql = "alter table %s CHANGE create_by created_by VARCHAR(32) COMMENT '创建人'";
 		List<String> sqlStatements = new ArrayList<>();
 		Map<String, List<String>> dbTableNamesMap = DbUtils.INSTANCE.getDbTablesNamesMap();
 		dbTableNamesMap.forEach((dbName,tableNames) -> {
