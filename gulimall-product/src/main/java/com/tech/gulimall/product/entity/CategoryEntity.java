@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.tech.gulimall.common.entity.CommonObject;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 @Data
 @TableName("pms_category")
-public class CategoryEntity implements Serializable {
+public class CategoryEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

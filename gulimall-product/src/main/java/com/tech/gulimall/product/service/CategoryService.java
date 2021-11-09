@@ -61,5 +61,14 @@ public interface CategoryService extends IService<CategoryEntity> {
     * @Date: 2021/11/6 20:51
     */
     void saveAllPath();
+
+    /**
+    * @Description: 级联更新关联表，如品牌-三级分类表
+    * @Param: [category]
+    * @return: void
+    * @Author: phil
+    * @Date: 2021/11/8 18:15
+    */
+    void updateCascade(CategoryEntity category);
 }
 

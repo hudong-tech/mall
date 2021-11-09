@@ -2,6 +2,7 @@ package com.tech.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tech.gulimall.common.entity.CommonObject;
 import com.tech.gulimall.common.valid.AddGroup;
 import com.tech.gulimall.common.valid.StatusVal;
 import com.tech.gulimall.common.valid.UpdateGroup;
@@ -21,7 +22,8 @@ import java.io.Serializable;
  */
 @Data
 @TableName("pms_brand")
-public class BrandEntity implements Serializable {
+public class BrandEntity extends CommonObject implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

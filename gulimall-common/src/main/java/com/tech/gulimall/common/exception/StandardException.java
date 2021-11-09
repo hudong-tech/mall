@@ -9,33 +9,33 @@
 package com.tech.gulimall.common.exception;
 
 /**
- * 自定义异常
+ * 标准异常
  *
  * @author Mark sunlightcs@gmail.com
  */
-public class RRException extends RuntimeException {
+public class StandardException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
     private String msg;
     private int code = 500;
     
-    public RRException(String msg) {
+    public StandardException(String msg) {
 		super(msg);
 		this.msg = msg;
 	}
 	
-	public RRException(String msg, Throwable e) {
+	public StandardException(String msg, Throwable e) {
 		super(msg, e);
 		this.msg = msg;
 	}
 	
-	public RRException(String msg, int code) {
+	public StandardException(String msg, int code) {
 		super(msg);
 		this.msg = msg;
 		this.code = code;
 	}
 	
-	public RRException(String msg, int code, Throwable e) {
+	public StandardException(String msg, int code, Throwable e) {
 		super(msg, e);
 		this.msg = msg;
 		this.code = code;

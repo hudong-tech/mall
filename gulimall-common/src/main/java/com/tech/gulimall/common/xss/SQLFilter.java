@@ -8,7 +8,7 @@
 
 package com.tech.gulimall.common.xss;
 
-import com.tech.gulimall.common.exception.RRException;
+import com.tech.gulimall.common.exception.StandardException;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -41,7 +41,7 @@ public class SQLFilter {
         //判断是否包含非法字符
         for(String keyword : keywords){
             if(str.indexOf(keyword) != -1){
-                throw new RRException("包含非法字符");
+                throw new StandardException("包含非法字符");
             }
         }
 
