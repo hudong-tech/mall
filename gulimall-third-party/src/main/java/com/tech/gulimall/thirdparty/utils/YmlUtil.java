@@ -6,6 +6,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+* @Description: yml工具类，用于获取application.yml中的信息
+* @Author: phil
+* @Date: 2021/11/9 23:50
+*/
 public class YmlUtil {
 
     /**

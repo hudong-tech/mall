@@ -18,8 +18,15 @@ public class DBSqlScriptUtils {
 	}
 
 
+	/**
+	* @Description: 拼凑要执行的sql语句
+	* @Param: [isForFiles] 
+	* @return: java.util.List<java.lang.String> 
+	* @Author: phil 
+	* @Date: 2021/11/9 23:52
+	*/
 	public static List<String> prepareSqlStatementWithStringFormat(boolean isForFiles) {
-		String sql = "alter table %s ADD COLUMN create_time DATETIME COMMENT '创建时间',ADD COLUMN created_by_id BIGINT(20) DEFAULT NULL COMMENT '创建人id', ADD COLUMN update_time DATETIME COMMENT '修改时间', ADD COLUMN last_updated_by_id BIGINT(20) DEFAULT NULL COMMENT '修改人id'";
+		String sql = "alter table %s ADD COLUMN created_time DATETIME COMMENT '创建时间', ADD COLUMN create_by VARCHAR(32) DEFAULT NULL COMMENT '创建人', ADD COLUMN updated_time DATETIME COMMENT '修改时间', ADD COLUMN updated_by VARCHAR(32) DEFAULT NULL COMMENT '修改人', ADD COLUMN version DECIMAL(4) DEFAULT 1 COMMENT '修改版本'";
 		List<String> sqlStatements = new ArrayList<>();
 		Map<String, List<String>> dbTableNamesMap = DbUtils.INSTANCE.getDbTablesNamesMap();
 		dbTableNamesMap.forEach((dbName,tableNames) -> {
@@ -139,6 +146,13 @@ public class DBSqlScriptUtils {
 		DbUtils.INSTANCE.close();
 	}
 
+	/**
+	* @Description: 将生成的sql语句写入文件
+	* @Param: [sqlStatements, filePath]
+	* @return: void
+	* @Author: phil
+	* @Date: 2021/11/9 23:53
+	*/
 	public static void writeSqlStatement2File(List<String> sqlStatements,String filePath){
 
 		try {

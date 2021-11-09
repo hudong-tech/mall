@@ -22,12 +22,12 @@ public class BeanUtils extends BeanUtil {
     public static <T extends CommonObject> void updateAuditFields(T obj, boolean isInsert, String userId) {
         Date modDate = new Date();
         if (isInsert) {
-            obj.setCreatedOn(modDate);
+            obj.setCreatedTime(modDate);
             obj.setCreatedBy(userId);
             obj.setVersion(1);
         }
-        obj.setLastModifiedOn(modDate);
-        obj.setLasModifiedBy(userId);
+        obj.setUpdatedTime(modDate);
+        obj.setUpdatedBy(userId);
     }
 
     public static <T extends CommonObject> void updateAuditFields(List<T> ObjList, boolean isInsert, String userId) {

@@ -9,6 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+* @Description: 获取数据库下的需要修改表结构的数据库表名
+* @Author: phil
+* @Date: 2021/11/9 23:49
+*/
+
 public enum DbUtils {
 
     INSTANCE;
@@ -59,6 +65,14 @@ public enum DbUtils {
                 System.out.println("表名: " + tableName + "，表所属数据库: " + curTableDbName + "，表类型: " + tableNameType + "，表模式: " + tableNameSchema + "，表备注: " + tableNameRemark);
                 //跳过mysql自带的系统库
                 if("sys".equalsIgnoreCase(curTableDbName)){
+                    continue;
+                }
+                // 跳过mall_admin数据库
+                if("mall_admin".equalsIgnoreCase(curTableDbName)){
+                    continue;
+                }
+                // 跳过nacos库
+                if("nacos".equalsIgnoreCase(curTableDbName)){
                     continue;
                 }
                 if(dbTableNamesMap.containsKey(curTableDbName)){

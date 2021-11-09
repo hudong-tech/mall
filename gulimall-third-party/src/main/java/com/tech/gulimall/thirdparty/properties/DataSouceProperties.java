@@ -1,6 +1,11 @@
 package com.tech.gulimall.thirdparty.properties;
 import com.tech.gulimall.thirdparty.utils.YmlUtil;
 
+/**
+* @Description: 从application.yml中获取数据库连接信息
+* @Author: phil
+* @Date: 2021/11/9 23:50
+*/
 public class DataSouceProperties {
 
     private static String driverClassName;

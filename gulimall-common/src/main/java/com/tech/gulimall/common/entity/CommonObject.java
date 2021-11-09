@@ -21,27 +21,27 @@ public class CommonObject implements Serializable {
     @TableField("create_by")
     protected String createdBy;
     @TableField(
-            value = "create_on",
+            value = "create_time",
             fill = FieldFill.INSERT
     )
-    protected Date createdOn;
-    @TableField("last_modified_by")
-    protected String lasModifiedBy;
+    protected Date createdTime;
+    @TableField("updated_by")
+    protected String updatedBy;
     @TableField(
-            value = "last_modified_on",
+            value = "updated_time",
             fill = FieldFill.INSERT_UPDATE
     )
-    protected Date lastModifiedOn;
+    protected Date updatedTime;
     @Version
     @TableField("version")
     protected Integer version;
 
     public static final String URID = "URID";
     public static final String CREATEDBY = "CREATEDBY";
-    public static final String CREATEDON = "CREATEDON";
-    public static final String LASTMODIFIEDBY = "LASTMODIFIEDBY";
-    public static final String LASTMODIFIEDON = "LASTMODIFIEDON";
-    public static final String ROWVERSION = "ROWVERSION";
+    public static final String CREATEDTIME = "CREATEDON";
+    public static final String UPDATEDBY = "UPDATEDBY";
+    public static final String UPDATEDTIME = "UPDATEDTIME";
+    public static final String VERSION = "VERSION";
 
     public CommonObject() {
     }
@@ -54,28 +54,28 @@ public class CommonObject implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public Date getCreatedOn() {
-        return createdOn;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public String getLasModifiedBy() {
-        return lasModifiedBy;
+    public String getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setLasModifiedBy(String lasModifiedBy) {
-        this.lasModifiedBy = lasModifiedBy;
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
-    public Date getLastModifiedOn() {
-        return lastModifiedOn;
+    public Date getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setLastModifiedOn(Date lastModifiedOn) {
-        this.lastModifiedOn = lastModifiedOn;
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     public Integer getVersion() {
