@@ -1,6 +1,7 @@
 package com.tech.gulimall.product.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
 import com.tech.gulimall.product.entity.CategoryBrandRelationEntity;
@@ -65,7 +66,8 @@ public class CategoryBrandRelationController {
     @RequestMapping("/save")
     // @RequiresPermissions("product:categorybrandrelation:save")
     public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-		categoryBrandRelationService.saveDetail(categoryBrandRelation);
+        BeanUtils.updateAuditFields(categoryBrandRelation,true,"hudong");
+        categoryBrandRelationService.saveDetail(categoryBrandRelation);
 
         return R.ok();
     }
@@ -76,7 +78,8 @@ public class CategoryBrandRelationController {
     @RequestMapping("/update")
     // @RequiresPermissions("product:categorybrandrelation:update")
     public R update(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-		categoryBrandRelationService.updateById(categoryBrandRelation);
+        BeanUtils.updateAuditFields(categoryBrandRelation,false,"hudong");
+        categoryBrandRelationService.updateById(categoryBrandRelation);
 
         return R.ok();
     }

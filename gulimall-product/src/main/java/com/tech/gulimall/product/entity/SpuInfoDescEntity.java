@@ -2,10 +2,10 @@ package com.tech.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tech.gulimall.common.entity.CommonObject;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * spu信息介绍
@@ -16,7 +16,7 @@ import lombok.Data;
  */
 @Data
 @TableName("pms_spu_info_desc")
-public class SpuInfoDescEntity implements Serializable {
+public class SpuInfoDescEntity  extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

@@ -2,6 +2,7 @@ package com.tech.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tech.gulimall.common.entity.CommonObject;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,7 +17,7 @@ import java.util.Date;
  */
 @Data
 @TableName("undo_log")
-public class UndoLogEntity implements Serializable {
+public class UndoLogEntity  extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

@@ -1,5 +1,6 @@
 package com.tech.gulimall.product.controller;
 
+import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.R;
 import com.tech.gulimall.product.entity.CategoryEntity;
 import com.tech.gulimall.product.service.CategoryService;
@@ -63,6 +64,7 @@ public class CategoryController {
     @RequestMapping("/save")
     // @RequiresPermissions("product:category:save")
     public R save(@RequestBody CategoryEntity category){
+        BeanUtils.updateAuditFields(category,true,"hudong");
 		categoryService.save(category);
 
         return R.ok();

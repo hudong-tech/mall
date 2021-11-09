@@ -2,10 +2,10 @@ package com.tech.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tech.gulimall.common.entity.CommonObject;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * sku销售属性&值
@@ -16,7 +16,7 @@ import lombok.Data;
  */
 @Data
 @TableName("pms_sku_sale_attr_value")
-public class SkuSaleAttrValueEntity implements Serializable {
+public class SkuSaleAttrValueEntity  extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

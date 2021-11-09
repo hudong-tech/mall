@@ -3,6 +3,7 @@ package com.tech.gulimall.product.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tech.gulimall.common.entity.CommonObject;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,7 +17,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("pms_attr_group")
-public class AttrGroupEntity implements Serializable {
+public class AttrGroupEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

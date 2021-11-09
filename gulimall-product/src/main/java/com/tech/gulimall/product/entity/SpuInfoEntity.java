@@ -2,11 +2,12 @@ package com.tech.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
-import java.util.Date;
+import com.tech.gulimall.common.entity.CommonObject;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * spu信息
@@ -17,7 +18,7 @@ import lombok.Data;
  */
 @Data
 @TableName("pms_spu_info")
-public class SpuInfoEntity implements Serializable {
+public class SpuInfoEntity  extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

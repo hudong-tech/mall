@@ -79,7 +79,7 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
             return;
         }
         for (CategoryBrandRelationEntity relationEntity : relationEntities) {
-            relationEntity.setBrandName(name);
+            relationEntity.setCatelogName(name);
         }
         this.updateBatchById(relationEntities);
     }

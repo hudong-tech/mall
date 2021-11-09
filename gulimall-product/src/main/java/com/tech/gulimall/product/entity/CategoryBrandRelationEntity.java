@@ -2,10 +2,10 @@ package com.tech.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tech.gulimall.common.entity.CommonObject;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 品牌分类关联
@@ -16,7 +16,7 @@ import lombok.Data;
  */
 @Data
 @TableName("pms_category_brand_relation")
-public class CategoryBrandRelationEntity implements Serializable {
+public class CategoryBrandRelationEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
