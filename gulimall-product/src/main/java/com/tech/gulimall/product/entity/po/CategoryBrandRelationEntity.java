@@ -1,4 +1,4 @@
-package com.tech.gulimall.product.entity;
+package com.tech.gulimall.product.entity.po;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -6,18 +6,17 @@ import com.tech.gulimall.common.entity.CommonObject;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
- * 
+ * 品牌分类关联
  * 
  * @author phil
  * @email hudong.tech@gmail.com
  * @date 2021-10-11 03:35:49
  */
 @Data
-@TableName("undo_log")
-public class UndoLogEntity  extends CommonObject implements Serializable {
+@TableName("pms_category_brand_relation")
+public class CategoryBrandRelationEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -26,36 +25,20 @@ public class UndoLogEntity  extends CommonObject implements Serializable {
 	@TableId
 	private Long id;
 	/**
-	 * 
+	 * 品牌id
 	 */
-	private Long branchId;
+	private Long brandId;
+	/**
+	 * 分类id
+	 */
+	private Long catelogId;
 	/**
 	 * 
 	 */
-	private String xid;
+	private String brandName;
 	/**
 	 * 
 	 */
-	private String context;
-	/**
-	 * 
-	 */
-	// private Longblob rollbackInfo;
-	/**
-	 * 
-	 */
-	private Integer logStatus;
-	/**
-	 * 
-	 */
-	private Date logCreated;
-	/**
-	 * 
-	 */
-	private Date logModified;
-	/**
-	 * 
-	 */
-	private String ext;
+	private String catelogName;
 
 }

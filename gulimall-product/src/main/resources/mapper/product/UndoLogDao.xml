@@ -4,7 +4,7 @@
 <mapper namespace="com.tech.gulimall.product.dao.UndoLogDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.tech.gulimall.product.entity.UndoLogEntity" id="undoLogMap">
+    <resultMap type="com.tech.gulimall.product.entity.po.UndoLogEntity" id="undoLogMap">
         <result property="id" column="id"/>
         <result property="branchId" column="branch_id"/>
         <result property="xid" column="xid"/>

@@ -2,9 +2,10 @@ package com.tech.gulimall.product.controller;
 
 import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.R;
-import com.tech.gulimall.product.entity.CategoryEntity;
+import com.tech.gulimall.product.entity.po.CategoryEntity;
 import com.tech.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,6 +75,7 @@ public class CategoryController {
      * 修改
      */
     @RequestMapping("/update")
+    @Transactional(rollbackFor=Exception.class)
     // @RequiresPermissions("product:category:update")
     public R update(@RequestBody CategoryEntity category){
 		categoryService.updateCascade(category);

@@ -1,7 +1,7 @@
 package com.tech.gulimall.product.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.tech.gulimall.product.entity.CategoryEntity;
+import com.tech.gulimall.product.entity.po.CategoryEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

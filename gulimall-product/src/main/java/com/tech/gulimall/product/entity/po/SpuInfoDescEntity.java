@@ -1,4 +1,4 @@
-package com.tech.gulimall.product.entity;
+package com.tech.gulimall.product.entity.po;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -8,29 +8,25 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 商品评价回复关系
+ * spu信息介绍
  * 
  * @author phil
  * @email hudong.tech@gmail.com
  * @date 2021-10-11 03:35:49
  */
 @Data
-@TableName("pms_comment_replay")
-public class CommentReplayEntity extends CommonObject implements Serializable {
+@TableName("pms_spu_info_desc")
+public class SpuInfoDescEntity  extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * id
+	 * 商品id
 	 */
 	@TableId
-	private Long id;
+	private Long spuId;
 	/**
-	 * 评论id
+	 * 商品介绍
 	 */
-	private Long commentId;
-	/**
-	 * 回复id
-	 */
-	private Long replyId;
+	private String decript;
 
 }

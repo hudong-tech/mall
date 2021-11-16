@@ -9,12 +9,13 @@ import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.Query;
 import com.tech.gulimall.product.dao.CategoryDao;
-import com.tech.gulimall.product.entity.CategoryEntity;
+import com.tech.gulimall.product.entity.po.CategoryEntity;
 import com.tech.gulimall.product.service.CategoryBrandRelationService;
 import com.tech.gulimall.product.service.CategoryService;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -206,6 +207,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
+    @Transactional(rollbackFor=Exception.class)
     public void updateCascade(CategoryEntity category) {
         if (null == category || StringUtils.isEmpty(category.getCatId())) {
             throw new BizException("传入参数不完整，无法进行后续操作!");

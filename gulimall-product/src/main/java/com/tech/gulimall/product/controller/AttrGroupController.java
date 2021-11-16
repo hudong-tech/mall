@@ -1,8 +1,9 @@
 package com.tech.gulimall.product.controller;
 
+import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
-import com.tech.gulimall.product.entity.AttrGroupEntity;
+import com.tech.gulimall.product.entity.po.AttrGroupEntity;
 import com.tech.gulimall.product.service.AttrGroupService;
 import com.tech.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,8 @@ public class AttrGroupController {
     @RequestMapping("/save")
     // @RequiresPermissions("product:attrgroup:save")
     public R save(@RequestBody AttrGroupEntity attrGroup){
+        BeanUtils.updateAuditFields(attrGroup,true);
+
 		attrGroupService.save(attrGroup);
 
         return R.ok();
@@ -78,6 +81,7 @@ public class AttrGroupController {
     @RequestMapping("/update")
     // @RequiresPermissions("product:attrgroup:update")
     public R update(@RequestBody AttrGroupEntity attrGroup){
+        BeanUtils.updateAuditFields(attrGroup,false);
 		attrGroupService.updateById(attrGroup);
 
         return R.ok();

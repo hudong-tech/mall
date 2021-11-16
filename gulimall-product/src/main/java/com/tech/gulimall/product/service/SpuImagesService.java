@@ -2,7 +2,7 @@ package com.tech.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tech.gulimall.common.utils.PageUtils;
-import com.tech.gulimall.product.entity.SpuImagesEntity;
+import com.tech.gulimall.product.entity.po.SpuImagesEntity;
 
 import java.util.Map;
 

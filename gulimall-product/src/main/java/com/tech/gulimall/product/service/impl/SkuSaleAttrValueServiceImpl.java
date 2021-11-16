@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.Query;
 import com.tech.gulimall.product.dao.SkuSaleAttrValueDao;
-import com.tech.gulimall.product.entity.SkuSaleAttrValueEntity;
+import com.tech.gulimall.product.entity.po.SkuSaleAttrValueEntity;
 import com.tech.gulimall.product.service.SkuSaleAttrValueService;
 import org.springframework.stereotype.Service;
 

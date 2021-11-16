@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.Query;
 import com.tech.gulimall.product.dao.AttrAttrgroupRelationDao;
-import com.tech.gulimall.product.entity.AttrAttrgroupRelationEntity;
+import com.tech.gulimall.product.entity.po.AttrAttrgroupRelationEntity;
 import com.tech.gulimall.product.service.AttrAttrgroupRelationService;
 import org.springframework.stereotype.Service;
 

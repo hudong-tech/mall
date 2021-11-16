@@ -6,7 +6,7 @@ import com.tech.gulimall.common.utils.R;
 import com.tech.gulimall.common.valid.AddGroup;
 import com.tech.gulimall.common.valid.UpdateGroup;
 import com.tech.gulimall.common.valid.UpdateStatus;
-import com.tech.gulimall.product.entity.BrandEntity;
+import com.tech.gulimall.product.entity.po.BrandEntity;
 import com.tech.gulimall.product.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

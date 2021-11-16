@@ -1,6 +1,6 @@
 package com.tech.gulimall.product.dao;
 
-import com.tech.gulimall.product.entity.SpuInfoDescEntity;
+import com.tech.gulimall.product.entity.po.SpuInfoDescEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

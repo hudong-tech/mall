@@ -8,11 +8,12 @@ import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.Query;
 import com.tech.gulimall.product.dao.BrandDao;
-import com.tech.gulimall.product.entity.BrandEntity;
+import com.tech.gulimall.product.entity.po.BrandEntity;
 import com.tech.gulimall.product.service.BrandService;
 import com.tech.gulimall.product.service.CategoryBrandRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
@@ -40,6 +41,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
     }
 
     @Override
+    @Transactional(rollbackFor=Exception.class)
     public void updateDetail(BrandEntity brand) {
         // 保证冗余字段的数据一致
         if (null == brand || StringUtils.isEmpty(brand.getBrandId())) {

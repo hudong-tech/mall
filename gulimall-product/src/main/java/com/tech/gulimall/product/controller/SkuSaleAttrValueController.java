@@ -2,7 +2,7 @@ package com.tech.gulimall.product.controller;
 
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
-import com.tech.gulimall.product.entity.SkuSaleAttrValueEntity;
+import com.tech.gulimall.product.entity.po.SkuSaleAttrValueEntity;
 import com.tech.gulimall.product.service.SkuSaleAttrValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
 package com.tech.gulimall.product;
 
-import com.tech.gulimall.product.entity.BrandEntity;
+import com.tech.gulimall.product.entity.po.BrandEntity;
 import com.tech.gulimall.product.service.BrandService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

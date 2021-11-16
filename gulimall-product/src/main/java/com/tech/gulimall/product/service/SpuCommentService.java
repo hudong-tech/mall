@@ -2,7 +2,7 @@ package com.tech.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tech.gulimall.common.utils.PageUtils;
-import com.tech.gulimall.product.entity.SpuCommentEntity;
+import com.tech.gulimall.product.entity.po.SpuCommentEntity;
 
 import java.util.Map;
 

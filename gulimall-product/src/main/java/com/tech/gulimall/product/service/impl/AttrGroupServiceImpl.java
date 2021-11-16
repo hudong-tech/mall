@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.Query;
 import com.tech.gulimall.product.dao.AttrGroupDao;
-import com.tech.gulimall.product.entity.AttrGroupEntity;
+import com.tech.gulimall.product.entity.po.AttrGroupEntity;
 import com.tech.gulimall.product.service.AttrGroupService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Service("attrGroupService")
 public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEntity> implements AttrGroupService {
 
-    private static final Integer ZERO = 0;
+    private static final Long ZERO = 0L;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {

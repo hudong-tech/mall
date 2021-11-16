@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.Query;
 import com.tech.gulimall.product.dao.SkuImagesDao;
-import com.tech.gulimall.product.entity.SkuImagesEntity;
+import com.tech.gulimall.product.entity.po.SkuImagesEntity;
 import com.tech.gulimall.product.service.SkuImagesService;
 import org.springframework.stereotype.Service;
 

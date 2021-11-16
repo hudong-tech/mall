@@ -2,7 +2,7 @@ package com.tech.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tech.gulimall.common.utils.PageUtils;
-import com.tech.gulimall.product.entity.CommentReplayEntity;
+import com.tech.gulimall.product.entity.po.CommentReplayEntity;
 
 import java.util.Map;
 

@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.Query;
 import com.tech.gulimall.product.dao.SpuInfoDescDao;
-import com.tech.gulimall.product.entity.SpuInfoDescEntity;
+import com.tech.gulimall.product.entity.po.SpuInfoDescEntity;
 import com.tech.gulimall.product.service.SpuInfoDescService;
 import org.springframework.stereotype.Service;
 

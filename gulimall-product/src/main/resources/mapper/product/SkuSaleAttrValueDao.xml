@@ -4,7 +4,7 @@
 <mapper namespace="com.tech.gulimall.product.dao.SkuSaleAttrValueDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.tech.gulimall.product.entity.SkuSaleAttrValueEntity" id="skuSaleAttrValueMap">
+    <resultMap type="com.tech.gulimall.product.entity.po.SkuSaleAttrValueEntity" id="skuSaleAttrValueMap">
         <result property="id" column="id"/>
         <result property="skuId" column="sku_id"/>
         <result property="attrId" column="attr_id"/>

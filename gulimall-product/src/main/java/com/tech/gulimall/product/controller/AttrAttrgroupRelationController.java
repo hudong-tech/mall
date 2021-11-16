@@ -1,8 +1,9 @@
 package com.tech.gulimall.product.controller;
 
+import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
-import com.tech.gulimall.product.entity.AttrAttrgroupRelationEntity;
+import com.tech.gulimall.product.entity.po.AttrAttrgroupRelationEntity;
 import com.tech.gulimall.product.service.AttrAttrgroupRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +55,7 @@ public class AttrAttrgroupRelationController {
     @RequestMapping("/save")
     // @RequiresPermissions("product:attrattrgrouprelation:save")
     public R save(@RequestBody AttrAttrgroupRelationEntity attrAttrgroupRelation){
+        BeanUtils.updateAuditFields(attrAttrgroupRelation,true);
 		attrAttrgroupRelationService.save(attrAttrgroupRelation);
 
         return R.ok();
@@ -65,6 +67,7 @@ public class AttrAttrgroupRelationController {
     @RequestMapping("/update")
     // @RequiresPermissions("product:attrattrgrouprelation:update")
     public R update(@RequestBody AttrAttrgroupRelationEntity attrAttrgroupRelation){
+        BeanUtils.updateAuditFields(attrAttrgroupRelation,false);
 		attrAttrgroupRelationService.updateById(attrAttrgroupRelation);
 
         return R.ok();

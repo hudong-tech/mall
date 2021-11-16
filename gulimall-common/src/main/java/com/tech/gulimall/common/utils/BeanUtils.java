@@ -19,6 +19,10 @@ public class BeanUtils extends BeanUtil {
     public BeanUtils() {
     }
 
+    public static <T extends CommonObject> void updateAuditFields(T obj, boolean isInsert) {
+        updateAuditFields(obj, isInsert, "system");
+    }
+
     public static <T extends CommonObject> void updateAuditFields(T obj, boolean isInsert, String userId) {
         Date modDate = new Date();
         if (isInsert) {

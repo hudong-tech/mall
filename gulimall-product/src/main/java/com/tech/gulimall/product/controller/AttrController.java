@@ -1,8 +1,10 @@
 package com.tech.gulimall.product.controller;
 
+import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
-import com.tech.gulimall.product.entity.AttrEntity;
+import com.tech.gulimall.product.entity.po.AttrEntity;
+import com.tech.gulimall.product.entity.vo.AttrVo;
 import com.tech.gulimall.product.service.AttrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,13 @@ public class AttrController {
         return R.ok().put("page", page);
     }
 
+    //  /product/attr/base/list/{catelogId}
+    @RequestMapping("/base/list/{catelogId}")
+    public R baseAttrList(@RequestParam Map<String, Object> params,
+                          @PathVariable Long catelogId){
+        PageUtils page = attrService.baseAttrList(params, catelogId);
+        return R.ok().put("page", page);
+    }
 
     /**
      * 信息
@@ -52,9 +61,8 @@ public class AttrController {
      * 保存
      */
     @RequestMapping("/save")
-    // @RequiresPermissions("product:attr:save")
-    public R save(@RequestBody AttrEntity attr){
-		attrService.save(attr);
+    public R save(@RequestBody AttrVo attr){
+		attrService.saveAttr(attr);
 
         return R.ok();
     }
@@ -63,8 +71,8 @@ public class AttrController {
      * 修改
      */
     @RequestMapping("/update")
-    // @RequiresPermissions("product:attr:update")
     public R update(@RequestBody AttrEntity attr){
+        BeanUtils.updateAuditFields(attr,false);
 		attrService.updateById(attr);
 
         return R.ok();
