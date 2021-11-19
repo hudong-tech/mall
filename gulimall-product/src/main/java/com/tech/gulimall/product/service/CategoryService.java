@@ -3,6 +3,7 @@ package com.tech.gulimall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.product.entity.po.CategoryEntity;
+import org.springframework.lang.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -70,5 +71,23 @@ public interface CategoryService extends IService<CategoryEntity> {
     * @Date: 2021/11/8 18:15
     */
     void updateCascade(CategoryEntity category);
+
+    /***
+    * @Description: 获取分类id和分类路径名称map
+    * @Param: []
+    * @return: Map<id, pathName>
+    * @Author: phil
+    * @Date: 2021/11/17 17:41
+    */
+    Map<Long, String> getIdPathNameRelation();
+
+    /***
+    * @Description: 根据分类id获取分类路径名称map 不传catId查询所有数据
+    * @Param: [catId]
+    * @return: Map<id, pathName>
+    * @Author: phil
+    * @Date: 2021/11/17 17:24
+    */
+    Map<Long, String> getIdPathNameRelation(@Nullable Long catId);
 }
 

@@ -8,6 +8,7 @@ import com.tech.gulimall.common.exception.BizException;
 import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.Query;
+import com.tech.gulimall.common.utils.StringUtils;
 import com.tech.gulimall.product.dao.CategoryDao;
 import com.tech.gulimall.product.entity.po.CategoryEntity;
 import com.tech.gulimall.product.service.CategoryBrandRelationService;
@@ -16,7 +17,6 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -221,5 +221,42 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         BeanUtils.updateAuditFields(dbCategory,false,"hudong");
         baseMapper.updateById(dbCategory);
         categoryBrandRelationService.updateCategory(dbCategory.getCatId(), dbCategory.getName());
+    }
+
+    @Override
+    public Map<Long, String> getIdPathNameRelation() {
+        return getIdPathNameRelation(null);
+    }
+
+    @Override
+    public Map<Long, String> getIdPathNameRelation(Long catId) {
+
+        List<CategoryEntity> categoryEntities = baseMapper.selectList(null);
+        Map<Long, String> cateIdNameMap = new HashMap<>(500);
+        Map<Long, String> cateIdPathNameMap = new HashMap<>(500);
+        for (CategoryEntity categoryEntity : categoryEntities) {
+            cateIdNameMap.put(categoryEntity.getCatId(), categoryEntity.getName());
+        }
+        for (CategoryEntity categoryEntity : categoryEntities) {
+            // 根据catId查询，则过滤掉其他数据，否则查询全部
+            if (null != catId && !categoryEntity.getCatId().equals(catId)) {
+                break;
+            }
+            StringBuilder pathName = new StringBuilder();
+            List<String> pathIdList = Splitter.on("#").omitEmptyStrings().splitToList(categoryEntity.getPath());
+            for (String pathStr : pathIdList) {
+                long pathId = Long.parseLong(pathStr);
+                if (StringUtils.isNotEmpty(cateIdNameMap.get(pathId))) {
+                    if (pathName.length() > 0) {
+                        pathName.append("/");
+                    }
+                    pathName.append(cateIdNameMap.get(pathId));
+                }
+            }
+            if (StringUtils.isNotEmpty(pathName.toString())) {
+                cateIdPathNameMap.put(categoryEntity.getCatId(), pathName.toString());
+            }
+        }
+        return cateIdPathNameMap;
     }
 }

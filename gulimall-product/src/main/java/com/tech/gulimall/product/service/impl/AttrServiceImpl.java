@@ -10,23 +10,35 @@ import com.tech.gulimall.common.utils.Query;
 import com.tech.gulimall.product.constant.enums.AttrEnum;
 import com.tech.gulimall.product.dao.AttrAttrgroupRelationDao;
 import com.tech.gulimall.product.dao.AttrDao;
+import com.tech.gulimall.product.dao.AttrGroupDao;
 import com.tech.gulimall.product.entity.po.AttrAttrgroupRelationEntity;
 import com.tech.gulimall.product.entity.po.AttrEntity;
+import com.tech.gulimall.product.entity.po.AttrGroupEntity;
+import com.tech.gulimall.product.entity.vo.AttrRespVo;
 import com.tech.gulimall.product.entity.vo.AttrVo;
 import com.tech.gulimall.product.service.AttrService;
+import com.tech.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
+import java.util.stream.Collectors;
 
 @Service("attrService")
 public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements AttrService {
 
     @Autowired
     private AttrAttrgroupRelationDao relationDao;
+
+    @Autowired
+    private AttrGroupDao attrGroupDao;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -73,6 +85,39 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
                 queryWrapper
         );
 
-        return new PageUtils(page);
+        Map<Long, String> attrGroupIdAndNameMap = new HashMap<>(1000);
+        Map<Long, String> attrIdAndGroupNameMap = new HashMap<>(1000);
+
+        // 获取属性分组的id-name，组装成map形式
+        List<AttrGroupEntity> attrGroupEntities = attrGroupDao.selectList(null);
+        for (AttrGroupEntity attrGroupEntity : attrGroupEntities) {
+            attrGroupIdAndNameMap.put(attrGroupEntity.getAttrGroupId(),attrGroupEntity.getAttrGroupName());
+        }
+        // 获取规格参数id 和 所属分组名字的对应关系
+        List<AttrAttrgroupRelationEntity> relationEntities = relationDao.selectList(null);
+        for (AttrAttrgroupRelationEntity relationEntity : relationEntities) {
+            attrIdAndGroupNameMap.put(relationEntity.getAttrId(),attrGroupIdAndNameMap.get(relationEntity.getAttrGroupId()));
+        }
+
+        // 获取分类路径名称
+        Map<Long, String> catIdPathNameMap = categoryService.getIdPathNameRelation();
+
+        PageUtils pageUtils = new PageUtils(page);
+        List<AttrEntity> records = page.getRecords();
+        List<AttrRespVo> attrRespVoList = records.stream().map((attrEntity) -> {
+            AttrRespVo attrRespVo = new AttrRespVo();
+            BeanUtils.copyWithoutNull(attrRespVo, attrEntity, null);
+            // 设置分类和分组的名字
+            // "catelogName": "手机/数码/手机", //所属分类名字
+            attrRespVo.setCatelogName(catIdPathNameMap.get(attrEntity.getCatelogId()));
+            //	"groupName": "主体", //所属分组名字
+            String groupName = attrIdAndGroupNameMap.get(attrEntity.getAttrId());
+            attrRespVo.setGroupName(groupName);
+
+            return attrRespVo;
+        }).collect(Collectors.toList());
+
+        pageUtils.setList(attrRespVoList);
+        return pageUtils;
     }
 }
