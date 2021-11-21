@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.tech.gulimall.product.entity.po.AttrAttrgroupRelationEntity;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,4 +28,13 @@ public interface AttrAttrgroupRelationDao extends BaseMapper<AttrAttrgroupRelati
     */
     @MapKey("t.attr_id")
     Map<Long, Long> getRelation2Maps();
+
+    /***
+    * @Description: 批量删除属性&属性分组关联关系
+    * @Param: [relationEntities]
+    * @return: void
+    * @Author: phil
+    * @Date: 2021/11/22 0:17
+    */
+    void removeBatchRelation(@Param("entities") List<AttrAttrgroupRelationEntity> relationEntities);
 }

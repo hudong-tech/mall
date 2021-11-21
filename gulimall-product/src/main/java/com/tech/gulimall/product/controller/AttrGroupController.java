@@ -5,6 +5,8 @@ import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
 import com.tech.gulimall.product.entity.po.AttrEntity;
 import com.tech.gulimall.product.entity.po.AttrGroupEntity;
+import com.tech.gulimall.product.entity.vo.AttrGroupRelationVo;
+import com.tech.gulimall.product.service.AttrAttrgroupRelationService;
 import com.tech.gulimall.product.service.AttrGroupService;
 import com.tech.gulimall.product.service.AttrService;
 import com.tech.gulimall.product.service.CategoryService;
@@ -36,6 +38,9 @@ public class AttrGroupController {
 
     @Autowired
     private AttrService attrService;
+
+    @Autowired
+    private AttrAttrgroupRelationService relationService;
 
     /**
      * 列表
@@ -112,5 +117,16 @@ public class AttrGroupController {
     public R attrRelation(@PathVariable("attrgroupId") Long attrgroupId){
         List<AttrEntity> attrEntities = attrService.getRelationAttr(attrgroupId);
         return R.ok().put("data", attrEntities);
+    }
+
+    /**
+     * 删除属性与分组的关联关系
+     * /product/attrgroup/attr/relation/delete
+     * @return
+     */
+    @PostMapping("/attr/relation/delete")
+    public R removeRelation(@RequestBody AttrGroupRelationVo[] vos){
+        relationService.removeRelation(vos);
+        return R.ok();
     }
 }
