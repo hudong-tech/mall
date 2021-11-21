@@ -29,7 +29,11 @@ public class AttrVo {
      */
     private String icon;
     /**
-     * 可选值列表[用逗号分隔]
+     * 值类型 | 0-只能单个值 1-允许多个值
+     */
+    private Integer valueType;
+    /**
+     * 可选值列表[用分号分隔]
      */
     private String valueSelect;
     /**

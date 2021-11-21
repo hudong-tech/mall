@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tech.gulimall.common.exception.BizException;
 import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.Query;
+import com.tech.gulimall.common.utils.StringUtils;
 import com.tech.gulimall.product.constant.enums.AttrEnum;
+import com.tech.gulimall.product.constant.enums.ValueTypeEnum;
 import com.tech.gulimall.product.dao.AttrAttrgroupRelationDao;
 import com.tech.gulimall.product.dao.AttrDao;
 import com.tech.gulimall.product.dao.AttrGroupDao;
@@ -21,7 +24,6 @@ import com.tech.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +42,11 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     * 可选值列表,当有多个值时，用;分隔。则判断是否有多个值，只需判断是否包含「;」即可
+     */
+    private static final String MULTIPLE_VALUES_FlAG= ";";
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<AttrEntity> page = this.page(
@@ -53,6 +60,17 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     @Override
     @Transactional(rollbackFor=Exception.class)
     public void saveAttr(AttrVo attr) {
+        if (null == attr || null == attr.getAttrType() || null == attr.getValueType()
+                || null == attr.getCatelogId() || StringUtils.isEmpty(attr.getIcon())
+                || null == attr.getShowDesc() || null == attr.getEnable() || null == attr.getSearchType() ) {
+            throw new BizException("传入参数不完整，无法进行下一步操作！");
+        }
+        if (ValueTypeEnum.ONLY_SINGLE_VALUE.getCode() == attr.getValueType()) {
+            if (attr.getValueSelect().contains(MULTIPLE_VALUES_FlAG)) {
+                throw new BizException("值类型为「只能单个值」，可选值不允许出现多个值！");
+            }
+        }
+
         AttrEntity attrEntity = new AttrEntity();
         BeanUtils.copyWithoutNull(attrEntity,attr,null);
         BeanUtils.updateAuditFields(attrEntity,true);
