@@ -9,18 +9,24 @@ public enum AttrEnum {
     /**
      * 销售属性
      */
-    ATTR_TYPE_PRODUCT(0),
+    ATTR_TYPE_PRODUCT(0, "product"),
     /**
      * 基本属性
      */
-    ATTR_TYPE_BASE(1);
+    ATTR_TYPE_BASE(1, "base");
     private int code;
+    private String type;
 
-    AttrEnum(int code) {
+    AttrEnum(int code, String type) {
         this.code = code;
+        this.type = type;
     }
 
     public int getCode() {
         return code;
+    }
+
+    public String getType() {
+        return type;
     }
 }

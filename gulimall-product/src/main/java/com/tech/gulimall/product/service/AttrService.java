@@ -30,12 +30,12 @@ public interface AttrService extends IService<AttrEntity> {
 
     /**
     * @Description:  分页查询分类规格参数
-    * @Param: [params, catelogId]
+    * @Param: [params, catelogId, type]
     * @return: com.tech.gulimall.common.utils.PageUtils
     * @Author: phil
     * @Date: 2021/11/10 3:01
     */
-    PageUtils baseAttrList(Map<String, Object> params, Long catelogId);
+    PageUtils baseAttrList(Map<String, Object> params, Long catelogId, String type);
 
     /**
      * 查询商品属性信息

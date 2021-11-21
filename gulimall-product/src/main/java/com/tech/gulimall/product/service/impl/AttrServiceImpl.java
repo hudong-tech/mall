@@ -90,8 +90,13 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     }
 
     @Override
-    public PageUtils baseAttrList(Map<String, Object> params, Long catelogId) {
+    public PageUtils baseAttrList(Map<String, Object> params, Long catelogId, String type) {
         LambdaQueryWrapper<AttrEntity> queryWrapper = new LambdaQueryWrapper<>();
+
+        if (StringUtils.isEmpty(type)) {
+            throw new BizException("属性类型不能为空");
+        }
+        queryWrapper.eq(AttrEntity::getAttrType, AttrEnum.ATTR_TYPE_BASE.getType().equals(type) ? AttrEnum.ATTR_TYPE_BASE.getCode() : AttrEnum.ATTR_TYPE_PRODUCT.getCode());
 
         String key = (String) params.get("key");
         if (! StringUtils.isEmpty(key)) {
@@ -133,9 +138,11 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             // "catelogName": "手机/数码/手机", //所属分类名字
             attrRespVo.setCatelogName(catIdPathNameMap.get(attrEntity.getCatelogId()));
             //	"groupName": "主体", //所属分组名字
-            String groupName = attrIdAndGroupNameMap.get(attrEntity.getAttrId());
-            attrRespVo.setGroupName(groupName);
-
+            // 只有基本属性才有分组信息
+            if (AttrEnum.ATTR_TYPE_BASE.getType().equals(type)) {
+                String groupName = attrIdAndGroupNameMap.get(attrEntity.getAttrId());
+                attrRespVo.setGroupName(groupName);
+            }
             return attrRespVo;
         }).collect(Collectors.toList());
 
@@ -152,12 +159,17 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         AttrEntity attrEntity = this.getById(attrId);
         BeanUtils.copyWithoutNull(attrRespVo,attrEntity,null);
 
-        AttrAttrgroupRelationEntity relationEntity = relationDao.selectOne(new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
-                .eq(AttrAttrgroupRelationEntity::getAttrId, attrRespVo.getAttrId()));
-        if (null != relationEntity && StringUtils.isNotEmpty(relationEntity.getAttrGroupId())) {
-            attrGroupId = relationEntity.getAttrGroupId();
-            attrGroupName = attrGroupDao.selectById(relationEntity.getAttrGroupId()).getAttrGroupName();
+        // 属性类型为 基本类型时，需要查询分组信息
+        if (AttrEnum.ATTR_TYPE_BASE.getType().equals(attrEntity.getAttrType())) {
+            // 1.查询分组信息
+            AttrAttrgroupRelationEntity relationEntity = relationDao.selectOne(new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
+                    .eq(AttrAttrgroupRelationEntity::getAttrId, attrRespVo.getAttrId()));
+            if (null != relationEntity && StringUtils.isNotEmpty(relationEntity.getAttrGroupId())) {
+                attrGroupId = relationEntity.getAttrGroupId();
+                attrGroupName = attrGroupDao.selectById(relationEntity.getAttrGroupId()).getAttrGroupName();
+            }
         }
+        // 2.查询分类信息
         if (null != attrEntity.getCatelogId()) {
             CategoryEntity categoryEntity = categoryService.getById(attrEntity.getCatelogId());
             List<String> pathIdList = Splitter.on("#").omitEmptyStrings().splitToList(categoryEntity.getPath());
@@ -200,6 +212,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
                 AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();
                 relationEntity.setAttrId(attr.getAttrId());
                 relationEntity.setAttrGroupId(attr.getAttrGroupId());
+                relationEntity.setAttrSort(0);
                 BeanUtils.updateAuditFields(relationEntity,true,"system");
                 relationDao.insert(relationEntity);
             } else {
