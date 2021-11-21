@@ -2,8 +2,10 @@ package com.tech.gulimall.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.base.Splitter;
 import com.tech.gulimall.common.exception.BizException;
 import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
@@ -17,10 +19,12 @@ import com.tech.gulimall.product.dao.AttrGroupDao;
 import com.tech.gulimall.product.entity.po.AttrAttrgroupRelationEntity;
 import com.tech.gulimall.product.entity.po.AttrEntity;
 import com.tech.gulimall.product.entity.po.AttrGroupEntity;
+import com.tech.gulimall.product.entity.po.CategoryEntity;
 import com.tech.gulimall.product.entity.vo.AttrRespVo;
 import com.tech.gulimall.product.entity.vo.AttrVo;
 import com.tech.gulimall.product.service.AttrService;
 import com.tech.gulimall.product.service.CategoryService;
+import org.apache.commons.beanutils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -137,5 +141,78 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
         pageUtils.setList(attrRespVoList);
         return pageUtils;
+    }
+
+    @Override
+    public AttrRespVo getAttrInfo(Long attrId) {
+        String attrGroupName = null;
+        Long attrGroupId = null;
+        Long[] catelogPath = null;
+        AttrRespVo attrRespVo = new AttrRespVo();
+        AttrEntity attrEntity = this.getById(attrId);
+        BeanUtils.copyWithoutNull(attrRespVo,attrEntity,null);
+
+        AttrAttrgroupRelationEntity relationEntity = relationDao.selectOne(new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
+                .eq(AttrAttrgroupRelationEntity::getAttrId, attrRespVo.getAttrId()));
+        if (null != relationEntity && StringUtils.isNotEmpty(relationEntity.getAttrGroupId())) {
+            attrGroupId = relationEntity.getAttrGroupId();
+            attrGroupName = attrGroupDao.selectById(relationEntity.getAttrGroupId()).getAttrGroupName();
+        }
+        if (null != attrEntity.getCatelogId()) {
+            CategoryEntity categoryEntity = categoryService.getById(attrEntity.getCatelogId());
+            List<String> pathIdList = Splitter.on("#").omitEmptyStrings().splitToList(categoryEntity.getPath());
+            catelogPath = (Long[]) ConvertUtils.convert(pathIdList, Long[].class);
+        }
+        //
+
+        attrRespVo.setAttrGroupId(attrGroupId);
+        attrRespVo.setGroupName(attrGroupName);
+        attrRespVo.setCatelogPath(catelogPath);
+        return attrRespVo;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateAttr(AttrVo attr) {
+        if (null == attr || null == attr.getAttrType() || null == attr.getValueType()
+                || null == attr.getCatelogId() || StringUtils.isEmpty(attr.getIcon())
+                || null == attr.getShowDesc() || null == attr.getEnable() || null == attr.getSearchType() ) {
+            throw new BizException("传入参数不完整，无法进行下一步操作！");
+        }
+        if (ValueTypeEnum.ONLY_SINGLE_VALUE.getCode() == attr.getValueType()) {
+            if (attr.getValueSelect().contains(MULTIPLE_VALUES_FlAG)) {
+                throw new BizException("值类型为「只能单个值」，可选值不允许出现多个值！");
+            }
+        }
+        AttrEntity dbAttrEntity = this.getById(attr.getAttrId());
+        if (null == dbAttrEntity) {
+            throw new BizException("未找到属性数据！");
+        }
+        BeanUtils.copyWithoutNull(dbAttrEntity,attr,new String[]{"attrId"});
+        BeanUtils.updateAuditFields(dbAttrEntity,false,"system");
+
+        this.updateById(dbAttrEntity);
+        // 如果所属分组有传值，则更新 属性-属性分组关联关系表
+        if (null != attr.getAttrGroupId()) {
+            AttrAttrgroupRelationEntity dbRelationEntity = relationDao.selectOne(new LambdaQueryWrapper<AttrAttrgroupRelationEntity>().eq(AttrAttrgroupRelationEntity::getAttrId, attr.getAttrId()));
+
+            if (null == dbRelationEntity ) {
+                AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();
+                relationEntity.setAttrId(attr.getAttrId());
+                relationEntity.setAttrGroupId(attr.getAttrGroupId());
+                BeanUtils.updateAuditFields(relationEntity,true,"system");
+                relationDao.insert(relationEntity);
+            } else {
+                // 如果所属分组未发生改变，则不更新
+                if (attr.getAttrGroupId().equals(dbRelationEntity.getAttrGroupId())) {
+                    return;
+                }
+                dbRelationEntity.setAttrGroupId(attr.getAttrGroupId());
+                BeanUtils.updateAuditFields(dbRelationEntity,false,"system");
+                relationDao.update(dbRelationEntity , new LambdaUpdateWrapper<AttrAttrgroupRelationEntity>().eq(AttrAttrgroupRelationEntity::getAttrId, dbRelationEntity.getAttrId()));
+
+            }
+
+        }
     }
 }

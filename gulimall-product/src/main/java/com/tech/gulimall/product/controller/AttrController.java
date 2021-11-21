@@ -1,9 +1,8 @@
 package com.tech.gulimall.product.controller;
 
-import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
-import com.tech.gulimall.product.entity.po.AttrEntity;
+import com.tech.gulimall.product.entity.vo.AttrRespVo;
 import com.tech.gulimall.product.entity.vo.AttrVo;
 import com.tech.gulimall.product.service.AttrService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,6 @@ public class AttrController {
         return R.ok().put("page", page);
     }
 
-    //  /product/attr/base/list/{catelogId}
     @RequestMapping("/base/list/{catelogId}")
     public R baseAttrList(@RequestParam Map<String, Object> params,
                           @PathVariable Long catelogId){
@@ -52,9 +50,9 @@ public class AttrController {
     @RequestMapping("/info/{attrId}")
     // @RequiresPermissions("product:attr:info")
     public R info(@PathVariable("attrId") Long attrId){
-		AttrEntity attr = attrService.getById(attrId);
+		AttrRespVo attrRespVo = attrService.getAttrInfo(attrId);
 
-        return R.ok().put("attr", attr);
+        return R.ok().put("attr", attrRespVo);
     }
 
     /**
@@ -71,10 +69,8 @@ public class AttrController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody AttrEntity attr){
-        BeanUtils.updateAuditFields(attr,false);
-		attrService.updateById(attr);
-
+    public R update(@RequestBody AttrVo attr){
+		attrService.updateAttr(attr);
         return R.ok();
     }
 
@@ -82,7 +78,6 @@ public class AttrController {
      * 删除
      */
     @RequestMapping("/delete")
-    // @RequiresPermissions("product:attr:delete")
     public R delete(@RequestBody Long[] attrIds){
 		attrService.removeByIds(Arrays.asList(attrIds));
 

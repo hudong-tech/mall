@@ -3,6 +3,7 @@ package com.tech.gulimall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.product.entity.po.AttrEntity;
+import com.tech.gulimall.product.entity.vo.AttrRespVo;
 import com.tech.gulimall.product.entity.vo.AttrVo;
 
 import java.util.Map;
@@ -35,5 +36,18 @@ public interface AttrService extends IService<AttrEntity> {
     * @Date: 2021/11/10 3:01
     */
     PageUtils baseAttrList(Map<String, Object> params, Long catelogId);
+
+    /**
+     * 查询商品属性信息
+     * @param attrId
+     * @return
+     */
+    AttrRespVo getAttrInfo(Long attrId);
+
+    /**
+     * 修改
+     * @param attr
+     */
+    void updateAttr(AttrVo attr);
 }
 
