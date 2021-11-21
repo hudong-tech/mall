@@ -6,6 +6,7 @@ import com.tech.gulimall.product.entity.po.AttrEntity;
 import com.tech.gulimall.product.entity.vo.AttrRespVo;
 import com.tech.gulimall.product.entity.vo.AttrVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,5 +50,14 @@ public interface AttrService extends IService<AttrEntity> {
      * @param attr
      */
     void updateAttr(AttrVo attr);
+
+    /***
+    * @Description: 获取属性分组id关联的所有基本属性
+    * @Param: [attrgroupId]
+    * @return: java.util.List<com.tech.gulimall.product.entity.po.AttrEntity>
+    * @Author: phil
+    * @Date: 2021/11/21 23:48
+    */
+    List<AttrEntity> getRelationAttr(Long attrgroupId);
 }
 

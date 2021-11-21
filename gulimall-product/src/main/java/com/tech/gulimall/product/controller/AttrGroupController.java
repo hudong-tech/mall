@@ -3,13 +3,16 @@ package com.tech.gulimall.product.controller;
 import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
+import com.tech.gulimall.product.entity.po.AttrEntity;
 import com.tech.gulimall.product.entity.po.AttrGroupEntity;
 import com.tech.gulimall.product.service.AttrGroupService;
+import com.tech.gulimall.product.service.AttrService;
 import com.tech.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -30,6 +33,9 @@ public class AttrGroupController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private AttrService attrService;
 
     /**
      * 列表
@@ -98,4 +104,13 @@ public class AttrGroupController {
         return R.ok();
     }
 
+    /**
+     * 获取属性分组关联的所有属性
+     * /product/attrgroup/{attrgroupId}/attr/relation
+     */
+    @GetMapping("/{attrgroupId}/attr/relation")
+    public R attrRelation(@PathVariable("attrgroupId") Long attrgroupId){
+        List<AttrEntity> attrEntities = attrService.getRelationAttr(attrgroupId);
+        return R.ok().put("data", attrEntities);
+    }
 }
