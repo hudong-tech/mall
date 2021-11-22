@@ -1604,11 +1604,11 @@ INSERT INTO `pms_category` VALUES (1436, 'tesat', 107, 3, 0, 0, NULL, NULL, NULL
 -- ----------------------------
 DROP TABLE IF EXISTS `pms_category_brand_relation`;
 CREATE TABLE `pms_category_brand_relation`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '关联关系id',
   `brand_id` bigint(20) NULL DEFAULT NULL COMMENT '品牌id',
   `catelog_id` bigint(20) NULL DEFAULT NULL COMMENT '分类id',
-  `brand_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `catelog_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `brand_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '品牌名称',
+  `catelog_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '分类名称',
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_by` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建人',
   `updated_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',

@@ -5,6 +5,7 @@ import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
 import com.tech.gulimall.product.entity.po.CategoryBrandRelationEntity;
+import com.tech.gulimall.product.entity.vo.BrandVo;
 import com.tech.gulimall.product.service.CategoryBrandRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -93,6 +94,17 @@ public class CategoryBrandRelationController {
 		categoryBrandRelationService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+    /**
+     * /product/categorybrandrelation/brands/list
+     * @param catId
+     * @return
+     */
+    @GetMapping("/brands/list")
+    public R relationBrandsList(@RequestParam(value = "catId", required = true) Long catId){
+        List<BrandVo> brandVo = categoryBrandRelationService.getBrandsVoByCatId(catId);
+        return R.ok().put("data", brandVo);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.tech.gulimall.product.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -55,5 +57,13 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
         BeanUtils.updateAuditFields(dbBrand,false,"hudong");
         this.updateById(dbBrand);
         categoryBrandRelationService.updateBrand(brand.getBrandId(), brand.getName());
+    }
+
+    @Override
+    public List<BrandEntity> getBrandList(List<Long> brandIds){
+        if (CollectionUtil.isEmpty(brandIds)) {
+            throw new BizException("品牌id为空，无法进行下一步操作！");
+        }
+        return this.baseMapper.selectBatchIds(brandIds);
     }
 }

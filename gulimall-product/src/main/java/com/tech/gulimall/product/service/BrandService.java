@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.product.entity.po.BrandEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,5 +26,15 @@ public interface BrandService extends IService<BrandEntity> {
     * @Date: 2021/11/8 16:47
     */
     void updateDetail(BrandEntity brand);
+
+
+    /***
+    * @Description: 根据品牌Id批量查询品牌信息
+    * @Param: [brandIds]
+    * @return: java.util.List<com.tech.gulimall.product.entity.po.BrandEntity>
+    * @Author: phil
+    * @Date: 2021/11/22 16:37
+    */
+    List<BrandEntity> getBrandList(List<Long> brandIds);
 }
 
