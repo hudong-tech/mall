@@ -1,5 +1,6 @@
 package com.tech.gulimall.product.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -233,13 +234,16 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     @Override
     public List<AttrEntity> getRelationAttr(Long attrgroupId) {
         List<Long> relationAttrList = new ArrayList<>();
+        List<AttrEntity> relationAttrEntities = new ArrayList<>();
 
         List<AttrAttrgroupRelationEntity> relationEntities = relationDao.selectList(new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
                 .eq(AttrAttrgroupRelationEntity::getAttrGroupId, attrgroupId));
         for (AttrAttrgroupRelationEntity relationEntity : relationEntities) {
             relationAttrList.add(relationEntity.getAttrId());
         }
-        List<AttrEntity> relationAttrEntities = (List<AttrEntity>) this.listByIds(relationAttrList);
+        if (CollectionUtil.isNotEmpty(relationAttrList)) {
+            relationAttrEntities = (List<AttrEntity>) this.listByIds(relationAttrList);
+        }
         return relationAttrEntities;
     }
 }
