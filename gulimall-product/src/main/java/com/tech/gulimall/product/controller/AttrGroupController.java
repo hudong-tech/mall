@@ -141,6 +141,23 @@ public class AttrGroupController {
         relationService.removeRelation(vos);
         return R.ok();
     }
+    /**
+     * 添加属性与分组关联关系
+     * /product/attrgroup/attr/relation
+     *
+     * [{
+     *   "attrGroupId": 0, //分组id
+     *   "attrId": 0, //属性id
+     * }]
+     * @param vos
+     * @return
+     */
+    @PostMapping("/attr/relation")
+    public R addRelation(@RequestBody List<AttrGroupRelationVo> vos){
+        relationService.saveBatch(vos);
+        return R.ok();
+    }
+
 
 
 }
