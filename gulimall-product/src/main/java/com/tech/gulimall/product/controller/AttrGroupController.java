@@ -6,6 +6,7 @@ import com.tech.gulimall.common.utils.R;
 import com.tech.gulimall.product.entity.po.AttrEntity;
 import com.tech.gulimall.product.entity.po.AttrGroupEntity;
 import com.tech.gulimall.product.entity.vo.AttrGroupRelationVo;
+import com.tech.gulimall.product.entity.vo.AttrGroupWithAttrsVo;
 import com.tech.gulimall.product.service.AttrAttrgroupRelationService;
 import com.tech.gulimall.product.service.AttrGroupService;
 import com.tech.gulimall.product.service.AttrService;
@@ -158,6 +159,13 @@ public class AttrGroupController {
         return R.ok();
     }
 
-
-
+    /**
+     * 获取分类下所有分组&关联属性
+     * /product/attrgroup/{catelogId}/withattr
+     */
+    @GetMapping("/{catelogId}/withattr")
+    public R getAttrGroupWithAttrs(@PathVariable("catelogId") Long catelogId){
+        List<AttrGroupWithAttrsVo> attrGroupWithAttrsVo = attrGroupService.getAttrGroupWithAttrsByCateLogId(catelogId);
+        return R.ok().put("data", attrGroupWithAttrsVo);
+    }
 }
