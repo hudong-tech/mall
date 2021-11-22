@@ -7,6 +7,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/***
+ * @Description: mybatis 配置类
+ * @Author: phil
+ * @Date: 2021/11/22 13:53
+ */
 @Configuration
 @EnableTransactionManagement
 @MapperScan("com.tech.gulimall.coupon.dao")

@@ -9,8 +9,6 @@ import java.util.Date;
 
 /**
 * @Description:  基础类
-* @Param:
-* @return:
 * @Author: phil
 * @Date: 2021/11/8 19:05
 */

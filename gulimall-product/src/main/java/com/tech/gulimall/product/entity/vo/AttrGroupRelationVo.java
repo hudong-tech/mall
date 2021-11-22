@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * @className: AttrGroupRelationVo
  * @description: 属性和属性分组的关联关系  [{"attrId":1,"attrGroupId":2}]
- * @author: niaonao
+ * @author: phil
  * @date: 2021/11/22
  **/
 @Data

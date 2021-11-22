@@ -3,7 +3,7 @@ package com.tech.gulimall.product.entity.vo;
 import lombok.Data;
 
 /**
-* @Description:
+* @Description: 属性响应数据
 * @Author: phil
 * @Date: 2021/11/16 22:15
 */

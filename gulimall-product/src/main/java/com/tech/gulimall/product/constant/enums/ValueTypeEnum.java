@@ -3,7 +3,7 @@ package com.tech.gulimall.product.constant.enums;
 /**
  * @className: ValueTypeEnum
  * @description: pms_attr 「value_type」值类型
- * @author: niaonao
+ * @author: phil
  * @date: 2021/11/21
  **/
 public enum ValueTypeEnum {

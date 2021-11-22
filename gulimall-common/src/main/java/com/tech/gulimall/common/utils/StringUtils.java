@@ -5,7 +5,7 @@ import org.springframework.lang.Nullable;
 /**
  * @className: StringUtils
  * @description: 字符串工具类
- * @author: niaonao
+ * @author: phil
  * @date: 2021/11/17
  **/
 public class StringUtils extends org.springframework.util.StringUtils {
