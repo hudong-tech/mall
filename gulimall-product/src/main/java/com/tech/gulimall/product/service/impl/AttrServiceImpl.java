@@ -246,4 +246,41 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         }
         return relationAttrEntities;
     }
+
+    @Override
+    public PageUtils getNoRelationAttr(Long attrgroupId, Map<String, Object> params) {
+        if (null == attrgroupId) {
+            throw new BizException("传入属性分组id不能为空！");
+        }
+        // 1.当前分组只能关联自己所属分类里面的属性
+        AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(attrgroupId);
+        Long catelogId = attrGroupEntity.getCatelogId();
+        // 2.当前分组只能关联别的分组没有引用的数据 = 当前分类下所有属性 - 当前分类下的全部分组已经关联的所有属性
+        // 2.1 查询出当前分类下的其他分组
+        List<AttrGroupEntity> attrGroupEntities = attrGroupDao.selectList(
+                new LambdaQueryWrapper<AttrGroupEntity>().eq(AttrGroupEntity::getCatelogId, catelogId));
+        List<Long> attrGroupList = attrGroupEntities.stream().map(item ->
+                item.getAttrGroupId()
+        ).collect(Collectors.toList());
+        // 2.2 查询出这些分组关联的属性
+        List<AttrAttrgroupRelationEntity> relationEntities = relationDao.selectList(
+                new LambdaQueryWrapper<AttrAttrgroupRelationEntity>().in(AttrAttrgroupRelationEntity::getAttrGroupId, attrGroupList));
+        List<Long> attrRelationList = relationEntities.stream().map(item -> item.getAttrId()).collect(Collectors.toList());
+        // 2.3 从当前分类的所有属性中移除这些属性
+        LambdaQueryWrapper<AttrEntity> queryWrapper = new LambdaQueryWrapper<AttrEntity>().eq(AttrEntity::getCatelogId, catelogId)
+                .eq(AttrEntity::getAttrType, AttrEnum.ATTR_TYPE_BASE.getCode());
+        if (CollectionUtil.isNotEmpty(attrRelationList)) {
+            queryWrapper.notIn(AttrEntity::getAttrId, attrRelationList);
+        }
+        // 模糊查询
+        String key = (String) params.get("key");
+        if (StringUtils.isNotEmpty(key)) {
+            queryWrapper.and((wrapper) -> {
+                wrapper.eq(AttrEntity::getAttrId, key).or().like(AttrEntity::getAttrName, key);
+            });
+        }
+        IPage<AttrEntity> page = this.page(new Query<AttrEntity>().getPage(params), queryWrapper);
+
+        return new PageUtils(page);
+    }
 }
