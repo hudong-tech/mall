@@ -156,7 +156,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         BeanUtils.copyWithoutNull(attrRespVo,attrEntity,null);
 
         // 属性类型为 基本类型时，需要查询分组信息
-        if (AttrEnum.ATTR_TYPE_BASE.getType().equals(attrEntity.getAttrType())) {
+        if (AttrEnum.ATTR_TYPE_BASE.getCode() == attrEntity.getAttrType()) {
             // 1.查询分组信息
             AttrAttrgroupRelationEntity relationEntity = relationDao.selectOne(new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
                     .eq(AttrAttrgroupRelationEntity::getAttrId, attrRespVo.getAttrId()));
