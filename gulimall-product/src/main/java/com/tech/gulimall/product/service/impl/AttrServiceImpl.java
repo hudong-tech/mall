@@ -13,7 +13,6 @@ import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.Query;
 import com.tech.gulimall.common.utils.StringUtils;
 import com.tech.gulimall.product.constant.enums.AttrEnum;
-import com.tech.gulimall.product.constant.enums.ValueTypeEnum;
 import com.tech.gulimall.product.dao.AttrAttrgroupRelationDao;
 import com.tech.gulimall.product.dao.AttrDao;
 import com.tech.gulimall.product.dao.AttrGroupDao;
@@ -70,11 +69,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
                 || null == attr.getCatelogId() || StringUtils.isEmpty(attr.getIcon())
                 || null == attr.getShowDesc() || null == attr.getEnable() || null == attr.getSearchType() ) {
             throw new BizException("传入参数不完整，无法进行下一步操作！");
-        }
-        if (ValueTypeEnum.ONLY_SINGLE_VALUE.getCode() == attr.getValueType()) {
-            if (attr.getValueSelect().contains(MULTIPLE_VALUES_FlAG)) {
-                throw new BizException("值类型为「只能单个值」，可选值不允许出现多个值！");
-            }
         }
 
         AttrEntity attrEntity = new AttrEntity();
@@ -192,11 +186,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
                 || null == attr.getCatelogId() || StringUtils.isEmpty(attr.getIcon())
                 || null == attr.getShowDesc() || null == attr.getEnable() || null == attr.getSearchType() ) {
             throw new BizException("传入参数不完整，无法进行下一步操作！");
-        }
-        if (ValueTypeEnum.ONLY_SINGLE_VALUE.getCode() == attr.getValueType()) {
-            if (attr.getValueSelect().contains(MULTIPLE_VALUES_FlAG)) {
-                throw new BizException("值类型为「只能单个值」，可选值不允许出现多个值！");
-            }
         }
         AttrEntity dbAttrEntity = this.getById(attr.getAttrId());
         if (null == dbAttrEntity) {
