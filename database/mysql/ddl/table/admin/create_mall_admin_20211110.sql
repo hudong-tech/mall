@@ -4,7 +4,6 @@
  Source Server         : Everest_M
  Source Server Type    : MySQL
  Source Server Version : 50735
- Source Host           : 81.68.207.20:3306
  Source Schema         : mall_admin
 
  Target Server Type    : MySQL
