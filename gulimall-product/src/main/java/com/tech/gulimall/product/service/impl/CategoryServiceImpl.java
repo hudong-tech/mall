@@ -28,6 +28,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
 
+    @Autowired
+    private CategoryDao categoryDao;
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<CategoryEntity> page = this.page(
@@ -216,7 +219,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         if (null == dbCategory) {
             throw new BizException("根据Id未找到分类信息，无法进行更新数据!");
         }
-
+        // 父id是否发生变化，变化则需要更新路径
+        if (dbCategory.getParentCid() != category.getParentCid()) {
+            CategoryEntity parent = this.getById(category.getParentCid());
+            if (null == parent) {
+                throw new BizException("未查询到父级节点信息，操作失败！");
+            }
+            category.setPath(parent.getPath() + "#" + category.getCatId());
+        }
         BeanUtils.copyWithoutNull(dbCategory,category,null);
         BeanUtils.updateAuditFields(dbCategory,false,"hudong");
         baseMapper.updateById(dbCategory);
@@ -260,5 +270,29 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             }
         }
         return cateIdPathNameMap;
+    }
+
+
+
+    @Override
+    @Transactional(rollbackFor=Exception.class)
+    public void saveCategory(CategoryEntity category) {
+        BeanUtils.updateAuditFields(category,true,"hudong");
+        baseMapper.insert(category);
+        // 更新分类路径，更新失败，则新增分类失败
+
+        if (null == category.getParentCid()) {
+            throw new BizException("未获取到新增分类的父id!");
+        }
+        CategoryEntity parent = this.getById(category.getParentCid());
+        if (null != parent && null != category.getCatId()) {
+            category.setPath(parent.getPath() + '#' + category.getCatId());
+        }
+        if (null == category.getPath()) {
+            throw new BizException("分类的路径为空,无法保存！");
+        }
+        // 将路径保存到新增分类中
+        BeanUtils.updateAuditFields(category,false,"hudong");
+        baseMapper.updateById(category);
     }
 }

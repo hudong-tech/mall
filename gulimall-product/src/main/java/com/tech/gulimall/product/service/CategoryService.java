@@ -89,5 +89,14 @@ public interface CategoryService extends IService<CategoryEntity> {
     * @Date: 2021/11/17 17:24
     */
     Map<Long, String> getIdPathNameRelation(@Nullable Long catId);
+
+    /**
+    * @Description: 保存
+    * @Param: [category]
+    * @return: void
+    * @Author: phil
+    * @Date: 2022/4/3 6:59
+    */
+    void saveCategory(CategoryEntity category);
 }
 
