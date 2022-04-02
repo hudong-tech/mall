@@ -243,18 +243,20 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 break;
             }
             StringBuilder pathName = new StringBuilder();
-            List<String> pathIdList = Splitter.on("#").omitEmptyStrings().splitToList(categoryEntity.getPath());
-            for (String pathStr : pathIdList) {
-                long pathId = Long.parseLong(pathStr);
-                if (StringUtils.isNotEmpty(cateIdNameMap.get(pathId))) {
-                    if (pathName.length() > 0) {
-                        pathName.append("/");
+            if (null != categoryEntity.getPath()) {
+                List<String> pathIdList = Splitter.on("#").omitEmptyStrings().splitToList(categoryEntity.getPath());
+                for (String pathStr : pathIdList) {
+                    long pathId = Long.parseLong(pathStr);
+                    if (StringUtils.isNotEmpty(cateIdNameMap.get(pathId))) {
+                        if (pathName.length() > 0) {
+                            pathName.append("/");
+                        }
+                        pathName.append(cateIdNameMap.get(pathId));
                     }
-                    pathName.append(cateIdNameMap.get(pathId));
                 }
-            }
-            if (StringUtils.isNotEmpty(pathName.toString())) {
-                cateIdPathNameMap.put(categoryEntity.getCatId(), pathName.toString());
+                if (StringUtils.isNotEmpty(pathName.toString())) {
+                    cateIdPathNameMap.put(categoryEntity.getCatId(), pathName.toString());
+                }
             }
         }
         return cateIdPathNameMap;
