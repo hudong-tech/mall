@@ -1851,7 +1851,6 @@ CREATE TABLE `pms_spu_comment`  (
   `member_nick_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '会员昵称',
   `star` tinyint(1) NULL DEFAULT NULL COMMENT '星级',
   `member_ip` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '会员ip',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `show_status` tinyint(1) NULL DEFAULT NULL COMMENT '显示状态[0-不显示，1-显示]',
   `spu_attributes` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '购买时属性组合',
   `likes_count` int(11) NULL DEFAULT NULL COMMENT '点赞数',
