@@ -6,7 +6,6 @@ import com.tech.gulimall.common.entity.CommonObject;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 商品评价
@@ -49,10 +48,6 @@ public class SpuCommentEntity  extends CommonObject implements Serializable {
 	 * 会员ip
 	 */
 	private String memberIp;
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
 	/**
 	 * 显示状态[0-不显示，1-显示]
 	 */
