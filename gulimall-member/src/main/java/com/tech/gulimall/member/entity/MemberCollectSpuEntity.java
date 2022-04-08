@@ -2,10 +2,11 @@ package com.tech.gulimall.member.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tech.gulimall.common.entity.CommonObject;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 会员收藏的商品
@@ -16,7 +17,7 @@ import lombok.Data;
  */
 @Data
 @TableName("ums_member_collect_spu")
-public class MemberCollectSpuEntity implements Serializable {
+public class MemberCollectSpuEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

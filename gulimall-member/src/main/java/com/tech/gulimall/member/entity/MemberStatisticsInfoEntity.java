@@ -2,11 +2,11 @@ package com.tech.gulimall.member.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
-import java.util.Date;
+import com.tech.gulimall.common.entity.CommonObject;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 会员统计信息
@@ -17,7 +17,7 @@ import lombok.Data;
  */
 @Data
 @TableName("ums_member_statistics_info")
-public class MemberStatisticsInfoEntity implements Serializable {
+public class MemberStatisticsInfoEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

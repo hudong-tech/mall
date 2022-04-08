@@ -2,10 +2,10 @@ package com.tech.gulimall.member.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tech.gulimall.common.entity.CommonObject;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 会员收货地址
@@ -16,7 +16,7 @@ import lombok.Data;
  */
 @Data
 @TableName("ums_member_receive_address")
-public class MemberReceiveAddressEntity implements Serializable {
+public class MemberReceiveAddressEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
