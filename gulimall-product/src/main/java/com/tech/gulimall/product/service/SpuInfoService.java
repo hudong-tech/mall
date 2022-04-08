@@ -23,5 +23,14 @@ public interface SpuInfoService extends IService<SpuInfoEntity> {
      * @param spuSaveVo
      */
     void saveSpuInfo(SpuSaveVo spuSaveVo);
+
+    /***
+    * @description: spu检索
+    * @param: [params]
+    * @return: com.tech.gulimall.common.utils.PageUtils
+    * @author: phil
+    * @date: 2022/4/9 2:36
+    */
+    PageUtils queryPageByCondition(Map<String, Object> params);
 }
 
