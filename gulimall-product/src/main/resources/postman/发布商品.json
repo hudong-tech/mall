@@ -1,0 +1,964 @@
+{
+    "spuName": "Apple iPad Air5",
+    "spuDescription": "Apple iPad Air5",
+    "catalogId": 1437,
+    "brandId": 13,
+    "weight": 4.1,
+    "publishStatus": 0,
+    "decript": ["https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/dc373d17-95b7-4fb6-8dd9-76d643b44391_ce69f058d14f8b96.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/8b319c83-743a-46f9-8cab-2981a590ceda_9d84455228c76e26.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/b9cc5761-fa99-497b-81bd-5a18861ae395_2c202c03b248bdcc.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/c98e2c81-2031-403b-8dc9-5d8ebed242b0_2ebf3081804c86a7.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/68e1a250-20c7-45e6-8da4-af1551ddc3cb_1a372caf0c7fc7b3.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/5fa106ec-97e2-4a4f-8b4b-f734bdef21f6_71d491a38d351065.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/5296cf9a-be30-4914-88cf-d46e3d1a53f5_a1e8a509c765dcc6.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/f97de57e-064a-49e6-8725-b573114fa9b7_cdb9c56c7c1d1543.jpg"],
+    "images": ["https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/02015b75-47d4-4a0e-8001-b9fd23820e80_e9a6982760918324.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/dc9f5058-5cc6-40bf-83e7-62ac142c04e2_0e30b3ce7c240006.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/3ff0cbf0-bad1-45b3-856d-58f592e8c46e_5.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/a4d8bedf-eaab-4be5-890e-bfb9437062df_4.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/96f2743b-5916-46f7-8b47-bfd6241974bf_3.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/b1364ec1-d138-41c3-854e-7c382f21dccc_2.jpg", "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/f6a2b9b4-f539-4595-81a3-668d0973005c_1.jpg"],
+    "bounds": {
+        "buyBounds": 200,
+        "growBounds": 100
+    },
+    "baseAttrs": [{
+        "attrId": 13,
+        "attrValues": "M1",
+        "showDesc": 1
+    }, {
+        "attrId": 1,
+        "attrValues": "5G",
+        "showDesc": 0
+    }],
+    "skus": [{
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "粉色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "WLAN 64G"
+        }],
+        "skuName": "Apple iPad Air5 粉色 WLAN 64G",
+        "price": "4399",
+        "skuTitle": "Apple iPad Air5 粉色 WLAN 64G 10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/3ff0cbf0-bad1-45b3-856d-58f592e8c46e_5.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["粉色", "WLAN 64G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 50,
+        "priceStatus": 1,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "粉色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "WLAN 256G "
+        }],
+        "skuName": "Apple iPad Air5 粉色 WLAN 256G ",
+        "price": "5499",
+        "skuTitle": "Apple iPad Air5 粉色 WLAN 256G  10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/3ff0cbf0-bad1-45b3-856d-58f592e8c46e_5.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["粉色", "WLAN 256G "],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 50,
+        "priceStatus": 1,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "粉色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "CELLULAR 64G"
+        }],
+        "skuName": "Apple iPad Air5 粉色 CELLULAR 64G",
+        "price": "5499",
+        "skuTitle": "Apple iPad Air5 粉色 CELLULAR 64G  10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/3ff0cbf0-bad1-45b3-856d-58f592e8c46e_5.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["粉色", "CELLULAR 64G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 50,
+        "priceStatus": 1,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "粉色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "CELLULAR 256G"
+        }],
+        "skuName": "Apple iPad Air5 粉色 CELLULAR 256G",
+        "price": "6599",
+        "skuTitle": "Apple iPad Air5 粉色 CELLULAR 256G 10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/3ff0cbf0-bad1-45b3-856d-58f592e8c46e_5.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["粉色", "CELLULAR 256G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 50,
+        "priceStatus": 1,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "星光色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "WLAN 64G"
+        }],
+        "skuName": "Apple iPad Air5 星光色 WLAN 64G",
+        "price": "4399",
+        "skuTitle": "Apple iPad Air5 星光色 WLAN 64G  10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/a4d8bedf-eaab-4be5-890e-bfb9437062df_4.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["星光色", "WLAN 64G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 200,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "星光色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "WLAN 256G "
+        }],
+        "skuName": "Apple iPad Air5 星光色 WLAN 256G ",
+        "price": "5499",
+        "skuTitle": "Apple iPad Air5 星光色 WLAN 256G  10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/a4d8bedf-eaab-4be5-890e-bfb9437062df_4.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["星光色", "WLAN 256G "],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 200,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "星光色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "CELLULAR 64G"
+        }],
+        "skuName": "Apple iPad Air5 星光色 CELLULAR 64G",
+        "price": "5499",
+        "skuTitle": "Apple iPad Air5 星光色 CELLULAR 64G  10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/a4d8bedf-eaab-4be5-890e-bfb9437062df_4.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["星光色", "CELLULAR 64G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 200,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "星光色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "CELLULAR 256G"
+        }],
+        "skuName": "Apple iPad Air5 星光色 CELLULAR 256G",
+        "price": "6599",
+        "skuTitle": "Apple iPad Air5 星光色 CELLULAR 256G  10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/a4d8bedf-eaab-4be5-890e-bfb9437062df_4.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["星光色", "CELLULAR 256G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 200,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "蓝色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "WLAN 64G"
+        }],
+        "skuName": "Apple iPad Air5 蓝色 WLAN 64G",
+        "price": "4399",
+        "skuTitle": "Apple iPad Air5 蓝色 WLAN 64G  10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/f6a2b9b4-f539-4595-81a3-668d0973005c_1.jpg",
+            "defaultImg": 1
+        }],
+        "descar": ["蓝色", "WLAN 64G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 200,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "蓝色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "WLAN 256G "
+        }],
+        "skuName": "Apple iPad Air5 蓝色 WLAN 256G ",
+        "price": "5499",
+        "skuTitle": "Apple iPad Air5 蓝色 WLAN 256G  10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/f6a2b9b4-f539-4595-81a3-668d0973005c_1.jpg",
+            "defaultImg": 1
+        }],
+        "descar": ["蓝色", "WLAN 256G "],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 200,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "蓝色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "CELLULAR 64G"
+        }],
+        "skuName": "Apple iPad Air5 蓝色 CELLULAR 64G",
+        "price": "5499",
+        "skuTitle": "Apple iPad Air5 蓝色 CELLULAR 64G  10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/f6a2b9b4-f539-4595-81a3-668d0973005c_1.jpg",
+            "defaultImg": 1
+        }],
+        "descar": ["蓝色", "CELLULAR 64G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 200,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "蓝色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "CELLULAR 256G"
+        }],
+        "skuName": "Apple iPad Air5 蓝色 CELLULAR 256G",
+        "price": "6599",
+        "skuTitle": "Apple iPad Air5 蓝色 CELLULAR 256G 10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/f6a2b9b4-f539-4595-81a3-668d0973005c_1.jpg",
+            "defaultImg": 1
+        }],
+        "descar": ["蓝色", "CELLULAR 256G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 200,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "紫色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "WLAN 64G"
+        }],
+        "skuName": "Apple iPad Air5 紫色 WLAN 64G",
+        "price": "4399",
+        "skuTitle": "Apple iPad Air5 紫色 WLAN 64G  10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/b1364ec1-d138-41c3-854e-7c382f21dccc_2.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["紫色", "WLAN 64G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 200,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "紫色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "WLAN 256G "
+        }],
+        "skuName": "Apple iPad Air5 紫色 WLAN 256G ",
+        "price": "5499",
+        "skuTitle": "Apple iPad Air5 紫色 WLAN 256G  10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/b1364ec1-d138-41c3-854e-7c382f21dccc_2.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["紫色", "WLAN 256G "],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 200,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "紫色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "CELLULAR 64G"
+        }],
+        "skuName": "Apple iPad Air5 紫色 CELLULAR 64G",
+        "price": "5499",
+        "skuTitle": "Apple iPad Air5 紫色 CELLULAR 64G 10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/b1364ec1-d138-41c3-854e-7c382f21dccc_2.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["紫色", "CELLULAR 64G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 200,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "紫色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "CELLULAR 256G"
+        }],
+        "skuName": "Apple iPad Air5 紫色 CELLULAR 256G",
+        "price": "6599",
+        "skuTitle": "Apple iPad Air5 紫色 CELLULAR 256G 10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/b1364ec1-d138-41c3-854e-7c382f21dccc_2.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["紫色", "CELLULAR 256G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 200,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "深空灰色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "WLAN 64G"
+        }],
+        "skuName": "Apple iPad Air5 深空灰色 WLAN 64G",
+        "price": "4399",
+        "skuTitle": "Apple iPad Air5 深空灰色 WLAN 64G 10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/96f2743b-5916-46f7-8b47-bfd6241974bf_3.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["深空灰色", "WLAN 64G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 400,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "深空灰色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "WLAN 256G "
+        }],
+        "skuName": "Apple iPad Air5 深空灰色 WLAN 256G ",
+        "price": "5499",
+        "skuTitle": "Apple iPad Air5 深空灰色 WLAN 256G  10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/96f2743b-5916-46f7-8b47-bfd6241974bf_3.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["深空灰色", "WLAN 256G "],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 400,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "深空灰色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "CELLULAR 64G"
+        }],
+        "skuName": "Apple iPad Air5 深空灰色 CELLULAR 64G",
+        "price": "5499",
+        "skuTitle": "Apple iPad Air5 深空灰色 CELLULAR 64G 10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/96f2743b-5916-46f7-8b47-bfd6241974bf_3.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["深空灰色", "CELLULAR 64G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 400,
+        "priceStatus": 0,
+        "memberPrice": []
+    }, {
+        "attr": [{
+            "attrId": 15,
+            "attrName": "颜色",
+            "attrValue": "深空灰色"
+        }, {
+            "attrId": 16,
+            "attrName": "版本",
+            "attrValue": "CELLULAR 256G"
+        }],
+        "skuName": "Apple iPad Air5 深空灰色 CELLULAR 256G",
+        "price": "6599",
+        "skuTitle": "Apple iPad Air5 深空灰色 CELLULAR 256G 10.9英寸平板电脑 2022年款",
+        "skuSubtitle": "【以旧换新至高补贴500元】M1芯片强势驱动，1200万像素超广角支持人物居中，急速5G连接，iPad新品，五彩缤纷亮相",
+        "images": [{
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/62136b7a-5e47-40bf-8550-3f51bece5694_71d491a38d351065.jpg",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "https://gulimail-dong.oss-cn-hangzhou.aliyuncs.com/2022/04/08/96f2743b-5916-46f7-8b47-bfd6241974bf_3.jpg",
+            "defaultImg": 1
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }, {
+            "imgUrl": "",
+            "defaultImg": 0
+        }],
+        "descar": ["深空灰色", "CELLULAR 256G"],
+        "fullCount": 1,
+        "discount": 0.98,
+        "countStatus": 1,
+        "fullPrice": 10000,
+        "reducePrice": 400,
+        "priceStatus": 0,
+        "memberPrice": []
+    }]
+}
