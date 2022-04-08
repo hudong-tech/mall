@@ -2,10 +2,11 @@ package com.tech.gulimall.coupon.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tech.gulimall.common.entity.CommonObject;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 秒杀商品通知订阅
@@ -16,7 +17,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sms_seckill_sku_notice")
-public class SeckillSkuNoticeEntity implements Serializable {
+public class SeckillSkuNoticeEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

@@ -2,10 +2,10 @@ package com.tech.gulimall.coupon.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tech.gulimall.common.entity.CommonObject;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 首页专题表【jd首页下面很多专题，每个专题链接新的页面，展示专题商品信息】
@@ -16,7 +16,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sms_home_subject")
-public class HomeSubjectEntity implements Serializable {
+public class HomeSubjectEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

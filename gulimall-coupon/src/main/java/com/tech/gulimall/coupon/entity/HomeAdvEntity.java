@@ -2,10 +2,11 @@ package com.tech.gulimall.coupon.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tech.gulimall.common.entity.CommonObject;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 首页轮播广告
@@ -16,7 +17,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sms_home_adv")
-public class HomeAdvEntity implements Serializable {
+public class HomeAdvEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
