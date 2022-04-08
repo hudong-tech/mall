@@ -2,11 +2,11 @@ package com.tech.gulimall.order.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
-import java.util.Date;
+import com.tech.gulimall.common.entity.CommonObject;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 退款信息
@@ -17,7 +17,7 @@ import lombok.Data;
  */
 @Data
 @TableName("oms_refund_info")
-public class RefundInfoEntity implements Serializable {
+public class RefundInfoEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

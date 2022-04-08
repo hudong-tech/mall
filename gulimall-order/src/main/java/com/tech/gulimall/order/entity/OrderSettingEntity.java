@@ -2,10 +2,10 @@ package com.tech.gulimall.order.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tech.gulimall.common.entity.CommonObject;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 订单配置信息
@@ -16,7 +16,7 @@ import lombok.Data;
  */
 @Data
 @TableName("oms_order_setting")
-public class OrderSettingEntity implements Serializable {
+public class OrderSettingEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
