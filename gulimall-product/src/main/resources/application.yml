@@ -16,6 +16,9 @@ spring:
 
   application:
     name: mall-product
+  # 日期格式化
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 # MapperScan
 mybatis-plus:
   # sql映射文件位置
