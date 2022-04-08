@@ -20,3 +20,6 @@
 #      id-type: auto
 #server:
 #  port: 11000
+#logging:
+#  level:
+#    com.tech.gulimall: debug
