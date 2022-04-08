@@ -1,5 +1,6 @@
 package com.tech.gulimall.product.entity.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.tech.gulimall.common.entity.CommonObject;
@@ -22,7 +23,7 @@ public class SpuInfoDescEntity  extends CommonObject implements Serializable {
 	/**
 	 * 商品id
 	 */
-	@TableId
+	@TableId(type = IdType.INPUT)
 	private Long spuId;
 	/**
 	 * 商品介绍

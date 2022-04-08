@@ -272,4 +272,18 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
         return new PageUtils(page);
     }
+
+    @Override
+    public Map<Long, String> getAttrNameById(List<Long> attrId) {
+        if (null == attrId || attrId.size() == 0) {
+            throw new BizException("传入参数有误，无法进行查询！");
+        }
+        List<AttrEntity> attrEntities = this.baseMapper.selectList(new LambdaQueryWrapper<AttrEntity>()
+                .in(AttrEntity::getAttrId, attrId));
+        Map<Long, String> attrIdAndNameMap = new HashMap<>();
+        for (AttrEntity attrEntity : attrEntities) {
+            attrIdAndNameMap.put(attrEntity.getAttrId(), attrEntity.getAttrName());
+        }
+        return attrIdAndNameMap;
+    }
 }

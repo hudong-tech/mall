@@ -48,7 +48,7 @@ public class SpuSaveVo {
     /**
      * 图片
      */
-    private List<Images> images;
+    private List<String> images;
     /**
      * 积分信息
      */

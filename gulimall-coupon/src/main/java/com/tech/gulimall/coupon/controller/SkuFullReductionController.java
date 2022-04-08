@@ -1,19 +1,16 @@
 package com.tech.gulimall.coupon.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.tech.gulimall.coupon.entity.SkuFullReductionEntity;
-import com.tech.gulimall.coupon.service.SkuFullReductionService;
+import com.tech.gulimall.common.to.SkuReductionTo;
+import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
+import com.tech.gulimall.coupon.entity.SkuFullReductionEntity;
+import com.tech.gulimall.coupon.service.SkuFullReductionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -59,6 +56,7 @@ public class SkuFullReductionController {
     @RequestMapping("/save")
     // @RequiresPermissions("coupon:skufullreduction:save")
     public R save(@RequestBody SkuFullReductionEntity skuFullReduction){
+        BeanUtils.updateAuditFields(skuFullReduction,true);
 		skuFullReductionService.save(skuFullReduction);
 
         return R.ok();
@@ -70,6 +68,7 @@ public class SkuFullReductionController {
     @RequestMapping("/update")
     // @RequiresPermissions("coupon:skufullreduction:update")
     public R update(@RequestBody SkuFullReductionEntity skuFullReduction){
+        BeanUtils.updateAuditFields(skuFullReduction,false);
 		skuFullReductionService.updateById(skuFullReduction);
 
         return R.ok();
@@ -86,4 +85,13 @@ public class SkuFullReductionController {
         return R.ok();
     }
 
+    /**
+     *  保存sku满减信息
+     */
+    @PostMapping("/saveReduction")
+    public R saveSkuReductionTo(@RequestBody SkuReductionTo skuReductionTo){
+        skuFullReductionService.saveSkuReduction(skuReductionTo);
+
+        return R.ok();
+    }
 }

@@ -44,11 +44,11 @@ public class Skus {
     /**
      * 满几件
      */
-    private BigDecimal fullCount;
+    private int fullCount;
     /**
      * 打几折
      */
-    private int discount;
+    private BigDecimal discount;
     /**
      * 是否叠加其他优惠[0-不可叠加，1-可叠加]
      */

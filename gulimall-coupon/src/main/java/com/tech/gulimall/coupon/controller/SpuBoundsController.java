@@ -1,19 +1,15 @@
 package com.tech.gulimall.coupon.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.tech.gulimall.coupon.entity.SpuBoundsEntity;
-import com.tech.gulimall.coupon.service.SpuBoundsService;
+import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
+import com.tech.gulimall.coupon.entity.SpuBoundsEntity;
+import com.tech.gulimall.coupon.service.SpuBoundsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -56,9 +52,10 @@ public class SpuBoundsController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     // @RequiresPermissions("coupon:spubounds:save")
     public R save(@RequestBody SpuBoundsEntity spuBounds){
+        BeanUtils.updateAuditFields(spuBounds,true);
 		spuBoundsService.save(spuBounds);
 
         return R.ok();
@@ -70,6 +67,7 @@ public class SpuBoundsController {
     @RequestMapping("/update")
     // @RequiresPermissions("coupon:spubounds:update")
     public R update(@RequestBody SpuBoundsEntity spuBounds){
+        BeanUtils.updateAuditFields(spuBounds,false);
 		spuBoundsService.updateById(spuBounds);
 
         return R.ok();

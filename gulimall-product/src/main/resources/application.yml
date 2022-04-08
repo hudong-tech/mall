@@ -26,3 +26,14 @@ mybatis-plus:
       id-type: auto
 server:
   port: 10019
+
+logging:
+  level:
+    com.tech.gulimall: debug
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 50000
+        readTimeout: 30000

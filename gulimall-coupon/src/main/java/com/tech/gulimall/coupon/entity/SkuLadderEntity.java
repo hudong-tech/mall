@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.tech.gulimall.common.entity.CommonObject;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -28,6 +29,7 @@ public class SkuLadderEntity extends CommonObject implements Serializable {
 	/**
 	 * spu_id
 	 */
+	@NotNull(message = "skuId不能为空！")
 	private Long skuId;
 	/**
 	 * 满几件

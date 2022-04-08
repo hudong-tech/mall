@@ -68,5 +68,14 @@ public interface AttrService extends IService<AttrEntity> {
     * @Date: 2021/11/22 12:23
     */
     PageUtils getNoRelationAttr(Long attrgroupId, Map<String, Object> params);
+
+    /**
+    * @description: 根据属性id查询属性名
+    * @param: [attrId]
+    * @return: java.util.Map<java.lang.Long,java.lang.String>
+    * @author: phil
+    * @date: 2022/4/7 1:53
+    */
+    Map<Long, String> getAttrNameById(List<Long> attrId);
 }
 

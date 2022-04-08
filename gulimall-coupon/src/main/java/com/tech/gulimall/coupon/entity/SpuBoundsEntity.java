@@ -2,11 +2,12 @@ package com.tech.gulimall.coupon.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
-import java.util.Date;
+import com.tech.gulimall.common.entity.CommonObject;
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 商品spu积分设置
@@ -17,7 +18,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sms_spu_bounds")
-public class SpuBoundsEntity implements Serializable {
+public class SpuBoundsEntity extends CommonObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -26,8 +27,9 @@ public class SpuBoundsEntity implements Serializable {
 	@TableId
 	private Long id;
 	/**
-	 * 
+	 * spuId
 	 */
+	@NotNull(message = "spuId不能为空")
 	private Long spuId;
 	/**
 	 * 成长积分
