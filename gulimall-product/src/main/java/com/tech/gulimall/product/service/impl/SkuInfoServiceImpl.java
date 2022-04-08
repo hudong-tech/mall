@@ -41,19 +41,20 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         }
 
         String catelogId = (String) params.get("catelogId");
-        if (StringUtils.isNotEmpty(catelogId)) {
+        if (StringUtils.isNotEmpty(catelogId) && "0".equalsIgnoreCase(catelogId)) {
             queryWrapper.eq(SkuInfoEntity::getCatalogId, catelogId);
         }
 
         String brandId = (String) params.get("brandId");
-        if (StringUtils.isNotEmpty(brandId)) {
+        if (StringUtils.isNotEmpty(brandId) && "0".equalsIgnoreCase(brandId)) {
             queryWrapper.eq(SkuInfoEntity::getBrandId, brandId);
         }
 
         String min = (String) params.get("min");
         if (StringUtils.isNotEmpty(min)) {
+
             BigDecimal minDecimal = new BigDecimal(min);
-            if (minDecimal.compareTo(new BigDecimal(0)) == 1) {
+            if (minDecimal.compareTo(new BigDecimal("0")) == 1) {
                 queryWrapper.ge(SkuInfoEntity::getPrice, min);
             }
         }
@@ -61,7 +62,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         String max = (String) params.get("max");
         if (StringUtils.isNotEmpty(max)) {
             BigDecimal maxBigDecimal = new BigDecimal(max);
-            if (maxBigDecimal.compareTo(new BigDecimal(0)) == 1) {
+            if (maxBigDecimal.compareTo(new BigDecimal("0")) == 1) {
                 queryWrapper.le(SkuInfoEntity::getPrice, max);
             }
         }
