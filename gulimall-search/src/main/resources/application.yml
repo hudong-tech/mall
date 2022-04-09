@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: mall-search
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 81.68.207.20:8848
+
+server:
+  port: 12000
+
+logging:
+  level:
+    com.tech.gulimall: debug
