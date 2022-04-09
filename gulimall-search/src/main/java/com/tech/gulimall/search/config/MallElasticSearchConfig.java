@@ -2,6 +2,7 @@ package com.tech.gulimall.search.config;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.*;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -31,6 +32,7 @@ public class MallElasticSearchConfig {
         COMMON_OPTIONS = builder.build();
     }
 
+    @Bean
     public RestHighLevelClient esRestClient() {
         RestClientBuilder builder = null;
         // String hostname, int port, String scheme
