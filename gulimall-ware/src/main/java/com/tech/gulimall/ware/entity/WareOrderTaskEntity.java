@@ -6,7 +6,6 @@ import com.tech.gulimall.common.entity.CommonObject;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 库存工作单
@@ -65,10 +64,6 @@ public class WareOrderTaskEntity extends CommonObject implements Serializable {
 	 * 物流单号
 	 */
 	private String trackingNo;
-	/**
-	 * create_time
-	 */
-	private Date createTime;
 	/**
 	 * 仓库id
 	 */

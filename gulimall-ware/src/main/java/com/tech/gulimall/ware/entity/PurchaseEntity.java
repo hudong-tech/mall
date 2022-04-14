@@ -7,7 +7,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * 采购信息
@@ -54,13 +53,4 @@ public class PurchaseEntity extends CommonObject implements Serializable {
 	 * 
 	 */
 	private BigDecimal amount;
-	/**
-	 * 
-	 */
-	private Date createTime;
-	/**
-	 * 
-	 */
-	private Date updateTime;
-
 }

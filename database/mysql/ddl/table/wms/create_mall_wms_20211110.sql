@@ -52,8 +52,6 @@ CREATE TABLE `wms_purchase`  (
   `status` int(4) NULL DEFAULT NULL,
   `ware_id` bigint(20) NULL DEFAULT NULL,
   `amount` decimal(18, 4) NULL DEFAULT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL,
-  `update_time` datetime(0) NULL DEFAULT NULL,
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `created_by` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `updated_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
@@ -65,10 +63,10 @@ CREATE TABLE `wms_purchase`  (
 -- ----------------------------
 -- Records of wms_purchase
 -- ----------------------------
-INSERT INTO `wms_purchase` VALUES (1, 2, 'fireflynay', '18156475879', 1, 3, 1, 149700.0000, '2020-06-07 00:34:32', '2020-06-07 15:55:06', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `wms_purchase` VALUES (2, 1, 'admin', '18173516309', 1, 3, 1, 177760.0000, '2020-06-07 00:55:43', '2020-06-07 14:14:47', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `wms_purchase` VALUES (3, 1, 'admin', '18173516309', 1, 3, 1, 297520.0000, '2020-06-07 13:33:08', '2020-06-07 15:21:43', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `wms_purchase` VALUES (4, 2, 'fireflynay', '18156475879', 1, 3, 1, 179640.0000, '2020-06-07 14:01:10', '2020-06-07 15:18:35', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `wms_purchase` VALUES (1, 2, 'fireflynay', '18156475879', 1, 3, 1, 149700.0000, '2020-06-07 00:34:32', 'admin', '2020-06-07 15:55:06', 'admin', 1);
+INSERT INTO `wms_purchase` VALUES (2, 1, 'admin', '18173516309', 1, 3, 1, 177760.0000, '2020-06-07 00:55:43', 'admin', '2020-06-07 14:14:47', 'admin', 1);
+INSERT INTO `wms_purchase` VALUES (3, 1, 'admin', '18173516309', 1, 3, 1, 297520.0000, '2020-06-07 13:33:08', 'admin', '2020-06-07 15:21:43', 'admin', 1);
+INSERT INTO `wms_purchase` VALUES (4, 2, 'fireflynay', '18156475879', 1, 3, 1, 179640.0000, '2020-06-07 14:01:10', 'admin', '2020-06-07 15:18:35', 'admin', 1);
 
 -- ----------------------------
 -- Table structure for wms_purchase_detail
@@ -138,7 +136,6 @@ CREATE TABLE `wms_ware_order_task`  (
   `task_status` tinyint(2) NULL DEFAULT NULL COMMENT '任务状态',
   `order_body` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '订单描述',
   `tracking_no` char(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '物流单号',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT 'create_time',
   `ware_id` bigint(20) NULL DEFAULT NULL COMMENT '仓库id',
   `task_comment` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '工作单备注',
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
@@ -152,8 +149,8 @@ CREATE TABLE `wms_ware_order_task`  (
 -- ----------------------------
 -- Records of wms_ware_order_task
 -- ----------------------------
-INSERT INTO `wms_ware_order_task` VALUES (1, NULL, '202007101511435951281486241929375746', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `wms_ware_order_task` VALUES (2, NULL, '202007102108315951281576033585246209', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+INSERT INTO `wms_ware_order_task` VALUES (1, NULL, '202007101511435951281486241929375746', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+INSERT INTO `wms_ware_order_task` VALUES (2, NULL, '202007102108315951281576033585246209', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
 
 -- ----------------------------
 -- Table structure for wms_ware_order_task_detail
