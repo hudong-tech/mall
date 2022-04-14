@@ -1,5 +1,6 @@
 package com.tech.gulimall.ware.controller;
 
+import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
 import com.tech.gulimall.ware.entity.WareInfoEntity;
@@ -54,6 +55,7 @@ public class WareInfoController {
     @RequestMapping("/save")
     // @RequiresPermissions("ware:wareinfo:save")
     public R save(@RequestBody WareInfoEntity wareInfo){
+        BeanUtils.updateAuditFields(wareInfo,true);
 		wareInfoService.save(wareInfo);
 
         return R.ok();
@@ -65,6 +67,7 @@ public class WareInfoController {
     @RequestMapping("/update")
     // @RequiresPermissions("ware:wareinfo:update")
     public R update(@RequestBody WareInfoEntity wareInfo){
+        BeanUtils.updateAuditFields(wareInfo,false);
 		wareInfoService.updateById(wareInfo);
 
         return R.ok();

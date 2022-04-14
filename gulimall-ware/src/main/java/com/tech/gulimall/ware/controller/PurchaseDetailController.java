@@ -1,19 +1,15 @@
 package com.tech.gulimall.ware.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.tech.gulimall.ware.entity.PurchaseDetailEntity;
-import com.tech.gulimall.ware.service.PurchaseDetailService;
+import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
+import com.tech.gulimall.ware.entity.PurchaseDetailEntity;
+import com.tech.gulimall.ware.service.PurchaseDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -59,7 +55,8 @@ public class PurchaseDetailController {
     @RequestMapping("/save")
     // @RequiresPermissions("ware:purchasedetail:save")
     public R save(@RequestBody PurchaseDetailEntity purchaseDetail){
-		purchaseDetailService.save(purchaseDetail);
+        BeanUtils.updateAuditFields(purchaseDetail,true);
+        purchaseDetailService.save(purchaseDetail);
 
         return R.ok();
     }
@@ -70,7 +67,8 @@ public class PurchaseDetailController {
     @RequestMapping("/update")
     // @RequiresPermissions("ware:purchasedetail:update")
     public R update(@RequestBody PurchaseDetailEntity purchaseDetail){
-		purchaseDetailService.updateById(purchaseDetail);
+        BeanUtils.updateAuditFields(purchaseDetail,false);
+        purchaseDetailService.updateById(purchaseDetail);
 
         return R.ok();
     }

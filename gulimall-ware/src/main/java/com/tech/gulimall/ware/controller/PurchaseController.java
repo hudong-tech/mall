@@ -1,5 +1,6 @@
 package com.tech.gulimall.ware.controller;
 
+import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
 import com.tech.gulimall.ware.entity.PurchaseEntity;
@@ -54,7 +55,8 @@ public class PurchaseController {
     @RequestMapping("/save")
     // @RequiresPermissions("ware:purchase:save")
     public R save(@RequestBody PurchaseEntity purchase){
-		purchaseService.save(purchase);
+        BeanUtils.updateAuditFields(purchase,true);
+        purchaseService.save(purchase);
 
         return R.ok();
     }
@@ -65,6 +67,7 @@ public class PurchaseController {
     @RequestMapping("/update")
     // @RequiresPermissions("ware:purchase:update")
     public R update(@RequestBody PurchaseEntity purchase){
+        BeanUtils.updateAuditFields(purchase,false);
 		purchaseService.updateById(purchase);
 
         return R.ok();

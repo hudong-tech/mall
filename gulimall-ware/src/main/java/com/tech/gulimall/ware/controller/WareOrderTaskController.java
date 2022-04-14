@@ -1,19 +1,15 @@
 package com.tech.gulimall.ware.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.tech.gulimall.ware.entity.WareOrderTaskEntity;
-import com.tech.gulimall.ware.service.WareOrderTaskService;
+import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
+import com.tech.gulimall.ware.entity.WareOrderTaskEntity;
+import com.tech.gulimall.ware.service.WareOrderTaskService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -59,7 +55,8 @@ public class WareOrderTaskController {
     @RequestMapping("/save")
     // @RequiresPermissions("ware:wareordertask:save")
     public R save(@RequestBody WareOrderTaskEntity wareOrderTask){
-		wareOrderTaskService.save(wareOrderTask);
+        BeanUtils.updateAuditFields(wareOrderTask,true);
+        wareOrderTaskService.save(wareOrderTask);
 
         return R.ok();
     }
@@ -70,6 +67,7 @@ public class WareOrderTaskController {
     @RequestMapping("/update")
     // @RequiresPermissions("ware:wareordertask:update")
     public R update(@RequestBody WareOrderTaskEntity wareOrderTask){
+        BeanUtils.updateAuditFields(wareOrderTask,false);
 		wareOrderTaskService.updateById(wareOrderTask);
 
         return R.ok();
