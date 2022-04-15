@@ -134,8 +134,8 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
     @Transactional
     public String receivedPurchase(ReceivedPurchaseVo receivedPurchaseVo) {
         StringBuilder msg = new StringBuilder();
-        List<Long> errorItems = new ArrayList<>();
-        int totalPurchaseNum = receivedPurchaseVo.getIds().size();
+        List<Long> totalIds = receivedPurchaseVo.getIds();
+
         if (null == receivedPurchaseVo) {
             throw new BizException("请求参数为空，无法进行下一步操作！");
         }
@@ -145,24 +145,26 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
         if (StringUtils.isEmpty(receivedPurchaseVo.getUser())) {
             throw new BizException("无法获取当前采购人名！");
         }
-        List<Long> purchaseList = new ArrayList<>();
+        List<Long> purchaseIdList = new ArrayList<>();
         List<PurchaseEntity> dbPurchaseEntities = (List<PurchaseEntity>) this.listByIds(receivedPurchaseVo.getIds());
+        // 0 获取没有采购项的采购单
+        List<Long> emptyPurchaseIds = purchaseDetailService.getEmptyPurchaseIds();
 
-        dbPurchaseEntities = dbPurchaseEntities.stream().filter(item -> {
-            //1、确认当前采购单是新建或者是已分配状态，且只能领取自己的采购单
-            if (!(StringUtils.isNotEmpty(item.getAssigneeName()) &&
-                    item.getAssigneeName().equals(receivedPurchaseVo.getUser()) &&
-                    StringUtils.isNotEmpty(item.getStatus()) &&
-                    item.getStatus().equals(PurchaseStatusEnum.CREATED.getCode()) ||
-                    item.getStatus().equals(PurchaseStatusEnum.ASSIGNED.getCode()))) {
-                errorItems.add(item.getId());
-                return false;
-            }
-            return true;
-        }).map(item -> {
+
+        dbPurchaseEntities = dbPurchaseEntities.stream().filter(item ->
+            //1、采购单里没有采购项，不能领取.且只能领取自己的采购单
+            !emptyPurchaseIds.contains(item.getId()) &&
+            StringUtils.isNotEmpty(item.getAssigneeName()) &&
+            item.getAssigneeName().equals(receivedPurchaseVo.getUser()) &&
+            //2 确认当前采购单是新建或者是已分配状态
+            StringUtils.isNotEmpty(item.getStatus()) &&
+            (item.getStatus().equals(PurchaseStatusEnum.CREATED.getCode()) ||
+            item.getStatus().equals(PurchaseStatusEnum.ASSIGNED.getCode()))
+
+        ).map(item -> {
             // 将采购单id加入集合，用于查询采购项
-            purchaseList.add(item.getId());
-            //2、改变采购单的状态
+            purchaseIdList.add(item.getId());
+            //3、改变采购单的状态
             item.setStatus(PurchaseStatusEnum.RECEIVE.getCode());
             BeanUtils.updateAuditFields(item, false);
             return item;
@@ -170,11 +172,8 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
 
         if (null != dbPurchaseEntities && dbPurchaseEntities.size() != 0) {
             this.updateBatchById(dbPurchaseEntities);
-            //3、改变采购项的状态
-            List<PurchaseDetailEntity> purchaseDetailEntities = purchaseDetailService.listDetailByPurchaseIds(purchaseList);
-
-
-
+            //4、改变采购项的状态
+            List<PurchaseDetailEntity> purchaseDetailEntities = purchaseDetailService.listDetailByPurchaseIds(purchaseIdList);
             if (null != purchaseDetailEntities && purchaseDetailEntities.size() > 0) {
                 for (PurchaseDetailEntity purchaseDetailEntity : purchaseDetailEntities) {
                     purchaseDetailEntity.setStatus(PurchaseDetailStatusEnum.BUYING.getCode());
@@ -185,13 +184,14 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
 
         }
 
-        String successMsg = "共申领"+ totalPurchaseNum + "个采购单。" + "成功领取" + dbPurchaseEntities.size() + "个采购单.\n";
+        String successMsg = "共申领"+ totalIds.size() + "个采购单。" + "成功领取" + dbPurchaseEntities.size() + "个采购单.";
         log.info(successMsg);
         msg.append(successMsg);
 
+        List<Long> errorItems = totalIds.stream().filter(id -> !purchaseIdList.contains(id)).collect(Collectors.toList());
 
         if (null != errorItems && errorItems.size() > 0) {
-            String errorMsg = "id为" + errorItems + "未能成功,采购单应是新建或者是已分配状态，且只能领取自己的采购单。\n";
+            String errorMsg = "id为" + errorItems + "未能成功,采购单里可能没有采购项,可能不是新建或者是已分配状态，也可能并不是自己的采购单，请检查！";
             log.info(errorMsg);
             msg.append(errorMsg);
         }

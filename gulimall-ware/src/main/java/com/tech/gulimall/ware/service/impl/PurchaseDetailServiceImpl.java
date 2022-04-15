@@ -64,4 +64,9 @@ public class PurchaseDetailServiceImpl extends ServiceImpl<PurchaseDetailDao, Pu
         return this.list(queryWrapper);
     }
 
+    @Override
+    public List<Long> getEmptyPurchaseIds() {
+        return baseMapper.getEmptyPurchaseIds();
+    }
+
 }

@@ -26,5 +26,14 @@ public interface PurchaseDetailService extends IService<PurchaseDetailEntity> {
     * @date: 2022/4/15 10:02
     */
     List<PurchaseDetailEntity> listDetailByPurchaseIds(List<Long> purchaseIds);
+
+    /**
+     * @description: 获取没有采购项的空采购单id
+     * @param: []
+     * @return: java.util.List<java.lang.Long>
+     * @author: phil
+     * @date: 2022/4/15 12:18
+     */
+    List<Long> getEmptyPurchaseIds();
 }
 

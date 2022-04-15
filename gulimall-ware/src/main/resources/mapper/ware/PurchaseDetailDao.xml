@@ -14,5 +14,13 @@
         <result property="status" column="status"/>
     </resultMap>
 
+    <select id="getEmptyPurchaseIds" resultType="Long">
+        SELECT
+            id
+        FROM
+            wms_purchase
+        WHERE
+            id NOT IN ( SELECT purchase_id FROM wms_purchase_detail WHERE STATUS IN ( 0, 1 ) AND purchase_id IS NOT NULL )
+    </select>
 
 </mapper>
