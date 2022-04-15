@@ -44,14 +44,14 @@ CREATE TABLE `undo_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `wms_purchase`;
 CREATE TABLE `wms_purchase`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `assignee_id` bigint(20) NULL DEFAULT NULL,
-  `assignee_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `phone` char(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `priority` int(4) NULL DEFAULT NULL,
-  `status` int(4) NULL DEFAULT NULL,
-  `ware_id` bigint(20) NULL DEFAULT NULL,
-  `amount` decimal(18, 4) NULL DEFAULT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `assignee_id` bigint(20) NULL DEFAULT NULL COMMENT '采购人id',
+  `assignee_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '采购人名',
+  `phone` char(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系方式',
+  `priority` int(4) NULL DEFAULT NULL COMMENT '优先级',
+  `status` int(4) NULL DEFAULT NULL COMMENT '采购单状态 0-新建 | 1-已分配 | 2-已领取 | 3-已完成 | 4-有异常',
+  `ware_id` bigint(20) NULL DEFAULT NULL COMMENT '仓库id',
+  `amount` decimal(18, 4) NULL DEFAULT NULL COMMENT '总金额',
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `created_by` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `updated_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',

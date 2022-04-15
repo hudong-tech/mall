@@ -5,6 +5,7 @@ import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
 import com.tech.gulimall.ware.entity.PurchaseEntity;
 import com.tech.gulimall.ware.service.PurchaseService;
+import com.tech.gulimall.ware.vo.MergeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,6 +83,30 @@ public class PurchaseController {
 		purchaseService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+    /**
+     * 查询未领取的采购单
+     * @param params
+     * @return R
+     */
+    @RequestMapping("/unreceive/list")
+    public R unReceiveList(@RequestParam Map<String, Object> params) {
+        PageUtils page = purchaseService.queryPageUnReceivePurchase(params);
+
+        return R.ok().put("page", page);
+    }
+
+    /**
+     * 合并采购需求
+     * @param mergeVo
+     * @return
+     */
+    @PostMapping("/merge")
+    public R mergepurchase(@RequestBody MergeVo mergeVo) {
+        String msg = purchaseService.mergePurchase(mergeVo);
+
+        return R.ok().put("msg", msg);
     }
 
 }
