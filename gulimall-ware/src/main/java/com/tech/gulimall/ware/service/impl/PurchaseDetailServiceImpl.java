@@ -11,6 +11,7 @@ import com.tech.gulimall.ware.entity.PurchaseDetailEntity;
 import com.tech.gulimall.ware.service.PurchaseDetailService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -51,6 +52,16 @@ public class PurchaseDetailServiceImpl extends ServiceImpl<PurchaseDetailDao, Pu
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<PurchaseDetailEntity> listDetailByPurchaseIds(List<Long> purchaseIds) {
+        LambdaQueryWrapper<PurchaseDetailEntity> queryWrapper = new LambdaQueryWrapper<>();
+        if (null != purchaseIds && purchaseIds.size() != 0) {
+            queryWrapper.in(PurchaseDetailEntity::getPurchaseId, purchaseIds);
+        }
+
+        return this.list(queryWrapper);
     }
 
 }

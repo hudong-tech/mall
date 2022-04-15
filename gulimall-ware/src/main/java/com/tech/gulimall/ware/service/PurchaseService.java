@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.ware.entity.PurchaseEntity;
 import com.tech.gulimall.ware.vo.MergeVo;
+import com.tech.gulimall.ware.vo.ReceivedPurchaseVo;
 
 import java.util.Map;
 
@@ -35,5 +36,14 @@ public interface PurchaseService extends IService<PurchaseEntity> {
     * @date: 2022/4/15 6:05
     */
     String mergePurchase(MergeVo mergeVo);
+
+    /**
+    * @description: 领取采购单
+    * @param: [ids, user]
+    * @return: String
+    * @author: phil
+    * @date: 2022/4/15 9:37
+    */
+    String receivedPurchase(ReceivedPurchaseVo receivedPurchaseVo);
 }
 

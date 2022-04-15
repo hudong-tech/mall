@@ -6,6 +6,7 @@ import com.tech.gulimall.common.utils.R;
 import com.tech.gulimall.ware.entity.PurchaseEntity;
 import com.tech.gulimall.ware.service.PurchaseService;
 import com.tech.gulimall.ware.vo.MergeVo;
+import com.tech.gulimall.ware.vo.ReceivedPurchaseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -107,6 +108,18 @@ public class PurchaseController {
         String msg = purchaseService.mergePurchase(mergeVo);
 
         return R.ok().put("msg", msg);
+    }
+
+    /**
+     * 领取采购单
+     * @param receivedPurchaseVo
+     * @return
+     */
+    @PostMapping("/received")
+    public R receivedPurchase(@RequestBody ReceivedPurchaseVo receivedPurchaseVo){
+        String msg = purchaseService.receivedPurchase(receivedPurchaseVo);
+
+        return R.ok().put("message", msg);
     }
 
 }
