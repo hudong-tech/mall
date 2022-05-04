@@ -77,5 +77,14 @@ public interface AttrService extends IService<AttrEntity> {
     * @date: 2022/4/7 1:53
     */
     Map<Long, String> getAttrNameById(List<Long> attrId);
+
+    /*** 
+    * @description: 过滤出可被检索的属性id集合
+    * @param: [attrIds] 
+    * @return: java.util.List<java.lang.Long> 
+    * @author: phil 
+    * @date: 2022/4/30 22:16
+    */
+    List<Long> selectSearchAttrIds(List<Long> attrIds);
 }
 

@@ -37,7 +37,9 @@ public enum BizCodeEnum {
 
     VALID_EXCEPTION(10001, "参数格式校验失败"),
 
-    BIZ_EXCEPTION(10002, "业务处理异常");
+    BIZ_EXCEPTION(10002, "业务处理异常"),
+
+    PRODUCT_UP_EXCEPTION(11000, "商品上架异常");
 
     private int code;
 

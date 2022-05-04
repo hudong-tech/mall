@@ -4,22 +4,22 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tech.gulimall.common.to.SkuEsModel;
 import com.tech.gulimall.common.to.SkuReductionTo;
 import com.tech.gulimall.common.to.SpuBoundTo;
 import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.Query;
 import com.tech.gulimall.common.utils.R;
+import com.tech.gulimall.product.constant.enums.ProductStatusEnum;
 import com.tech.gulimall.product.dao.SpuInfoDao;
-import com.tech.gulimall.product.entity.po.SkuImagesEntity;
-import com.tech.gulimall.product.entity.po.SkuInfoEntity;
-import com.tech.gulimall.product.entity.po.SpuInfoDescEntity;
-import com.tech.gulimall.product.entity.po.SpuInfoEntity;
+import com.tech.gulimall.product.entity.po.*;
 import com.tech.gulimall.product.entity.vo.BaseAttrs;
 import com.tech.gulimall.product.entity.vo.Images;
 import com.tech.gulimall.product.entity.vo.Skus;
 import com.tech.gulimall.product.entity.vo.SpuSaveVo;
 import com.tech.gulimall.product.feign.CouponFeignService;
+import com.tech.gulimall.product.feign.SearchFeignService;
 import com.tech.gulimall.product.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -54,6 +55,19 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     @Autowired
     private CouponFeignService couponFeignService;
+
+    @Autowired
+    private BrandService brandService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private SearchFeignService searchFeignService;
+
+    @Autowired
+    private AttrService attrService;
+
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -177,6 +191,69 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public void upSpuForSearch(Long spuId) {
+        // 1. 查出当前spuId对应的所有sku信息，品牌的名字
+        List<SkuInfoEntity> skuInfoEntities = skuInfoService.getSkuBySpuId(spuId);
+
+        // 4. 查出当前sku的所有可以被用来检索的规格属性
+        List<ProductAttrValueEntity> productAttrValueEntities = attrValueService.list(new LambdaQueryWrapper<ProductAttrValueEntity>()
+                .eq(ProductAttrValueEntity::getSpuId, spuId));
+        List<Long> attrIds = productAttrValueEntities.stream().map(attr -> attr.getAttrId()).collect(Collectors.toList());
+        List<Long> searchIds = attrService.selectSearchAttrIds(attrIds);
+        HashSet<Long> searchIdsSet = new HashSet<>(searchIds);
+        List<SkuEsModel.Attr> searchAttrs = productAttrValueEntities.stream().filter(
+                entity -> searchIdsSet.contains(entity.getAttrId())
+        ).map(entity -> {
+            SkuEsModel.Attr attr = new SkuEsModel.Attr();
+            BeanUtils.copyWithoutNull(entity, attr);
+            return attr;
+        }).collect(Collectors.toList());
+
+        // 发送远程调用，库存系统查询是否有库存
+        Map<Long, Boolean> stockMap = null;
+        try {
+            List<Long> skuIds = skuInfoEntities.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
+
+        } catch (Exception e) {
+            log.error("远程调用库存服务失败，原因是{}", e);
+        }
+
+        // 2. 封装每个sku的信息
+        List<SkuEsModel> skuEsModelList = skuInfoEntities.stream().map(sku -> {
+            SkuEsModel skuEsModel = new SkuEsModel();
+            BeanUtils.copyProperties(sku, skuEsModel);
+            skuEsModel.setSkuPrice(sku.getPrice());
+            skuEsModel.setSkuImg(sku.getSkuDefaultImg());
+            // 2.1 热度评分默认为0
+            skuEsModel.setHotScore(0L);
+            // 3. 查询品牌和分类的名字信息
+            if (null != sku.getBrandId()) {
+                BrandEntity brandEntity = brandService.getById(sku.getBrandId());
+                if (null != brandEntity) {
+                    skuEsModel.setBrandName(brandEntity.getName());
+                    skuEsModel.setBrandImg(brandEntity.getLogo());
+                }
+            }
+            if (null != sku.getCatalogId()) {
+                CategoryEntity categoryEntity = categoryService.getById(sku.getCatalogId());
+                if (null != categoryEntity) {
+                    skuEsModel.setCatelogName(categoryEntity.getName());
+                }
+            }
+
+            return skuEsModel;
+        }).collect(Collectors.toList());
+        // 5. 将数据发给es进行保存
+        R r = searchFeignService.saveProductAsIndices(skuEsModelList);
+        if (r.getCode() == 0) {
+            this.baseMapper.upSpuStatus(spuId, ProductStatusEnum.SPU_UP.getCode());
+        } else {
+            log.error("商品远程es保存失败！");
+        }
+
     }
 
 }
