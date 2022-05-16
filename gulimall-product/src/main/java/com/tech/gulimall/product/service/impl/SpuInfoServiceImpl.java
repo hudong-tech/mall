@@ -1,5 +1,6 @@
 package com.tech.gulimall.product.service.impl;
 
+import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -241,9 +242,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         Map<Long, Boolean> stockMap = null;
         try {
             List<Long> skuIds = skuInfoEntities.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
-            List<SkuHasStackVo> skuHasStackVoList = wareFeignService.getSkuHasStack(skuIds);
-            if (skuHasStackVoList.size() != 0) {
-                stockMap = skuHasStackVoList.stream().collect(Collectors.toMap(SkuHasStackVo::getSkuId, SkuHasStackVo::getHasStack));
+            R r = wareFeignService.getSkuHasStack(skuIds);
+            if (RCodeEnum.SUCCESS.getCode() == r.getCode()) {
+                TypeReference<List<SkuHasStackVo>> typeReference = new TypeReference<List<SkuHasStackVo>>() {
+                };
+                stockMap = r.getData(typeReference).stream().collect(Collectors.toMap(SkuHasStackVo::getSkuId, SkuHasStackVo::getHasStack));
             }
         } catch (Exception e) {
             log.error("远程调用库存服务失败!", e);

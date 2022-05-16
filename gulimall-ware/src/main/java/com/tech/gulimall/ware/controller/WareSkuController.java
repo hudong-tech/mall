@@ -92,8 +92,11 @@ public class WareSkuController {
      * @return
      */
     @RequestMapping("/getSkuHasStack")
-    public List<SkuHasStackVo> getSkuHasStack(@RequestParam List<Long> skuIds){
-        return wareSkuService.getSkuHasStack(skuIds);
+    public R getSkuHasStack(@RequestParam List<Long> skuIds){
+        List<SkuHasStackVo> data = wareSkuService.getSkuHasStack(skuIds);
+
+        return R.ok().setDate(data);
+
     }
 
 }

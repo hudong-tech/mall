@@ -1,6 +1,6 @@
 package com.tech.gulimall.product.feign;
 
-import com.tech.gulimall.common.to.SkuHasStackVo;
+import com.tech.gulimall.common.utils.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,5 +11,5 @@ import java.util.List;
 public interface WareFeignService {
 
     @RequestMapping("/ware/waresku/getSkuHasStack")
-    List<SkuHasStackVo> getSkuHasStack(@RequestParam List<Long> skuIds);
+    R getSkuHasStack(@RequestParam List<Long> skuIds);
 }
