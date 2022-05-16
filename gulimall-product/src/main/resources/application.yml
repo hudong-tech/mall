@@ -20,6 +20,13 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  thymeleaf:
+    # 关闭缓存，这样开发期间就能看到实时效果
+    cache: false
+    # 配置thymeleaf后缀
+    suffix: .html
+    # 配置thymeleaf前缀
+    prefix: classpath:/templates/
 # MapperScan
 mybatis-plus:
   # sql映射文件位置
