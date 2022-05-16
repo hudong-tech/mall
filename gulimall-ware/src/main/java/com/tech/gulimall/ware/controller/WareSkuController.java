@@ -1,5 +1,6 @@
 package com.tech.gulimall.ware.controller;
 
+import com.tech.gulimall.common.to.SkuHasStackVo;
 import com.tech.gulimall.common.utils.BeanUtils;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.common.utils.R;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -52,7 +54,7 @@ public class WareSkuController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     // @RequiresPermissions("ware:waresku:save")
     public R save(@RequestBody WareSkuEntity wareSku){
         BeanUtils.updateAuditFields(wareSku,true);
@@ -82,6 +84,16 @@ public class WareSkuController {
 		wareSkuService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+    /**
+     * 查询sku是否有库存
+     * @param skuIds
+     * @return
+     */
+    @RequestMapping("/getSkuHasStack")
+    public List<SkuHasStackVo> getSkuHasStack(@RequestParam List<Long> skuIds){
+        return wareSkuService.getSkuHasStack(skuIds);
     }
 
 }

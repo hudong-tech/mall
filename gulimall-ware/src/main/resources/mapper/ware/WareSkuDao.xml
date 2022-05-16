@@ -12,6 +12,18 @@
         <result property="skuName" column="sku_name"/>
         <result property="stockLocked" column="stock_locked"/>
     </resultMap>
+    <select id="getStackByIds" resultType="java.util.HashMap">
+        SELECT
+            w.sku_id, SUM(w.stock-w.stock_locked) AS stock
+        FROM
+            wms_ware_sku w
+        WHERE
+        w.sku_id in
+        <foreach collection="skuIds" open="(" close=")" separator="," item="skuId">
+           #{skuId}
+        </foreach>
+        GROUP BY w.sku_id
+    </select>
 
 
 </mapper>
