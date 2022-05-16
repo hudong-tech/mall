@@ -295,6 +295,30 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             this.baseMapper.updateById(dbSpuInfoEntity);
         } else {
             log.error("商品远程es保存失败！");
+            // 7. todo 商品上架失败，重复调用？ 接口幂等性，重试机制。。。
+            // Feign调用流程
+            /**
+             * 1、构造请求数据，将对象转为json
+             *    SynchronousMethodHandler.class
+             *      RequestTemplate template = this.buildTemplateFromArgs.create(argv);
+             * 2、发送请求进行执行
+             *      return this.executeAndDecode(template);
+             * 3、执行请求会有重试机制
+             *      while(true) {
+             *          try {
+             *             return this.executeAndDecode(template);
+             *          } catch(RetryableException e) {
+             *              try{
+             *                 retryer.continueOrPropagate(e);
+             *              } catch () {
+             *                  // 如果有异常，会抛出
+             *                  throw ex;
+             *              }
+             *              // 否则，继续
+             *              countinue;
+             *          }
+             *      }
+             */
         }
 
 
