@@ -1,5 +1,6 @@
 package com.tech.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -24,6 +25,8 @@ import java.util.*;
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
 
     private final static Integer ROOT_LEVEL = 1;
+
+    private final static Integer PID_OF_LEVEL_1 = 0;
 
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
@@ -294,5 +297,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         // 将路径保存到新增分类中
         BeanUtils.updateAuditFields(category,false,"hudong");
         baseMapper.updateById(category);
+    }
+
+    @Override
+    public List<CategoryEntity> getLevel1Category() {
+        List<CategoryEntity> level1CategoryEntities = baseMapper.selectList(new LambdaQueryWrapper<CategoryEntity>().eq(CategoryEntity::getParentCid, PID_OF_LEVEL_1));
+        return level1CategoryEntities;
     }
 }

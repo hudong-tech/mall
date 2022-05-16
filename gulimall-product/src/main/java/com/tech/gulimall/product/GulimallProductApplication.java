@@ -57,6 +57,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *  2）、静态资源都放在static文件夹下，就可以按照路径直接访问
  *  3）、页面放在templates下，也可直接访问
  *      springboot,访问项目时，默认会找index
+ *  4）、页面修改不重启服务器情况下实时更新
+ *      4.1）、引入dev-tools
+ *      4.2）、修改完页面 ctrl+f9 重新编译页面  或 ctrl+shift+f9 重新编译当前页面， 如果代码配置，还是推荐 重启服务，以避免系统bug.
+ *      4.3）、网页重新刷新即可看到修改后的页面
  */
 @SpringBootApplication
 @EnableDiscoveryClient

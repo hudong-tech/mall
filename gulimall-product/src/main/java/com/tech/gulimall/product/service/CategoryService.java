@@ -98,5 +98,14 @@ public interface CategoryService extends IService<CategoryEntity> {
     * @Date: 2022/4/3 6:59
     */
     void saveCategory(CategoryEntity category);
+
+    /**
+    * @description: 获取一级分类
+    * @param: []
+    * @return: java.util.List<com.tech.gulimall.product.entity.po.CategoryEntity>
+    * @author: phil
+    * @date: 2022/5/17 2:33
+    */
+    List<CategoryEntity> getLevel1Category();
 }
 
