@@ -1,5 +1,6 @@
 package com.tech.gulimall.product.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -12,6 +13,7 @@ import com.tech.gulimall.common.utils.Query;
 import com.tech.gulimall.common.utils.StringUtils;
 import com.tech.gulimall.product.dao.CategoryDao;
 import com.tech.gulimall.product.entity.po.CategoryEntity;
+import com.tech.gulimall.product.entity.vo.Catalog2Vo;
 import com.tech.gulimall.product.service.CategoryBrandRelationService;
 import com.tech.gulimall.product.service.CategoryService;
 import org.apache.commons.beanutils.ConvertUtils;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
@@ -80,17 +83,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Override
     public List<CategoryEntity> queryListTreeByFor() {
         List<CategoryEntity> dbCategoryList = baseMapper.selectList(null);
-        return sortParentAndChild(dbCategoryList);
+        return sortParentAndChild(dbCategoryList, true);
     }
 
     /** 
     * @Description: 很好的菜单树算法
-    * @Param: [entities] 
+    * @Param: [entities, treeMenu] treeMenu 是否以菜单树形式返回
     * @return: java.util.List<com.tech.gulimall.product.entity.CategoryEntity> 
     * @Author: phil 
     * @Date: 2021/10/18 21:30
     */
-    private List<CategoryEntity> sortParentAndChild(List<CategoryEntity> entities) {
+    private List<CategoryEntity> sortParentAndChild(List<CategoryEntity> entities, boolean treeMenu) {
         // 1,寻找集合中所有根节点  key为父节点id
         Map<Long, List<CategoryEntity>> pMap = new HashMap<>(1000);
 
@@ -121,7 +124,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                     CategoryEntity category = queue.remove(0);
                     List<CategoryEntity> childrenList = pMap.remove(category.getCatId());
                     category.setChildren(childrenList);
-                    sortedList.add(category);
+                    if (treeMenu && category.getParentCid() == pid) {
+                        sortedList.add(category);
+                    }
                     // 如果只得到一级菜单的队列，则下行语句可注释
                     if (null != childrenList) {
                         queue.addAll(childrenList);
@@ -303,5 +308,48 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     public List<CategoryEntity> getLevel1Category() {
         List<CategoryEntity> level1CategoryEntities = baseMapper.selectList(new LambdaQueryWrapper<CategoryEntity>().eq(CategoryEntity::getParentCid, PID_OF_LEVEL_1));
         return level1CategoryEntities;
+    }
+
+    @Override
+    public Map<String, List<Catalog2Vo>> getCatalogJsonDBWithSpringCache() {
+        return getCategoryDB();
+    }
+
+    /**
+    * @description: 从数据库中查出三级分类
+    * @param: []
+    * @return: java.util.Map<java.lang.String,java.util.List<com.tech.gulimall.product.entity.vo.Catalog2Vo>>
+    * @author: phil
+    * @date: 2022/5/17 16:35
+    */
+    private Map<String, List<Catalog2Vo>> getCategoryDB() {
+        Map<String, List<Catalog2Vo>> listMap = new HashMap<>();
+        List<CategoryEntity> categoryEntities = queryListTreeByFor();
+
+        // 一级分类
+        for (CategoryEntity level1 : categoryEntities) {
+            List<Catalog2Vo> catalog2Vos = new ArrayList<>(32);
+            // 二级分类
+            for (CategoryEntity level2 : level1.getChildren()) {
+                Catalog2Vo catalog2Vo = new Catalog2Vo();
+                catalog2Vo.setCatalog1Id(level2.getParentCid().toString());
+                catalog2Vo.setId(level2.getCatId().toString());
+                catalog2Vo.setName(level2.getName());
+
+                // 三级分类
+                List<Catalog2Vo.Catalog3List> catalog3Vos = level2.getChildren().stream().map(level3 ->
+                                new Catalog2Vo.Catalog3List(level3.getParentCid().toString(), level3.getCatId().toString(), level3.getName()))
+                        .collect(Collectors.toList());
+
+                catalog2Vo.setCatalog3List(catalog3Vos);
+                catalog2Vos.add(catalog2Vo);
+            }
+
+            listMap.put(level1.getCatId().toString(), catalog2Vos);
+        }
+
+        System.out.println("listMap: " + JSON.toJSONString(listMap));
+
+        return listMap;
     }
 }

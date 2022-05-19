@@ -1,13 +1,16 @@
 package com.tech.gulimall.product.web;
 
 import com.tech.gulimall.product.entity.po.CategoryEntity;
+import com.tech.gulimall.product.entity.vo.Catalog2Vo;
 import com.tech.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 首页controller
@@ -30,5 +33,11 @@ public class IndexController {
         // classpath:/templates/ + 返回值 + .html
         model.addAttribute("categorys", categoryEntities);
         return "index";
+    }
+
+    @GetMapping("/index/json/catalog.json")
+    @ResponseBody   //以json数据返回值
+    public Map<String, List<Catalog2Vo>> getCategoryMap() {
+        return categoryService.getCatalogJsonDBWithSpringCache();
     }
 }

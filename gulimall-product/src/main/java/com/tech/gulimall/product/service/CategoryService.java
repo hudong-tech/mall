@@ -3,6 +3,7 @@ package com.tech.gulimall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tech.gulimall.common.utils.PageUtils;
 import com.tech.gulimall.product.entity.po.CategoryEntity;
+import com.tech.gulimall.product.entity.vo.Catalog2Vo;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
@@ -107,5 +108,14 @@ public interface CategoryService extends IService<CategoryEntity> {
     * @date: 2022/5/17 2:33
     */
     List<CategoryEntity> getLevel1Category();
+
+    /**
+    * @description: 查询二级三级分类数据
+    * @param: []
+    * @return: java.util.Map<java.lang.String,java.util.List<com.tech.gulimall.product.entity.vo.Catalog2Vo>>
+    * @author: phil
+    * @date: 2022/5/17 16:34
+    */
+    Map<String, List<Catalog2Vo>> getCatalogJsonDBWithSpringCache();
 }
 
