@@ -1,6 +1,5 @@
 package com.tech.gulimall.product.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -348,8 +347,16 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             listMap.put(level1.getCatId().toString(), catalog2Vos);
         }
 
-        System.out.println("listMap: " + JSON.toJSONString(listMap));
+        // 查看数据及所占空间大小
+//        System.out.println("listMap: " + JSON.toJSONString(listMap));
+//
+//        byte[] strByUtf8 = StringUtils.strConvertBytes(JSON.toJSONString(listMap), "utf-8");
+//        System.out.println("utf-8编码下所占的空间:" + StringUtils.setSize(strByUtf8.length));
+//
+//        byte[] strByGbk = StringUtils.strConvertBytes(JSON.toJSONString(listMap), "gbk");
+//        System.out.println("gbk编码下所占的空间:" + StringUtils.setSize(strByGbk.length));
 
         return listMap;
     }
+
 }
