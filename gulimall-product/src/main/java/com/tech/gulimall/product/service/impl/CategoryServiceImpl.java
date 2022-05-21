@@ -306,7 +306,10 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Override
     public List<CategoryEntity> getLevel1Category() {
+        long start = System.currentTimeMillis();
         List<CategoryEntity> level1CategoryEntities = baseMapper.selectList(new LambdaQueryWrapper<CategoryEntity>().eq(CategoryEntity::getParentCid, PID_OF_LEVEL_1));
+        long end = System.currentTimeMillis();
+        System.out.println("getLevel1Category耗时：" + (end - start) );
         return level1CategoryEntities;
     }
 
