@@ -1,6 +1,7 @@
 package com.tech.gulimall.product.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -18,6 +19,8 @@ import com.tech.gulimall.product.service.CategoryBrandRelationService;
 import com.tech.gulimall.product.service.CategoryService;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +38,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     private CategoryBrandRelationService categoryBrandRelationService;
 
     @Autowired
-    private CategoryDao categoryDao;
+    private StringRedisTemplate redisTemplate;
+
+
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -313,9 +318,36 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return level1CategoryEntities;
     }
 
+    // TODO 产生堆外内存溢出. OutOfDirectMemoryError
+    //    1)、springboot2.0以后默认使用lettuce作为操作redis的客户端，它使用netty进行网络通信
+    //    2)、lettuce的bug导致netty堆外内存溢出。netty如果没有指定堆外内存，默认使用Xms的值，可以使用-Dio.netty.maxDirectMemory进行设置
+    //    解决方案：由于是lettuce的bug造成，不要直接使用-Dio.netty.maxDirectMemory去调大虚拟机堆外内存，治标不治本。
+    //            1)、升级lettuce客户端。但是没有解决的
+    //            2)、切换使用jedis
+    //  Lettuce、redis操作redis的底层客户端。spring再次封装redisTemplate.
+
     @Override
     public Map<String, List<Catalog2Vo>> getCatalogJsonDBWithSpringCache() {
-        return getCategoryDB();
+        // 给缓存中放入json字符串，拿出的json字符串，还用逆转为能用的对象类型。【序列化与反序列化】
+
+        // 1. 加入缓存逻辑，缓存中存的数据是json字符串
+        ValueOperations<String, String> ops = redisTemplate.opsForValue();
+        String catalogJson = ops.get("catalogJson");
+
+        // 2. 缓存中没有，查询数据库
+        if (null == catalogJson) {
+            Map<String, List<Catalog2Vo>> categoryDB = getCategoryDB();
+            // 3. 将查到的数据对象转为json放入缓存中
+            String catalogDBJson = JSON.toJSONString(categoryDB);
+            ops.set("catalogJson", catalogDBJson);
+            return getCategoryDB();
+        }
+
+        //转为指定对象
+        Map<String, List<Catalog2Vo>> listMap = JSON.parseObject(catalogJson, new TypeReference<Map<String, List<Catalog2Vo>>>() {
+        });
+
+        return listMap;
     }
 
     /**
@@ -326,6 +358,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     * @date: 2022/5/17 16:35
     */
     private Map<String, List<Catalog2Vo>> getCategoryDB() {
+
+
         Map<String, List<Catalog2Vo>> listMap = new HashMap<>();
         List<CategoryEntity> categoryEntities = queryListTreeByFor();
 
