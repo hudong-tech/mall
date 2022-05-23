@@ -27,6 +27,9 @@ spring:
     suffix: .html
     # 配置thymeleaf前缀
     prefix: classpath:/templates/
+  redis:
+    host: 81.68.207.20
+    port: 6379
 # MapperScan
 mybatis-plus:
   # sql映射文件位置

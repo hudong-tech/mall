@@ -61,6 +61,13 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *      4.1）、引入dev-tools
  *      4.2）、修改完页面 ctrl+f9 重新编译页面  或 ctrl+shift+f9 重新编译当前页面， 如果代码配置，还是推荐 重启服务，以避免系统bug.
  *      4.3）、网页重新刷新即可看到修改后的页面
+ *
+ *  6、整合redis
+ *  1）、引入 spring-boot-starter-
+ *
+ *  -redis
+ *  2）、简单配置redis的host信息
+ *  3）、使用Springboot自动配置好的StringRedisTemplate来操作redis
  */
 @SpringBootApplication
 @EnableDiscoveryClient
