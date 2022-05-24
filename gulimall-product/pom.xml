@@ -71,6 +71,13 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
+        <!--这个用作练习，后面可以使用redisson-spring-boot-starter -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+
 
 
 

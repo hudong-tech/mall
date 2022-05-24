@@ -66,6 +66,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *  1）、引入 spring-boot-starter-redis
  *  2）、简单配置redis的host信息
  *  3）、使用Springboot自动配置好的StringRedisTemplate来操作redis
+ *
+ *  7、整合redisson作为分布式锁等功能框架    官方文档： https://github.com/redisson/redisson/wiki/Table-of-Content
+ *  1）、引入依赖
+ *  2）、配置redisson
  */
 @SpringBootApplication
 @EnableDiscoveryClient
