@@ -38,7 +38,8 @@ public class IndexController {
     @GetMapping("/index/json/catalog.json")
     @ResponseBody   //以json数据返回值
     public Map<String, List<Catalog2Vo>> getCategoryMap() {
-        return categoryService.getCatalogJsonDBWithSpringCache();
+        return categoryService.getCatalogJsonDbWithRedisLock();
+//        return categoryService.getCatalogJsonDBWithSpringCache();
     }
 
 

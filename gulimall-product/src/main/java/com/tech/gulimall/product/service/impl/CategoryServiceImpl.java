@@ -21,10 +21,12 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service("categoryService")
@@ -33,6 +35,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     private final static Integer ROOT_LEVEL = 1;
 
     private final static Integer PID_OF_LEVEL_1 = 0;
+
+    private final static String LOCK = "lock";
 
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
@@ -318,6 +322,58 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return level1CategoryEntities;
     }
 
+    /**
+    * @description: 通过redis占坑来试下分布式锁
+     *  使用redis实现分布式锁  需要保证 加锁保证原子性， 解锁也要保证原子性
+    * @param: []
+    * @return: java.util.Map<java.lang.String,java.util.List<com.tech.gulimall.product.entity.vo.Catalog2Vo>>
+    * @author: phil
+    * @date: 2022/5/24 18:56
+    */
+    public Map<String, List<Catalog2Vo>> getCatalogJsonDbWithRedisLock() {
+        String uuid = UUID.randomUUID().toString();
+        ValueOperations<String, String> ops = redisTemplate.opsForValue();
+        // redis中的 set NX 对应 setIfAbsent, 如果不存在才可以set，否则返回null
+        // 一、设置锁和设置过期时间必须是一个原子操作
+        // setIfAbsent 参数说明： （key, value, 过期时间， 时间单位） 下面代码是 设置过期时间为300秒
+        Boolean lock = ops.setIfAbsent(LOCK, uuid, 300, TimeUnit.SECONDS);
+
+        if (lock) {
+            System.out.println("获取分布式锁成功。。。。");
+            Map<String, List<Catalog2Vo>> categoryDB;
+            try {
+                categoryDB = getCategoryDB();
+            } finally {
+                String lockValue = ops.get(LOCK);
+                // 二、 删除锁可能会出现的问题:
+                // 1. 业务超时怎么办
+                // 2. 如果由于业务时间很长，锁自己过期了，我们直接删除，有可能把别人正在持有的锁删除了。
+                // 获取值对比 + 对比成功删锁 = 原子操作
+                // 解决方案： 删除锁必须保证原子性。使用redis+Lua脚本完成
+                // 获取值对比 + 对比成功删锁 = 原子操作
+                // lun脚本地址 -> http://www.redis.cn/commands/set.html
+                String script = "if redis.call(\"get\",KEYS[1]) == ARGV[1]\n" +
+                        "then\n" +
+                        "    return redis.call(\"del\",KEYS[1])\n" +
+                        "else\n" +
+                        "    return 0\n" +
+                        "end";
+                // 删除锁，使用script脚本
+                redisTemplate.execute(new DefaultRedisScript<Long>(script, Long.class), Arrays.asList(LOCK), lockValue);
+
+            }
+           return categoryDB;
+        } else {
+            System.out.println("获取分布式锁失败。。。。");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                log.error(e.getLocalizedMessage());
+            }
+            return getCatalogJsonDbWithRedisLock();
+        }
+    }
+
     // TODO 产生堆外内存溢出. OutOfDirectMemoryError
     //    1)、springboot2.0以后默认使用lettuce作为操作redis的客户端，它使用netty进行网络通信
     //    2)、lettuce的bug导致netty堆外内存溢出。netty如果没有指定堆外内存，默认使用Xms的值，可以使用-Dio.netty.maxDirectMemory进行设置
@@ -344,7 +400,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         if (null == catalogJson) {
             System.out.println("缓存不命中，查询数据库！！！");
 
-            Map<String, List<Catalog2Vo>> categoryDB = getCategoryDB();
+            Map<String, List<Catalog2Vo>> categoryDB = getCategoryDBBySync();
             return categoryDB;
         }
 
@@ -358,13 +414,70 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     /**
-    * @description: 从数据库中查出三级分类
+    * @description: 从数据库中获取三级分类数据（未进行并发处理）
+    * @param: []
+    * @return: java.util.Map<java.lang.String,java.util.List<com.tech.gulimall.product.entity.vo.Catalog2Vo>>
+    * @author: phil
+    * @date: 2022/5/24 19:31
+    */
+    private Map<String, List<Catalog2Vo>> getCategoryDB() {
+        Map<String, List<Catalog2Vo>> listMap = new HashMap<>();
+        List<CategoryEntity> categoryEntities = queryListTreeByFor();
+
+        String catalogJson = redisTemplate.opsForValue().get("catalogJson");
+        if (StringUtils.isNotEmpty(catalogJson)) {
+            listMap = JSON.parseObject(catalogJson, new TypeReference<Map<String, List<Catalog2Vo>>>() {
+            });
+        } else {
+            System.out.println("查询了数据库！！！！" + Thread.currentThread().getId());
+            // 一级分类
+            for (CategoryEntity level1 : categoryEntities) {
+                List<Catalog2Vo> catalog2Vos = new ArrayList<>(32);
+                // 二级分类
+                for (CategoryEntity level2 : level1.getChildren()) {
+                    Catalog2Vo catalog2Vo = new Catalog2Vo();
+                    catalog2Vo.setCatalog1Id(level2.getParentCid().toString());
+                    catalog2Vo.setId(level2.getCatId().toString());
+                    catalog2Vo.setName(level2.getName());
+
+                    // 三级分类
+                    List<Catalog2Vo.Catalog3List> catalog3Vos = level2.getChildren().stream().map(level3 ->
+                                    new Catalog2Vo.Catalog3List(level3.getParentCid().toString(), level3.getCatId().toString(), level3.getName()))
+                            .collect(Collectors.toList());
+
+                    catalog2Vo.setCatalog3List(catalog3Vos);
+                    catalog2Vos.add(catalog2Vo);
+                }
+
+                listMap.put(level1.getCatId().toString(), catalog2Vos);
+            }
+            // 3. 将查到的数据对象转为json放入缓存中
+            String catalogDBJson = JSON.toJSONString(listMap);
+            redisTemplate.opsForValue().set("catalogJson", catalogDBJson);
+        }
+        // 执行查询数据库
+
+
+        // 查看数据及所占空间大小
+//        System.out.println("listMap: " + JSON.toJSONString(listMap));
+
+        byte[] strByUtf8 = StringUtils.strConvertBytes(JSON.toJSONString(listMap), "utf-8");
+        System.out.println("utf-8编码下所占的空间:" + StringUtils.setSize(strByUtf8.length));
+
+        byte[] strByGbk = StringUtils.strConvertBytes(JSON.toJSONString(listMap), "gbk");
+        System.out.println("gbk编码下所占的空间:" + StringUtils.setSize(strByGbk.length));
+
+        return listMap;
+    }
+
+    /**
+    * @description: 使用本地锁从数据库中查出三级分类
     * @param: []
     * @return: java.util.Map<java.lang.String,java.util.List<com.tech.gulimall.product.entity.vo.Catalog2Vo>>
     * @author: phil
     * @date: 2022/5/17 16:35
     */
-    private Map<String, List<Catalog2Vo>> getCategoryDB() {
+    private Map<String, List<Catalog2Vo>> getCategoryDBBySync() {
         Map<String, List<Catalog2Vo>> listMap = new HashMap<>();
         List<CategoryEntity> categoryEntities = queryListTreeByFor();
 
