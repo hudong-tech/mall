@@ -63,9 +63,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *      4.3）、网页重新刷新即可看到修改后的页面
  *
  *  6、整合redis
- *  1）、引入 spring-boot-starter-
- *
- *  -redis
+ *  1）、引入 spring-boot-starter-redis
  *  2）、简单配置redis的host信息
  *  3）、使用Springboot自动配置好的StringRedisTemplate来操作redis
  */
