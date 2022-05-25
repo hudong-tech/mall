@@ -4,15 +4,13 @@ import com.tech.gulimall.product.entity.po.CategoryEntity;
 import com.tech.gulimall.product.entity.vo.Catalog2Vo;
 import com.tech.gulimall.product.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RLock;
-import org.redisson.api.RReadWriteLock;
-import org.redisson.api.RSemaphore;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -123,6 +121,8 @@ public class IndexController {
     
     /** 
     * @description: Redis的Redisson的分布式信号量（Semaphore）测试 以停车以例
+     * 文档地址：
+     * https://github.com/redisson/redisson/wiki/8.-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%92%8C%E5%90%8C%E6%AD%A5%E5%99%A8
     * @param: [] 
     * @return: java.lang.String 
     * @author: phil 
@@ -163,6 +163,38 @@ public class IndexController {
         park.release();
 //        park.release(2);
         return Thread.currentThread().getId() +  "开走";
+    }
+
+    /**
+    * @description: 基于Redisson的Redisson分布式闭锁（CountDownLatch）测试      场景： 放假锁门    5个班全部走完，我们才能锁大门
+    * @param: []
+    * @return: java.lang.String
+    * @author: phil
+    * @date: 2022/5/25 21:27
+    */
+    @GetMapping("/lockDoor")
+    @ResponseBody
+    public String lockDoor() {
+        RCountDownLatch door = redisson.getCountDownLatch("door");
+        //当count计数为0时，闭锁完成
+        door.trySetCount(5);
+        try {
+            //等待闭锁都完成
+            door.await();
+        } catch (InterruptedException e) {
+            log.error(e.getLocalizedMessage());
+        }
+        return "放假了。。。";
+    }
+
+    @GetMapping("/gogogo/{id}")
+    @ResponseBody
+    public String gogogo(@PathVariable("id") Long id) {
+        RCountDownLatch door = redisson.getCountDownLatch("door");
+        // 相当于计数减1
+        door.countDown();
+
+        return id + " 班的人都走完了...";
     }
 
 
