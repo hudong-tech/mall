@@ -18,6 +18,8 @@ import com.tech.gulimall.product.entity.vo.Catalog2Vo;
 import com.tech.gulimall.product.service.CategoryBrandRelationService;
 import com.tech.gulimall.product.service.CategoryService;
 import org.apache.commons.beanutils.ConvertUtils;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -43,6 +45,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private RedissonClient redisson;
 
 
 
@@ -320,6 +325,32 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         long end = System.currentTimeMillis();
         System.out.println("getLevel1Category耗时：" + (end - start) );
         return level1CategoryEntities;
+    }
+
+    /**
+    * @description: 通过redisson占坑来试下分布式锁
+     * 缓存里面的数据如何和数据库保持一致
+     * 缓存数据一致性
+     * 1）、双写模式
+     * 2）、失效模式
+    * @param: []
+    * @return: java.util.Map<java.lang.String,java.util.List<com.tech.gulimall.product.entity.vo.Catalog2Vo>>
+    * @author: phil
+    * @date: 2022/5/25 21:37
+    */
+    public Map<String, List<Catalog2Vo>> getCatalogJsonDbWithRedissonLock() {
+
+        // 1. 锁的名字 -> 锁的粒度，越细越快
+        // 锁的粒度，具体缓存的是某个数据，如11号商品： product-11-lock  product-12-lock
+        RLock lock = redisson.getLock("CatalogJson-lock");
+        lock.lock();
+        Map<String, List<Catalog2Vo>> categoryDB;
+        try {
+            categoryDB = getCategoryDB();
+        } finally {
+            lock.unlock();
+        }
+        return categoryDB;
     }
 
     /**
