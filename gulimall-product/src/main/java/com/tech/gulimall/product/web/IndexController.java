@@ -3,9 +3,12 @@ package com.tech.gulimall.product.web;
 import com.tech.gulimall.product.entity.po.CategoryEntity;
 import com.tech.gulimall.product.entity.vo.Catalog2Vo;
 import com.tech.gulimall.product.service.CategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
+import org.redisson.api.RReadWriteLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -23,13 +27,20 @@ import java.util.concurrent.TimeUnit;
  * @date 2022-05-17 02:24:54
  **/
 @Controller
+@Slf4j
 public class IndexController {
+
+    private static final String LOCK_UUID = "lock-uuid";
 
     @Autowired
     private CategoryService categoryService;
 
     @Autowired
     private RedissonClient redisson;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
 
     @GetMapping({"/", "/index.html"})
     public String indexPage(Model model) {
@@ -48,10 +59,79 @@ public class IndexController {
 //        return categoryService.getCatalogJsonDBWithSpringCache();
     }
 
+    /**
+     * @description: 读写锁（ReadWriteLock）测试
+     * @param: []
+     * @return: java.lang.String
+     * @author: phil
+     * @date: 2022/5/25 17:20
+     */
+    @GetMapping("read")
+    @ResponseBody
+    public String readValue() {
+        RReadWriteLock lock = redisson.getReadWriteLock("ReadWrite-Lock");
+        RLock rLock = lock.readLock();
+        String uuid = "";
+        try {
+            rLock.lock();
+            System.out.println("读锁加锁..." + Thread.currentThread().getId());
+            Thread.sleep(10000);
+            uuid = redisTemplate.opsForValue().get(LOCK_UUID);
+        } catch (InterruptedException e) {
+            log.error(e.getLocalizedMessage());
+        } finally {
+            rLock.unlock();
+            return "读取完成： " + uuid;
+        }
+    }
 
+    /** 
+    * @description: 读写锁（ReadWriteLock）测试
+     *  保证一定能读到最新的数据，修改期间，写锁是一个排他锁（互斥锁，独享锁）。读是一个共享锁
+     *  写锁没释放读就必须等待
+     *  写 + 读 ： 等待写锁释放
+     *  写 + 写： 阻塞方式
+     *  读 + 读： 相当于无锁，并发读，只会在redis中记录好，所有当前的读锁，他们都会同时加锁成功
+     *  读 + 写：有读锁，写也要等待
+     *  只要有写的存在，都必须等待
+    * @param: [] 
+    * @return: java.lang.String 
+    * @author: phil 
+    * @date: 2022/5/25 17:20
+    */
+    
+    @GetMapping("/write")
+    @ResponseBody
+    public String writeValue() {
+        RReadWriteLock lock = redisson.getReadWriteLock("ReadWrite-Lock");
+        RLock wLock = lock.writeLock();
+        String uuid = UUID.randomUUID().toString();
+        try {
+            wLock.lock();
+            System.out.println("写锁加锁..." + Thread.currentThread().getId());
+            Thread.sleep(10000);
+            redisTemplate.opsForValue().set(LOCK_UUID, uuid);
+
+        } catch (InterruptedException e) {
+            log.error(e.getLocalizedMessage());
+        } finally {
+            wLock.unlock();
+            return "写入成功：" + uuid;
+        }
+    }
+
+
+    /***
+    * @description: 可重入锁测试
+    * @param: []
+    * @return: java.lang.String
+    * @author: phil
+    * @date: 2022/5/25 17:21
+    */
     @ResponseBody
     @GetMapping("/hello")
     public String hello() {
+        // 官方文档     https://github.com/redisson/redisson/wiki/Table-of-Content
         // 1. 获取一把锁，只要锁名一致，就是同一把锁
         RLock lock = redisson.getLock("hello");
 
