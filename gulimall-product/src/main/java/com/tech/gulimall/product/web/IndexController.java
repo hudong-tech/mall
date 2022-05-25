@@ -6,6 +6,7 @@ import com.tech.gulimall.product.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RReadWriteLock;
+import org.redisson.api.RSemaphore;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -118,6 +119,50 @@ public class IndexController {
             wLock.unlock();
             return "写入成功：" + uuid;
         }
+    }
+    
+    /** 
+    * @description: Redis的Redisson的分布式信号量（Semaphore）测试 以停车以例
+    * @param: [] 
+    * @return: java.lang.String 
+    * @author: phil 
+    * @date: 2022/5/25 21:05
+    */
+    @GetMapping("/park")
+    @ResponseBody
+    public String park() {
+        RSemaphore park = redisson.getSemaphore("park");
+        System.out.println("线程正在停车：" + Thread.currentThread().getId());
+//        try {
+//            // 获取一个信号，获取一个值，占一个车位
+//           park.acquire();
+//           park.acquire(2);
+//
+//        } catch (InterruptedException e) {
+//            log.error(e.getLocalizedMessage());
+//        }
+
+        // 尝试获取信号值，如果获取不到，则返回false，且不会阻塞。
+        // 可以作为分布式限流业务
+        boolean b = park.tryAcquire();
+        if (b) {
+            // 执行业务
+        } else {
+            return "error";
+        }
+
+        return Thread.currentThread().getId() + "停车" + (b ? "成功" : "失败");
+    }
+
+    @GetMapping("go")
+    @ResponseBody
+    public String go() {
+        RSemaphore park = redisson.getSemaphore("park");
+        // 释放一个车位
+        System.out.println("线程正在开走：" + Thread.currentThread().getId());
+        park.release();
+//        park.release(2);
+        return Thread.currentThread().getId() +  "开走";
     }
 
 
