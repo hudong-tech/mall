@@ -31,6 +31,11 @@ spring:
     host: 81.68.207.20
     port: 6379
     timeout: 60000
+  cache:
+    type: redis
+    redis:
+      # 指定redis中的过期时间为1h 单位是毫秒
+      time-to-live: 3600000
 # MapperScan
 mybatis-plus:
   # sql映射文件位置

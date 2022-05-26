@@ -21,6 +21,7 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -318,6 +319,26 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         baseMapper.updateById(category);
     }
 
+    /**
+     *  官方文档： https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache
+     *
+     *      @Cacheable({"category"})
+     *      1. 代表当前方法的结果需要缓存，如果缓存中有，方法不用调用; 如果缓存中没有，会调用方法，最后将方法的结果放入缓存
+     *      2. 每一个需要缓存的数据我们都要指定要放到哪个名字的缓存。【缓存的分区（推荐按照类型分）】
+     *      3. 默认行为
+     *           1）、如果缓存中有，方法不用调用。
+     *           2）、key默认自动生成：缓存的名字 ::SimpleKey []{自主生成的key值}
+     *           3）、缓存中的value值。默认使用jdk序列化机制，将序列化后的数据存到redis
+     *           4) 、默认ttl时间为-1
+ *           自定义：
+     *           1）、指定生成的缓存使用key        key属性指定，接收一个SpEL表达式。    https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache-spel-context
+     *              @Cacheable(value = {"category"}, key = "'level1Categorys'") 或   @Cacheable(value = {"category"}, key = "#root.method.name") #root.method.name 当前方法名
+     *           2）、指定缓存的数据的过期时间（ttl）   配置文件中修改ttl
+     *           3）、将数据保存为json格式
+     * @return
+     */
+
+    @Cacheable(value = {"category"}, key = "#root.method.name")
     @Override
     public List<CategoryEntity> getLevel1Category() {
         long start = System.currentTimeMillis();
@@ -326,6 +347,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         System.out.println("getLevel1Category耗时：" + (end - start) );
         return level1CategoryEntities;
     }
+
+
+
 
     /**
     * @description: 通过redisson占坑来试下分布式锁
