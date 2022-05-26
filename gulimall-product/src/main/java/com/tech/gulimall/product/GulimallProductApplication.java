@@ -3,7 +3,6 @@ package com.tech.gulimall.product;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 /**
@@ -88,8 +87,11 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *              @CacheConfig: Shares some common cache-related settings at class-level.         在类级别共享缓存的相同配置
  *              a. 开启缓存功能   @EnableCaching
  *              b. 只需要使用注解就能完成缓存操作
+ *         （4）、原理
+ *              CacheAutoConfiguration  --> RedisCacheConfiguration  --> 自动配置了 RedisCacheManager  --> 初始化所有的缓存（默认配置 RedisCacheConfiguration.determineConfiguration()）
+ *              --> 每个缓存决定使用什么配置    --> 如果 RedisCacheConfiguration 有就用已有的，没有就用默认配置 （RedisCacheConfiguration.determineConfiguration()方法中）
+ *              --> 想改缓存的配置，只需要给容器中放一个 redisCacheConfiguration即可  --> 就会应用到当前缓存管理器（RedisCacheManager） 管理的所有缓存分区中。
  */
-@EnableCaching
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.tech.gulimall.product.feign")
