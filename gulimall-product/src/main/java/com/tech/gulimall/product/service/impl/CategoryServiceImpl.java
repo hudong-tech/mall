@@ -348,9 +348,24 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
      *              @Cacheable(value = {"category"}, key = "'level1Categorys'") 或   @Cacheable(value = {"category"}, key = "#root.method.name") #root.method.name 当前方法名
      *           2）、指定缓存的数据的过期时间（ttl）   配置文件中修改ttl
      *           3）、将数据保存为json格式
+     *
+     *       Spring-Cache的不足：
+     *  *          1）、读模式：
+     *  *              缓存穿透：查询一个null数据。
+     *  *                  解决：缓存空数据 配置文件中写入 --> spring.cache.redis.cache-null-values=true
+     *  *              缓存击穿：大量并发进来同时查询一个正好过期的数据
+     *  *                  解决：加锁(默认是无加锁的)      sync = true 加锁解决击穿问题    如     @Cacheable(value = {"category"}, key = "#root.method.name", sync = true)
+     *  *              缓存雪崩：大量的key同时过期，超大型的系统可能会发生。在正常的系统，只要不是正好10+w个key同时过期，同时正好10w+的请求进来，就不用考虑。
+     *  *                  解决：加随机时间，加上过期时间 spring.cache.redis.time-to-live=3600000
+     *  *          2）、写模式：（缓存与数据库一致）
+     *  *              1）、读写加锁。    适用于读多写少的系统
+     *  *              2）、引入中间件Canal,感知到mysql的更新去更新数据库
+     *  *              3）、读多写多，直接去数据库查询就行
+     *  *
+     *  *     原理：  CacheManager（RedisCacheManager） --> Cache（RedisCache）  --> Cache负责缓存的读写
      * @return
      */
-    @Cacheable(value = {"category"}, key = "#root.method.name")
+    @Cacheable(value = {"category"}, key = "#root.method.name", sync = true)
     @Override
     public List<CategoryEntity> getLevel1Category() {
         long start = System.currentTimeMillis();

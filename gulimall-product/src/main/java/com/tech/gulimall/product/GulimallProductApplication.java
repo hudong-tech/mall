@@ -91,6 +91,23 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *              CacheAutoConfiguration  --> RedisCacheConfiguration  --> 自动配置了 RedisCacheManager  --> 初始化所有的缓存（默认配置 RedisCacheConfiguration.determineConfiguration()）
  *              --> 每个缓存决定使用什么配置    --> 如果 RedisCacheConfiguration 有就用已有的，没有就用默认配置 （RedisCacheConfiguration.determineConfiguration()方法中）
  *              --> 想改缓存的配置，只需要给容器中放一个 redisCacheConfiguration即可  --> 就会应用到当前缓存管理器（RedisCacheManager） 管理的所有缓存分区中。
+ *      3）、Spring-Cache的不足：
+ *          1）、读模式：
+ *              缓存穿透：查询一个null数据。
+ *                  解决：缓存空数据 配置文件中写入 --> spring.cache.redis.cache-null-values=true
+ *              缓存击穿：大量并发进来同时查询一个正好过期的数据
+ *                  解决：加锁(默认是无加锁的)      sync = true 加锁解决击穿问题    如     @Cacheable(value = {"category"}, key = "#root.method.name", sync = true)
+ *              缓存雪崩：大量的key同时过期，超大型的系统可能会发生。在正常的系统，只要不是正好10+w个key同时过期，同时正好10w+的请求进来，就不用考虑。
+ *                  解决：加随机时间，加上过期时间 spring.cache.redis.time-to-live=3600000
+ *          2）、写模式：（缓存与数据库一致）
+ *              1）、读写加锁。    适用于读多写少的系统
+ *              2）、引入中间件Canal,感知到mysql的更新去更新数据库
+ *              3）、读多写多，直接去数据库查询就行
+ *         总结：
+ *              常规数据（读多写少，即时性， 一致性要求不高的数据）：完全可以使用Spring Cache，写模式（只要缓存的数据有过期时间就足够了）
+ *              特殊数据：特殊设计
+ *
+ *     原理：  CacheManager（RedisCacheManager） --> Cache（RedisCache）  --> Cache负责缓存的读写
  */
 @SpringBootApplication
 @EnableDiscoveryClient
