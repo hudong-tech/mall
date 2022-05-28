@@ -110,13 +110,22 @@ public interface CategoryService extends IService<CategoryEntity> {
     List<CategoryEntity> getLevel1Category();
 
     /**
-    * @description: 使用spring cache查询二级三级分类数据
+    * @description: 使用Spring Cache注解将二三级分类数据放到缓存中
+    * @param: []
+    * @return: java.util.Map<java.lang.String,java.util.List<com.tech.gulimall.product.entity.vo.Catalog2Vo>>
+    * @author: phil
+    * @date: 2022/5/28 21:01
+    */
+    Map<String, List<Catalog2Vo>> getCatalogJsonDBWithSpringCache();
+
+    /**
+    * @description: 查询二级三级分类数据,并放到redis中
     * @param: []
     * @return: java.util.Map<java.lang.String,java.util.List<com.tech.gulimall.product.entity.vo.Catalog2Vo>>
     * @author: phil
     * @date: 2022/5/17 16:34
     */
-    Map<String, List<Catalog2Vo>> getCatalogJsonDBWithSpringCache();
+    Map<String, List<Catalog2Vo>> getCatalogJsonDBWithRedis();
 
     /***
     * @description:  使用redis分布锁查询二级三级分类数据

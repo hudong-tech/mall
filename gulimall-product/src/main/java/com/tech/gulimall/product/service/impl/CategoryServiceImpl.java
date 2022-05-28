@@ -21,6 +21,7 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -232,6 +233,18 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         baseMapper.updatePath(catIdPathMap);
     }
 
+    // @CacheEvict 失效模式，清除缓存
+    // @CacheEvict(value = {"category"}, key = "'getLevel1Category'")
+
+    // 业务背景：修改操作执行后，需要同时删除redis中的一级分类缓存 和 全部分类缓存
+    // 1、@Caching 同时进行多个缓存操作
+//    @Caching(evict = {
+//            @CacheEvict(value = {"category"}, key = "'getLevel1Category'"),
+//            @CacheEvict(value = {"category"}, key = "'getCatalogJsonDBWithSpringCache'")
+//    })
+
+    // 2、使用@CacheEvict删除某个分区下的所有数据， allEntries 代表category分区下的所有数据，默认为false
+    @CacheEvict(value = {"category"}, allEntries = true)
     @Override
     @Transactional(rollbackFor=Exception.class)
     public void updateCascade(CategoryEntity category) {
@@ -331,13 +344,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
      *           3）、缓存中的value值。默认使用jdk序列化机制，将序列化后的数据存到redis
      *           4) 、默认ttl时间为-1
  *           自定义：
-     *           1）、指定生成的缓存使用key        key属性指定，接收一个SpEL表达式。    https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache-spel-context
+     *           1）、指定生成的缓存使用key        key属性指定，接收一个SpEL表达式。SpEL表达式如果是字符串，要单引号括起来 如key = "'level1Categorys'"    https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache-spel-context
      *              @Cacheable(value = {"category"}, key = "'level1Categorys'") 或   @Cacheable(value = {"category"}, key = "#root.method.name") #root.method.name 当前方法名
      *           2）、指定缓存的数据的过期时间（ttl）   配置文件中修改ttl
      *           3）、将数据保存为json格式
      * @return
      */
-
     @Cacheable(value = {"category"}, key = "#root.method.name")
     @Override
     public List<CategoryEntity> getLevel1Category() {
@@ -429,6 +441,45 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         }
     }
 
+    @Cacheable(value = {"category"}, key = "#root.methodName")
+    @Override
+    public Map<String, List<Catalog2Vo>> getCatalogJsonDBWithSpringCache() {
+        Map<String, List<Catalog2Vo>> listMap = new HashMap<>();
+        List<CategoryEntity> categoryEntities = queryListTreeByFor();
+
+        String catalogJson = redisTemplate.opsForValue().get("catalogJson");
+        if (StringUtils.isNotEmpty(catalogJson)) {
+            listMap = JSON.parseObject(catalogJson, new TypeReference<Map<String, List<Catalog2Vo>>>() {
+            });
+        } else {
+            System.out.println("查询了数据库！！！！" + Thread.currentThread().getId());
+            // 一级分类
+            for (CategoryEntity level1 : categoryEntities) {
+                List<Catalog2Vo> catalog2Vos = new ArrayList<>(32);
+                // 二级分类
+                for (CategoryEntity level2 : level1.getChildren()) {
+                    Catalog2Vo catalog2Vo = new Catalog2Vo();
+                    catalog2Vo.setCatalog1Id(level2.getParentCid().toString());
+                    catalog2Vo.setId(level2.getCatId().toString());
+                    catalog2Vo.setName(level2.getName());
+
+                    // 三级分类
+                    List<Catalog2Vo.Catalog3List> catalog3Vos = level2.getChildren().stream().map(level3 ->
+                                    new Catalog2Vo.Catalog3List(level3.getParentCid().toString(), level3.getCatId().toString(), level3.getName()))
+                            .collect(Collectors.toList());
+
+                    catalog2Vo.setCatalog3List(catalog3Vos);
+                    catalog2Vos.add(catalog2Vo);
+                }
+
+                listMap.put(level1.getCatId().toString(), catalog2Vos);
+            }
+        }
+
+        return listMap;
+
+    }
+
     // TODO 产生堆外内存溢出. OutOfDirectMemoryError
     //    1)、springboot2.0以后默认使用lettuce作为操作redis的客户端，它使用netty进行网络通信
     //    2)、lettuce的bug导致netty堆外内存溢出。netty如果没有指定堆外内存，默认使用Xms的值，可以使用-Dio.netty.maxDirectMemory进行设置
@@ -438,7 +489,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     //  Lettuce、redis操作redis的底层客户端。spring再次封装redisTemplate.
 
     @Override
-    public Map<String, List<Catalog2Vo>> getCatalogJsonDBWithSpringCache() {
+    public Map<String, List<Catalog2Vo>> getCatalogJsonDBWithRedis() {
         // 给缓存中放入json字符串，拿出的json字符串，还用逆转为能用的对象类型。【序列化与反序列化】
 
         /**

@@ -79,7 +79,7 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         }
         List<CategoryBrandRelationEntity> relationEntities = baseMapper.selectList(
                 new LambdaQueryWrapper<CategoryBrandRelationEntity>().eq(CategoryBrandRelationEntity::getCatelogId, catId));
-        if( null == relationEntities) {
+        if( relationEntities.size() == 0) {
             return;
         }
         for (CategoryBrandRelationEntity relationEntity : relationEntities) {
