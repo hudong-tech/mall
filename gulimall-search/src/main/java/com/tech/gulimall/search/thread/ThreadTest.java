@@ -19,11 +19,72 @@ public class ThreadTest {
 
 //        runAsync();
 //        supplyAsync();
-//        supplyAsyncTest();
-        handle();
+//        whenComplete();
+//        handle();
+//        thenRunAsync();
+//        thenAcceptAsync();
+        thenApplyAsync();
 
         System.out.println("main方法结束。。。。。");
     }
+
+    /**
+     * 线程串行化 thenRun: 不能获取到上一步的执行结果，无返回值
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static void thenRunAsync() throws ExecutionException, InterruptedException {
+        CompletableFuture.supplyAsync(() -> {
+            System.out.println("当前线程： " + Thread.currentThread().getId());
+
+            int i = 10 / 4;
+
+            System.out.println("运行结果: " + i);
+            return i;
+        }, executor).thenRunAsync(() -> {
+            System.out.println("任务2启动了...");
+        }, executor);
+    }
+
+    /**
+     * 线程串行化 thenAcceptAsync: 能接收上一步结果，但无返回值
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static void thenAcceptAsync() throws ExecutionException, InterruptedException {
+        CompletableFuture.supplyAsync(() -> {
+            System.out.println("当前线程： " + Thread.currentThread().getId());
+
+            int i = 10 / 4;
+
+            System.out.println("运行结果: " + i);
+            return i;
+        }, executor).thenAcceptAsync((result) -> {
+            System.out.println("任务2启动了..." + result);
+        }, executor);
+    }
+
+    /**
+     * 线程串行化 thenApplyAsync: 能接收上一步结果，有返回值
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static CompletableFuture<String> thenApplyAsync() throws ExecutionException, InterruptedException {
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+            System.out.println("当前线程： " + Thread.currentThread().getId());
+
+            int i = 10 / 4;
+
+            System.out.println("运行结果: " + i);
+            return i;
+        }, executor).thenApplyAsync((result) -> {
+            System.out.println("任务2启动了..." + result);
+            return "hello " + result;
+        }, executor);
+        System.out.println("返回值为： " + future.get());
+        return future;
+    }
+
 
     /**
      * CompletableFuture 不带返回值
@@ -101,7 +162,7 @@ public class ThreadTest {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    public static CompletableFuture<Integer> supplyAsyncTest() throws ExecutionException, InterruptedException {
+    public static CompletableFuture<Integer> whenComplete() throws ExecutionException, InterruptedException {
         CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
             System.out.println("当前线程： " + Thread.currentThread().getId());
 
