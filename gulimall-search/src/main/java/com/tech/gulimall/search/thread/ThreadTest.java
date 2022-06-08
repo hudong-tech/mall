@@ -2,6 +2,8 @@ package com.tech.gulimall.search.thread;
 
 import java.util.concurrent.*;
 
+import static java.lang.Thread.sleep;
+
 /**
  * 线程测试
  *
@@ -14,7 +16,7 @@ public class ThreadTest {
    // 当前系统中池只能有一两个，每个异步任务，提交给线程池让他自己去执行。
    public static  ExecutorService executor = Executors.newFixedThreadPool(10);
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) throws Exception{
         System.out.println("main方法开始。。。。");
 
 //        runAsync();
@@ -29,9 +31,96 @@ public class ThreadTest {
 //        thenCombineAsync();
 //        runAfterEitherAsync();
 //        acceptEitherAsync();
-        applyToEitherAsync();
+//        applyToEitherAsync();
+//        allOf();
+        anyOf();
 
         System.out.println("main方法结束。。。。。");
+    }
+
+    /**
+     * CompletableFuture-多任务组合
+     * allOf() 等待所有任务完成
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static void allOf() throws Exception{
+        CompletableFuture<String> futureImg = CompletableFuture.supplyAsync(() -> {
+            System.out.println("模拟查询商品的图片信息....");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return "phone.jpg";
+        }, executor);
+
+        CompletableFuture<String> futureAttr = CompletableFuture.supplyAsync(() -> {
+            System.out.println("模拟查询商品的属性信息....");
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return "黑色 + 256G";
+        }, executor);
+
+        CompletableFuture<String> futureDesc = CompletableFuture.supplyAsync(() -> {
+            System.out.println("模拟查询商品介绍....");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return "华为";
+        }, executor);
+
+        CompletableFuture<Void> allOf = CompletableFuture.allOf(futureImg, futureAttr, futureDesc);
+        // 等待所有结果完成
+        System.out.println(allOf.get());
+        System.out.println(futureImg.get() + " --> " + futureAttr.get() + " --> " + futureDesc.get());
+    }
+
+    /**
+     * CompletableFuture-多任务组合
+     * anyOf() 等待任意一个任务完成
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static void anyOf() throws Exception{
+        CompletableFuture<String> futureImg = CompletableFuture.supplyAsync(() -> {
+            System.out.println("模拟查询商品的图片信息....");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return "phone.jpg";
+        }, executor);
+
+        CompletableFuture<String> futureAttr = CompletableFuture.supplyAsync(() -> {
+            System.out.println("模拟查询商品的属性信息....");
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return "黑色 + 256G";
+        }, executor);
+
+        CompletableFuture<String> futureDesc = CompletableFuture.supplyAsync(() -> {
+            System.out.println("模拟查询商品介绍....");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return "华为";
+        }, executor);
+
+        CompletableFuture<Object> anyOf = CompletableFuture.anyOf(futureImg, futureAttr, futureDesc);
+        // 任意一个任务完成
+        System.out.println(anyOf.get());
     }
 
     /**
@@ -116,7 +205,7 @@ public class ThreadTest {
             System.out.println("任务1线程： " + Thread.currentThread().getId());
             int i = 10 / 2;
             try {
-                Thread.sleep(1000);
+                sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -143,7 +232,7 @@ public class ThreadTest {
             System.out.println("任务1线程： " + Thread.currentThread().getId());
             int i = 10 / 2;
             try {
-                Thread.sleep(1000);
+                sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -171,7 +260,7 @@ public class ThreadTest {
             System.out.println("任务1线程： " + Thread.currentThread().getId());
             int i = 10 / 2;
             try {
-                Thread.sleep(1000);
+                sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
