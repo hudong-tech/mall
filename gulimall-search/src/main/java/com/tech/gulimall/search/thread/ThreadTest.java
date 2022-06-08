@@ -23,10 +23,84 @@ public class ThreadTest {
 //        handle();
 //        thenRunAsync();
 //        thenAcceptAsync();
-        thenApplyAsync();
+//        thenApplyAsync();
+//        runAfterBothAsync();
+//        thenAcceptBothAsync();
+        thenCombineAsync();
 
         System.out.println("main方法结束。。。。。");
     }
+
+    /**
+     * CompletableFuture-两任务组合-都要完成，才能开启第三个任务
+     * runAfterBothAsync() 不能接收两个任务的参数，且无返回值
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static void runAfterBothAsync() throws ExecutionException, InterruptedException {
+        CompletableFuture<Integer> future01 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务1线程： " + Thread.currentThread().getId());
+            int i = 10 / 2;
+            System.out.println("任务1结束");
+            return i;
+        }, executor);
+        CompletableFuture<String> future02 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务2线程： " + Thread.currentThread().getId());
+            System.out.println("任务2结束");
+            return "hello";
+        }, executor);
+
+        future01.runAfterBothAsync(future02, () -> System.out.println("任务3开始...") , executor);
+    }
+
+    /**
+     * CompletableFuture-两任务组合-都要完成，才能开启第三个任务
+     * runAfterBothAsync() 能接收两个任务的参数，但无返回值
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static void thenAcceptBothAsync() throws ExecutionException, InterruptedException {
+        CompletableFuture<Integer> future01 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务1线程： " + Thread.currentThread().getId());
+            int i = 10 / 2;
+            System.out.println("任务1结束");
+            return i;
+        }, executor);
+        CompletableFuture<String> future02 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务2线程： " + Thread.currentThread().getId());
+            System.out.println("任务2结束");
+            return "hello";
+        }, executor);
+
+        future01.thenAcceptBothAsync(future02, (f1, f2) -> System.out.println("任务3开始..." + "\n之前的结果是：" + f1 + " --> " + f2) , executor);
+    }
+
+
+    /**
+     * CompletableFuture-两任务组合-都要完成，才能开启第三个任务
+     * runAfterBothAsync() 能接收两个任务的参数，且有返回值
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static void thenCombineAsync() throws ExecutionException, InterruptedException {
+        CompletableFuture<Integer> future01 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务1线程： " + Thread.currentThread().getId());
+            int i = 10 / 2;
+            System.out.println("任务1结束");
+            return i;
+        }, executor);
+        CompletableFuture<String> future02 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务2线程： " + Thread.currentThread().getId());
+            System.out.println("任务2结束");
+            return "hello";
+        }, executor);
+
+        CompletableFuture<String> future03 = future01.thenCombineAsync(future02, (f1, f2) -> f1 + " : " + f2, executor);
+
+        System.out.println("future03的返回值为--> " + future03.get());
+    }
+
+
 
     /**
      * 线程串行化 thenRun: 不能获取到上一步的执行结果，无返回值
