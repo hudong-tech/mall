@@ -12,9 +12,55 @@ import java.util.concurrent.*;
 public class ThreadTest {
 
    // 当前系统中池只能有一两个，每个异步任务，提交给线程池让他自己去执行。
-   public static  ExecutorService executorService = Executors.newFixedThreadPool(10);
+   public static  ExecutorService executor = Executors.newFixedThreadPool(10);
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
+        System.out.println("main方法开始。。。。");
+
+//        runAsync();
+        supplyAsync();
+
+        System.out.println("main方法结束。。。。。");
+    }
+
+    /**
+     * CompletableFuture 不带返回值
+     * @return CompletableFuture<Void>
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static CompletableFuture<Void> runAsync() throws ExecutionException, InterruptedException {
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            System.out.println("当前线程： " + Thread.currentThread().getId());
+
+            int i = 10 / 2;
+
+            System.out.println("运行结果: " + i);
+        }, executor);
+
+        System.out.println("runAsync的返回值为： " + future.get());
+        return future;
+    }
+
+    public static CompletableFuture<Long> supplyAsync() throws ExecutionException, InterruptedException {
+        CompletableFuture<Long> future = CompletableFuture.supplyAsync(() -> {
+            System.out.println("当前线程： " + Thread.currentThread().getId());
+
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("run end...");
+            return  System.currentTimeMillis();
+        }, executor);
+
+        System.out.println("supplyAsync的返回值为：" + future.get());
+
+        return future;
+    }
+
+    public static void thread(String[] args) throws ExecutionException, InterruptedException {
 
         /**
          * 初始化线程的4种方式：
@@ -54,6 +100,8 @@ public class ThreadTest {
          *                                  private static final RejectedExecutionHandler defaultHandler = new AbortPolicy(); 默认直接丢弃
          *
          *             ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(10, 200, 10, TimeUnit.SECONDS, new LinkedBlockingDeque<>(100000), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
+         *     2、 CompletableFuture
+         *          1）、 Future 可以获取到异步结构
          *
          *  运行流程：
          *      1、线程池创建，准备好 corePoolSize 数量的核心线程，准备接受任务
@@ -100,7 +148,7 @@ public class ThreadTest {
 
         System.out.println("main方法开始。。。。");
         // executorService.submit(task); 可以获取返回值  executorService.execute(task); 没有返回值
-        executorService.execute(new Thread01());
+        executor.execute(new Thread01());
         System.out.println("main方法结束。。。。。");
     }
 
