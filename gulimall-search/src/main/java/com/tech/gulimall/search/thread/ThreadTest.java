@@ -18,7 +18,8 @@ public class ThreadTest {
         System.out.println("main方法开始。。。。");
 
 //        runAsync();
-        supplyAsync();
+//        supplyAsync();
+        supplyAsyncTest();
 
         System.out.println("main方法结束。。。。。");
     }
@@ -57,6 +58,27 @@ public class ThreadTest {
 
         System.out.println("supplyAsync的返回值为：" + future.get());
 
+        return future;
+    }
+
+    public static CompletableFuture<Integer> supplyAsyncTest() throws ExecutionException, InterruptedException {
+        CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+            System.out.println("当前线程： " + Thread.currentThread().getId());
+
+            int i = 10 / 0;
+
+            System.out.println("运行结果: " + i);
+            return i;
+        }, executor).whenComplete((result, exception) -> {
+            System.out.println("异步任务完成。。。");
+            // 虽然能得到异常，但无法修改返回数据
+            System.out.println("结果是：" + result + "\t异常是：" + exception);
+        }).exceptionally(
+                // 可以感知异常，同时返回默认值
+                throwable -> 10
+        );
+
+        System.out.println("runAsync的返回值为： " + future.get());
         return future;
     }
 
