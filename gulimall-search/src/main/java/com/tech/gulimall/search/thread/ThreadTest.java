@@ -26,7 +26,10 @@ public class ThreadTest {
 //        thenApplyAsync();
 //        runAfterBothAsync();
 //        thenAcceptBothAsync();
-        thenCombineAsync();
+//        thenCombineAsync();
+//        runAfterEitherAsync();
+//        acceptEitherAsync();
+        applyToEitherAsync();
 
         System.out.println("main方法结束。。。。。");
     }
@@ -72,6 +75,7 @@ public class ThreadTest {
             return "hello";
         }, executor);
 
+        //     void accept(T t);
         future01.thenAcceptBothAsync(future02, (f1, f2) -> System.out.println("任务3开始..." + "\n之前的结果是：" + f1 + " --> " + f2) , executor);
     }
 
@@ -95,7 +99,93 @@ public class ThreadTest {
             return "hello";
         }, executor);
 
+        //         R apply(T t);
         CompletableFuture<String> future03 = future01.thenCombineAsync(future02, (f1, f2) -> f1 + " : " + f2, executor);
+
+        System.out.println("future03的返回值为--> " + future03.get());
+    }
+
+    /**
+     * CompletableFuture-两任务组合-任意一个完成，就能开启第三个任务
+     * runAfterEitherAsync() 不能接收两个任务的参数，且无返回值
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static void runAfterEitherAsync() throws ExecutionException, InterruptedException {
+        CompletableFuture<Integer> future01 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务1线程： " + Thread.currentThread().getId());
+            int i = 10 / 2;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("任务1结束");
+            return i;
+        }, executor);
+        CompletableFuture<String> future02 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务2线程： " + Thread.currentThread().getId());
+            System.out.println("任务2结束");
+            return "hello";
+        }, executor);
+
+        future01.runAfterEitherAsync(future02, () -> System.out.println("任务3开始...") , executor);
+    }
+
+    /**
+     * CompletableFuture-两任务组合-任意一个完成，就能开启第三个任务
+     * acceptEitherAsync() 能接收两个任务的参数，但无返回值
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static void acceptEitherAsync() throws ExecutionException, InterruptedException {
+        CompletableFuture<Object> future01 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务1线程： " + Thread.currentThread().getId());
+            int i = 10 / 2;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("任务1结束");
+            return i;
+        }, executor);
+        CompletableFuture<Object> future02 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务2线程： " + Thread.currentThread().getId());
+            System.out.println("任务2结束");
+            return "hello";
+        }, executor);
+
+        //     void accept(T t);
+        future01.acceptEitherAsync(future02, (res) -> System.out.println("任务3开始..." + "\n之前的结果是：" + res ) , executor);
+    }
+
+    /**
+     * CompletableFuture-两任务组合-任意一个完成，就能开启第三个任务
+     * applyToEitherAsync() 能接收两个任务的参数，有返回值
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static void applyToEitherAsync() throws ExecutionException, InterruptedException {
+        CompletableFuture<Object> future01 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务1线程： " + Thread.currentThread().getId());
+            int i = 10 / 2;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("任务1结束");
+            return i;
+        }, executor);
+        CompletableFuture<Object> future02 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务2线程： " + Thread.currentThread().getId());
+            System.out.println("任务2结束");
+            return "hello";
+        }, executor);
+
+        //         R apply(T t);
+        CompletableFuture<String> future03 = future01.applyToEitherAsync(future02, result -> result.toString() + "哈哈", executor);
 
         System.out.println("future03的返回值为--> " + future03.get());
     }
