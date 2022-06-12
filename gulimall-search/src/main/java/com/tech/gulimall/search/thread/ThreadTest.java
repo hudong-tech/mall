@@ -469,7 +469,7 @@ public class ThreadTest {
          *                  @maximumPoolSize 最大线程数量。控制资源
          *                  @keepAliveTime 非核心线程（maximumPoolSize - corePoolSize）的最大等待接收任务时间，若maximumPoolSize > corePoolSize才会触发
          *                  @TimeUnit unit 超时时间单位
-         *                  @workQueue 阻塞队列。 当任务数量大于 maximumPoolSize 时， 就会将目前多的任务放在阻塞队列里，只要有空闲，就会去队列里面取出新任务继续执行
+         *                  @workQueue 阻塞队列。 当任务数量大于 corePoolSize 时， 就会将目前多的任务放在阻塞队列里，只要有空闲，就会去队列里面取出新任务继续执行
          *                                          new LinkedBlockingDeque<>() : 默认大小为Integer的最大值（即2^31 - 1）个队列。可能会导致内存不够，实际中会根据业务峰值去判断队列大小。
          *                  @threadFactory 线程的创建工厂，使用了工厂模式     使用默认线程工厂 ： Executors.defaultThreadFactory()
          *                  @handler 如果阻塞队列满了，按照指定的拒绝策略拒绝执行任务【RejectedExecutionHandler handler】
